@@ -6,7 +6,53 @@
   <title>Roster — BLMS Science Olympiad</title>
   <meta name="description" content="Team roster and event assignments.">
   <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Apple-style card layout */
+    .roster-container {
+      display: grid;
+      gap: 16px;
+      padding: 10px 0;
+    }
+    .roster-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.08);
+      transition: 0.2s ease;
+    }
+    .roster-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+    .roster-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+    }
+    .roster-grade {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .roster-events {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    @media (min-width: 700px) {
+      .roster-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1100px) {
+      .roster-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <div class="nav">
@@ -19,7 +65,6 @@
         <li><a href="roster.html" class="active">Roster</a></li>
         <li><a href="attendance.html">Attendance</a></li>
         <li><a href="resources.html">Event Study Resources</a></li>
-        <li><a href="event-interests.html">Event Interests</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
     </nav>
@@ -29,16 +74,24 @@
 <main class="container">
   <section class="hero">
     <h1>Team Roster</h1>
-    <p>View-only roster. Coaches may update assignments in Google Sheets at any time.</p>
+    <p>View our 2024–25 Science Olympiad roster and event assignments.</p>
   </section>
 
-  <div class="card" style="padding: 0;">
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQgBRvuKenQe3nEmwk2nxMY2210KR0TyxOkSKVZTVFMdHwUn5fIR3mlfb9emSqijw/pubhtml?widget=true&amp;headers=false"
-            width="100%"
-            height="800"
-            frameborder="0">
-    </iframe>
+  <!-- ROSTER CARDS WILL BE INSERTED HERE -->
+  <div class="roster-container">
+
+    <!-- 👇 I will generate these cards from your Excel in the next message -->
+    <!-- Example card (the rest of the students will be auto-filled for you) -->
+    <!--
+    <div class="roster-card">
+      <div class="roster-name">Shreya Ayyalasomayajula</div>
+      <div class="roster-grade">Grade: 7</div>
+      <div class="roster-events">Events: Anatomy, Fossils, Meteorology</div>
+    </div>
+    -->
+
   </div>
+
 </main>
 
 <footer>
@@ -54,4 +107,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
