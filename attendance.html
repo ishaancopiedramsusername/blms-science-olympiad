@@ -4,11 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Attendance — BLMS Science Olympiad</title>
-  <meta name="description" content="Attendance logging info and demo form.">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+    .panel{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.06);padding:18px 22px}
+    .hero{margin-bottom:28px}
+    .embed-card{padding:0;border-radius:14px;overflow:hidden}
+    .embed-card iframe{width:100%;border:0}
+    /* Tweak heights as you like */
+    #attendanceForm{height:900px}
+    #attendanceLog{height:650px}
+  </style>
 </head>
 <body>
-  
+
+<!-- Nav -->
 <div class="nav">
   <div class="container nav-inner">
     <a class="brand" href="index.html">BLMS Science Olympiad — Div B</a>
@@ -17,7 +27,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="tournaments.html">Tournaments</a></li>
         <li><a href="roster.html">Roster</a></li>
-        <li><a href="attendance.html">Attendance</a></li>
+        <li><a href="attendance.html" class="active">Attendance</a></li>
         <li><a href="resources.html">Event Study Resources</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
@@ -25,55 +35,29 @@
   </div>
 </div>
 
-  <main class="container">
-    
-<h2 class="section-title">Attendance</h2>
-<p class="notice">Recommended: Use a Google Form for official logging. The form responses should feed a protected Google Sheet. The form embed or link can go here.</p>
+<main class="container">
+  <section class="hero">
+    <h1>Attendance</h1>
+    <p class="note">Select your name and mark Present, Absent, or Excused. Submissions save automatically; the log updates below.</p>
+  </section>
 
-<div class="card">
-  <h3 style="margin-top:0;">Quick Mark (Demo — no backend)</h3>
-  <p class="note">This demo form does not save data. Replace with your Google Form link or embed.</p>
-  <form onsubmit="event.preventDefault(); alert('This demo form does not save data. Replace with your Google Form.');">
-    <div class="form-row">
-      <div>
-        <label for="date">Date</label>
-        <input id="date" type="date" required>
-      </div>
-      <div>
-        <label for="student">Student</label>
-        <input id="student" type="text" placeholder="Start typing name…" required>
-      </div>
-      <div>
-        <label for="status">Status</label>
-        <select id="status">
-          <option>Present</option>
-          <option>Absent</option>
-          <option>Excused</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row">
-      <div>
-        <label for="notes">Notes</label>
-        <textarea id="notes" rows="3" placeholder="Optional"></textarea>
-      </div>
-    </div>
-    <div class="form-actions">
-      <button class="btn btn-primary" type="submit">Mark</button>
-      <a class="btn btn-light" href="#" onclick="alert('Link this to your Google Form or Sheets dashboard.'); return false;">Open Official Form</a>
-    </div>
-  </form>
-</div>
+  <!-- Attendance Form (embedded) -->
+  <div class="panel embed-card">
+    <iframe
+      id="attendanceForm"
+      src="https://forms.gle/Jyqr1uFJDkkh4LB57">
+    </iframe>
+  </div>
 
-<hr class="spacer">
+  <!-- Live Attendance Log (published Sheet) -->
+  <div class="panel embed-card" style="margin-top:28px;">
+    <iframe
+      id="attendanceLog"
+      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQaTiAzTRg1uiMq5_SB5arffGGBPIDhbIDBmFeLJVBPiPzt5wHeWUX-lcLHR5P1CrprlxCZjL-Owd2A/pubhtml">
+    </iframe>
+  </div>
+</main>
 
-<div class="card">
-  <strong>Summary (Suggestion)</strong>
-  <p class="note">Create a Sheets dashboard with attendance counts per student and embed it here.</p>
-</div>
-
-  </main>
-  
 <footer>
   <div class="container footer-inner">
     <span>© <span id="year"></span> BLMS Science Olympiad — Division B</span>
@@ -84,6 +68,12 @@
   </div>
 </footer>
 
-  <script src="script.js"></script>
+<script>
+  // Update footer year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // If your form shows too short, try forcing the embed view:
+  // document.getElementById('attendanceForm').src = "https://docs.google.com/forms/d/e/REPLACE_ID/viewform?embedded=true";
+</script>
 </body>
 </html>
