@@ -1,210 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team Roster — BLMS Science Olympiad</title>
-  <style>
-    :root {
-      --bg: #f2f3f7;
-      --card: rgba(255,255,255,0.25);
-      --text: #1c1c1e;
-      --shadow: rgba(0,0,0,0.15);
-    }
-    [data-theme="dark"] {
-      --bg: #0c0c0c;
-      --card: rgba(40,40,40,0.45);
-      --text: #f9f9f9;
-      --shadow: rgba(0,0,0,0.5);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BLMS Science Olympiad — Team Roster</title>
+<style>
+  /* THEME (old liquid-glass look) */
+  :root{
+    --bg-light: radial-gradient(1200px 800px at 15% -10%, #e6efff, transparent 60%),
+                radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
+                linear-gradient(#eef2f8, #f9fafc);
+    --bg-dark:  radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
+                radial-gradient(1400px 900px at 110% 120%, #201433, transparent 60%),
+                linear-gradient(#0b0d12, #12141b);
+    --text: #111318;
+    --text-weak:#1c1f26cc;
+    --card: rgba(255,255,255,.40);
+    --card-bd: rgba(255,255,255,.28);
+    --shadow: rgba(0,0,0,.22);
+  }
+  [data-theme="dark"]{
+    --text:#f5f7ff;
+    --text-weak:#f5f7ffcc;
+    --card: rgba(36,38,46,.55);
+    --card-bd: rgba(255,255,255,.18);
+    --shadow: rgba(0,0,0,.55);
+  }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-      color: var(--text);
-      transition: background 0.4s, color 0.4s;
-    }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,Roboto,Arial,sans-serif;
+    background:var(--bg-light);
+    color:var(--text);
+    transition:background .4s,color .4s;
+    overflow-x:hidden;
+  }
+  [data-theme="dark"] body{background:var(--bg-dark)}
+  header{
+    text-align:center;
+    padding:56px 16px 8px;
+  }
+  h1{
+    margin:0;
+    font-size:2.6rem;
+    font-weight:800;
+    letter-spacing:.2px;
+    background:linear-gradient(90deg,#007aff,#9b7bff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .tag{opacity:.75;margin-top:8px}
 
-    header {
-      text-align: center;
-      padding: 60px 20px 20px;
-    }
-    header h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      background: linear-gradient(90deg,#007aff,#9b7bff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0;
-    }
-    header p {opacity:0.75;margin-top:6px;}
+  /* Dark / Light toggle */
+  .toggle{
+    position:fixed;top:18px;right:20px;z-index:10;
+    padding:8px 14px;border-radius:999px;border:1px solid var(--card-bd);
+    background:rgba(255,255,255,.25);backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);cursor:pointer
+  }
 
-    .grid {
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:28px;
-      padding:40px;
-      max-width:1400px;
-      margin:auto;
-    }
+  /* GRID */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+    max-width:1200px;
+    padding:32px 24px 80px;
+    margin:0 auto;
+  }
 
-    .card {
-      background: var(--card);
-      backdrop-filter: blur(30px) saturate(160%);
-      -webkit-backdrop-filter: blur(30px) saturate(160%);
-      border:1px solid rgba(255,255,255,0.25);
-      border-radius:24px;
-      padding:22px 26px;
-      box-shadow:0 8px 25px var(--shadow);
-      transition:transform .3s ease, box-shadow .3s ease;
-      animation:fadeIn .7s ease both;
-    }
-    .card:hover{
-      transform:translateY(-6px);
-      box-shadow:0 16px 40px var(--shadow);
-    }
+  /* FLIP CARDS */
+  .flip-card{perspective:1100px;height:220px}
+  .flip-inner{
+    position:relative;width:100%;height:100%;
+    transform-style:preserve-3d;
+    transition:transform .75s cubic-bezier(.2,.65,.2,1);
+    cursor:pointer;
+  }
+  /* hover flip (desktop) */
+  .flip-card:hover .flip-inner{transform:rotateY(180deg)}
+  /* tap flip (mobile) */
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg)}
 
-    .name{
-      font-size:1.2rem;
-      font-weight:600;
-      margin-bottom:8px;
-    }
-    ul{
-      list-style:none;
-      padding:0;
-      margin:0;
-    }
-    li{
-      padding:3px 0;
-      font-size:.95rem;
-      opacity:.9;
-    }
+  .face{
+    position:absolute;inset:0;border-radius:22px;
+    background:var(--card);
+    border:1px solid var(--card-bd);
+    backdrop-filter:blur(26px) saturate(160%);
+    -webkit-backdrop-filter:blur(26px) saturate(160%);
+    box-shadow:0 14px 28px var(--shadow);
+    padding:18px 18px 20px;
+    display:flex;align-items:flex-start;justify-content:flex-start;flex-direction:column;
+    backface-visibility:hidden;
+  }
+  .front h3{margin:0;font-size:1.15rem;font-weight:700}
+  .back{transform:rotateY(180deg);padding:18px 20px}
+  .back ul{margin:4px 0 0 0;padding-left:18px}
+  .back li{margin:4px 0;color:var(--text-weak)}
 
-    .toggle{
-      position:fixed;
-      top:20px;
-      right:25px;
-      background:rgba(255,255,255,0.2);
-      border:1px solid rgba(255,255,255,0.3);
-      border-radius:20px;
-      padding:6px 14px;
-      font-size:.9rem;
-      cursor:pointer;
-      backdrop-filter:blur(15px);
-    }
-
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(10px);}
-      to{opacity:1;transform:translateY(0);}
-    }
-  </style>
+  /* entry animation */
+  .flip-card{animation:rise .55s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
 </head>
 <body>
-  <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
-  <header>
-    <h1>BLMS Science Olympiad Roster</h1>
-    <p>2025 – 2026 Season · Division B</p>
-  </header>
+<button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
 
-  <main class="grid">
-    <!-- 1 -->
-    <div class="card"><div class="name">Shreya Ayyalasomayajula</div>
-      <ul><li>Anatomy and Physiology</li><li>Entomology</li><li>Heredity</li><li>Meteorology</li><li>Dynamic Planet</li></ul></div>
+<header>
+  <h1>Team Roster</h1>
+  <p class="tag">Flip a card to view events · 2025–26 · BLMS Science Olympiad</p>
+</header>
 
-    <div class="card"><div class="name">Yvaine Wang</div>
-      <ul><li>Anatomy and Physiology</li><li>Disease Detectives</li><li>Potions and Poisons</li><li>Heredity</li><li>Crime Busters</li></ul></div>
+<main class="grid" id="grid">
+  <!-- Cards injected by JS below to keep things clean -->
+</main>
 
-    <div class="card"><div class="name">Junye Huang</div>
-      <ul><li>Solar System</li><li>Potions and Poisons</li><li>Metric Mastery</li><li>Anatomy and Physiology</li><li>Circuit Lab</li></ul></div>
+<script>
+/* Dark / Light toggle */
+const toggle = document.getElementById('modeToggle');
+toggle.addEventListener('click',()=>{
+  const html=document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+});
 
-    <div class="card"><div class="name">Sanvi Byreddy</div>
-      <ul><li>Disease Detectives</li><li>Heredity</li><li>Water Quality</li><li>Dynamic Planet</li></ul></div>
+/* DATA — de-duplicated and cleaned per your list */
+const students = [
+  {name:"Shreya Ayyalasomayajula", events:["Anatomy and Physiology","Entomology","Heredity","Meteorology","Dynamic Planet"]},
+  {name:"Yvaine Wang", events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]},
+  {name:"Junye Huang", events:["Solar System","Potions and Poisons","Metric Mastery","Anatomy and Physiology","Circuit Lab"]},
+  {name:"Sanvi Byreddy", events:["Disease Detectives","Heredity","Water Quality","Dynamic Planet"]},
+  {name:"Vinay Patel", events:["Entomology","Heredity","Crime Busters","Codebusters","Scrambler"]},
+  {name:"Saanvika Nair", events:["Crime Busters","Potions and Poisons","Helicopter","Scrambler","Codebusters"]},
+  {name:"Ryan Thomas", events:["Metric Mastery","Helicopter","Write It Do It","Heredity","Experimental Design"]},
+  {name:"Anay Chatterjee", events:["Metric Mastery","Helicopter","Heredity","Experimental Design"]},
+  {name:"Dhruv Bajaj", events:["Hovercraft","Crime Busters","Experimental Design"]},
+  {name:"Aarav Singhai", events:["Disease Detectives","Mission Possible","Crime Busters"]},
+  {name:"Sofia Shao", events:["Write It Do It","Scrambler","Helicopter","Potions and Poisons","Machines"]},
+  {name:"Akshay Bhargav Varanasi", events:["Boomilever","Codebusters","Rocks and Minerals","Dynamic Planet","Meteorology","Circuit Lab"]},
+  {name:"Edmund Bao", events:["Boomilever","Helicopter","Scrambler","Potions and Poisons","Hovercraft","Crime Busters","Disease Detectives","Heredity","Codebusters"]},
+  {name:"Pavel Chudnovskiy", events:["Remote Sensing","Dynamic Planet","Meteorology","Circuit Lab"]},
+  {name:"Aarav Singh Mandhar", events:["Rocks and Minerals","Codebusters","Boomilever"]},
+  {name:"Anvika Rath", events:["Anatomy and Physiology","Rocks and Minerals","Solar System","Crime Busters"]},
+  {name:"Jayden Oh", events:["Boomilever","Hovercraft","Helicopter","Mission Possible"]},
+  {name:"William Wang", events:["Hovercraft","Boomilever","Helicopter","Mission Possible"]},
+  {name:"Akhil Gollapally", events:["Anatomy and Physiology","Heredity","Boomilever","Mission Possible","Potions and Poisons","Disease Detectives"]},
+  {name:"Joann Antony", events:["Disease Detectives","Scrambler","Boomilever"]},
+  {name:"Nora Ahmed", events:["Solar System","Boomilever","Disease Detectives","Scrambler"]},
+  {name:"Haasini Bharathwaj", events:["Meteorology","Write It Do It","Water Quality","Dynamic Planet","Solar System"]},
+  {name:"Anvi Dhome", events:["Crime Busters","Mission Possible","Codebusters","Entomology","Potions and Poisons"]},
+  {name:"Krishvee Anand", events:["Anatomy and Physiology","Disease Detectives","Heredity","Solar System","Potions and Poisons","Experimental Design"]},
+  {name:"Rayansh Anand", events:["Potions and Poisons","Disease Detectives","Remote Sensing","Circuit Lab"]},
+  {name:"Pavaki Rastogi", events:["Entomology","Heredity","Write It Do It","Experimental Design","Dynamic Planet","Meteorology","Circuit Lab"]},
+  {name:"Samira Senthil", events:["Heredity","Water Quality","Rocks and Minerals","Potions and Poisons"]},
+  {name:"Ishani Bhat", events:["Disease Detectives","Heredity","Rocks and Minerals","Potions and Poisons"]},
+  {name:"Zayna Rasheed", events:["Water Quality","Heredity","Rocks and Minerals","Potions and Poisons"]},
+  {name:"Ishaan Parthasarathy", events:["Anatomy and Physiology","Metric Mastery","Write It Do It"]}
+];
 
-    <div class="card"><div class="name">Vinay Patel</div>
-      <ul><li>Entomology</li><li>Heredity</li><li>Crime Busters</li><li>Codebusters</li><li>Scrambler</li></ul></div>
+/* Render cards */
+const grid = document.getElementById('grid');
+students.forEach((s, i)=>{
+  const card = document.createElement('div');
+  card.className = 'flip-card';
+  // small staggered animation delay
+  card.style.animationDelay = (i*0.025)+'s';
 
-    <div class="card"><div class="name">Saanvika Nair</div>
-      <ul><li>Crime Busters</li><li>Potions and Poisons</li><li>Helicopter</li><li>Scrambler</li><li>Codebusters</li></ul></div>
+  const inner = document.createElement('div');
+  inner.className = 'flip-inner';
 
-    <div class="card"><div class="name">Ryan Thomas</div>
-      <ul><li>Metric Mastery</li><li>Helicopter</li><li>Write It Do It</li><li>Heredity</li><li>Experimental Design</li></ul></div>
+  const front = document.createElement('div');
+  front.className = 'face front';
+  front.innerHTML = `<h3>${s.name}</h3>`;
 
-    <div class="card"><div class="name">Anay Chatterjee</div>
-      <ul><li>Metric Mastery</li><li>Helicopter</li><li>Heredity</li><li>Experimental Design</li></ul></div>
+  const back = document.createElement('div');
+  back.className = 'face back';
+  back.innerHTML = `<ul>${s.events.map(e=>`<li>${e}</li>`).join('')}</ul>`;
 
-    <div class="card"><div class="name">Dhruv Bajaj</div>
-      <ul><li>Hovercraft</li><li>Crime Busters</li><li>Experimental Design</li></ul></div>
+  inner.appendChild(front);
+  inner.appendChild(back);
+  card.appendChild(inner);
+  grid.appendChild(card);
 
-    <div class="card"><div class="name">Aarav Singhai</div>
-      <ul><li>Disease Detectives</li><li>Mission Possible</li><li>Crime Busters</li></ul></div>
-
-    <div class="card"><div class="name">Sofia Shao</div>
-      <ul><li>Write It Do It</li><li>Scrambler</li><li>Helicopter</li><li>Potions and Poisons</li><li>Machines</li></ul></div>
-
-    <div class="card"><div class="name">Akshay Bhargav Varanasi</div>
-      <ul><li>Boomilever</li><li>Codebusters</li><li>Rocks and Minerals</li><li>Dynamic Planet</li><li>Meteorology</li><li>Circuit Lab</li></ul></div>
-
-    <div class="card"><div class="name">Edmund Bao</div>
-      <ul><li>Boomilever</li><li>Helicopter</li><li>Scrambler</li><li>Potions and Poisons</li><li>Hovercraft</li><li>Crime Busters</li><li>Disease Detectives</li><li>Heredity</li><li>Codebusters</li></ul></div>
-
-    <div class="card"><div class="name">Pavel Chudnovskiy</div>
-      <ul><li>Remote Sensing</li><li>Dynamic Planet</li><li>Meteorology</li><li>Circuit Lab</li></ul></div>
-
-    <div class="card"><div class="name">Aarav Singh Mandhar</div>
-      <ul><li>Rocks and Minerals</li><li>Codebusters</li><li>Boomilever</li></ul></div>
-
-    <div class="card"><div class="name">Anvika Rath</div>
-      <ul><li>Anatomy and Physiology</li><li>Rocks and Minerals</li><li>Solar System</li><li>Crime Busters</li></ul></div>
-
-    <div class="card"><div class="name">Jayden Oh</div>
-      <ul><li>Boomilever</li><li>Hovercraft</li><li>Helicopter</li><li>Mission Possible</li></ul></div>
-
-    <div class="card"><div class="name">William Wang</div>
-      <ul><li>Hovercraft</li><li>Boomilever</li><li>Helicopter</li><li>Mission Possible</li></ul></div>
-
-    <div class="card"><div class="name">Akhil Gollapally</div>
-      <ul><li>Anatomy and Physiology</li><li>Heredity</li><li>Boomilever</li><li>Mission Possible</li><li>Potions and Poisons</li><li>Disease Detectives</li></ul></div>
-
-    <div class="card"><div class="name">Joann Antony</div>
-      <ul><li>Disease Detectives</li><li>Scrambler</li><li>Boomilever</li></ul></div>
-
-    <div class="card"><div class="name">Nora Ahmed</div>
-      <ul><li>Solar System</li><li>Boomilever</li><li>Disease Detectives</li><li>Scrambler</li></ul></div>
-
-    <div class="card"><div class="name">Haasini Bharathwaj</div>
-      <ul><li>Meteorology</li><li>Write It Do It</li><li>Water Quality</li><li>Dynamic Planet</li><li>Solar System</li></ul></div>
-
-    <div class="card"><div class="name">Anvi Dhome</div>
-      <ul><li>Crime Busters</li><li>Mission Possible</li><li>Codebusters</li><li>Entomology</li><li>Potions and Poisons</li></ul></div>
-
-    <div class="card"><div class="name">Krishvee Anand</div>
-      <ul><li>Anatomy and Physiology</li><li>Disease Detectives</li><li>Heredity</li><li>Solar System</li><li>Potions and Poisons</li><li>Experimental Design</li></ul></div>
-
-    <div class="card"><div class="name">Rayansh Anand</div>
-      <ul><li>Potions and Poisons</li><li>Disease Detectives</li><li>Remote Sensing</li><li>Circuit Lab</li></ul></div>
-
-    <div class="card"><div class="name">Pavaki Rastogi</div>
-      <ul><li>Entomology</li><li>Heredity</li><li>Write It Do It</li><li>Experimental Design</li></ul></div>
-
-    <div class="card"><div class="name">Samira Senthil</div>
-      <ul><li>Heredity</li><li>Water Quality</li><li>Rocks and Minerals</li><li>Potions and Poisons</li></ul></div>
-
-    <div class="card"><div class="name">Ishani Bhat</div>
-      <ul><li>Disease Detectives</li><li>Heredity</li><li>Rocks and Minerals</li><li>Potions and Poisons</li></ul></div>
-
-    <div class="card"><div class="name">Zayna Rasheed</div>
-      <ul><li>Water Quality</li><li>Heredity</li><li>Rocks and Minerals</li><li>Potions and Poisons</li></ul></div>
-
-    <div class="card"><div class="name">Ishaan Parthasarathy</div>
-      <ul><li>Anatomy and Physiology</li><li>Metric Mastery</li><li>Write It Do It</li></ul></div>
-  </main>
-
-  <script>
-    document.getElementById("modeToggle").onclick = () => {
-      const html = document.documentElement;
-      html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
-    };
-  </script>
+  // Tap-to-flip for touch devices
+  card.addEventListener('click', ()=>{
+    // If a link inside back is added in future, prevent accidental close
+    card.classList.toggle('flipped');
+  });
+});
+</script>
 </body>
 </html>
+
