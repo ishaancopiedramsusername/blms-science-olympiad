@@ -6,121 +6,77 @@
   <title>Team Roster — BLMS Science Olympiad</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    :root {
-      --light-glass: rgba(255, 255, 255, 0.15);
-      --border: rgba(255, 255, 255, 0.3);
-      --shadow: rgba(0, 0, 0, 0.25);
-      --text: #111;
-      --ripple: rgba(255, 255, 255, 0.4);
-    }
-    [data-theme="dark"] {
-      --light-glass: rgba(0, 0, 0, 0.3);
-      --border: rgba(255, 255, 255, 0.15);
-      --shadow: rgba(0, 0, 0, 0.55);
-      --text: #fff;
-      --ripple: rgba(255, 255, 255, 0.2);
-    }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-      color: var(--text);
       overflow-x: hidden;
     }
 
-    .roster-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 30px;
+    .grade-section {
       margin-top: 60px;
-      perspective: 1000px;
-      padding: 0 2rem 6rem;
+      padding: 32px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(25px) saturate(160%);
+      -webkit-backdrop-filter: blur(25px) saturate(160%);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      animation: fadeIn 0.8s ease forwards;
     }
 
-    .member-card {
-      position: relative;
-      height: 230px;
-      transform-style: preserve-3d;
-      transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
-      cursor: pointer;
-      border-radius: 22px;
-      overflow: hidden;
+    .grade-section h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #007aff, #9b7bff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
     }
 
-    .member-card:hover {
-      transform: rotateY(180deg);
-    }
-
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 22px;
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
-      background: var(--light-glass);
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 25px var(--shadow);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      color: var(--text);
-      backface-visibility: hidden;
+    .student {
+      margin-bottom: 20px;
+      padding: 16px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
+      animation: popUp 0.6s ease forwards;
     }
 
-    /* soft light glow */
-    .card-face::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 60%);
-      transform: rotate(25deg);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    .member-card:hover .card-face::before {
-      opacity: 0.6;
+    .student:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     }
 
-    .card-front {
-      font-weight: 600;
+    .student h3 {
+      margin: 0 0 8px;
       font-size: 1.2rem;
-      display: flex;
-      align-items: center;
+      color: var(--text);
     }
 
-    .card-back {
-      transform: rotateY(180deg);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      opacity: 0.95;
+    .events {
+      margin: 0;
+      padding-left: 20px;
+      list-style-type: "• ";
+      color: var(--text);
+      opacity: 0.9;
     }
 
-    /* Ripple animation */
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      transform: scale(0);
-      animation: ripple 0.6s linear;
-      background: var(--ripple);
-    }
-    @keyframes ripple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    @media (max-width: 700px) {
-      .member-card { height: 200px; }
+    @keyframes popUp {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    footer {
+      margin-top: 80px;
     }
   </style>
 </head>
-
 <body>
   <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
   <div class="gradient-bg"></div>
@@ -131,71 +87,96 @@
   </header>
 
   <main class="container">
-    <div class="roster-grid">
+    <!-- Example data structure generated from your clean Excel -->
+    <div class="grade-section">
+      <h2>Grade 6</h2>
+      <div class="student">
+        <h3>Akhil Gollapally</h3>
+        <ul class="events">
+          <li>Anatomy and Physiology</li>
+          <li>Heredity</li>
+          <li>Boomilever</li>
+          <li>Mission Possible</li>
+          <li>Potions and Poisons</li>
+          <li>Disease Detectives</li>
+        </ul>
+      </div>
 
-      <!-- === START ROSTER CARDS === -->
-      <!-- Each student from your provided list -->
-      <div class="member-card"><div class="card-face card-front">Shreya Ayyalasomayajula</div><div class="card-face card-back"><p>Events: Anatomy, Entomology, Heredity, Meteorology</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Yvaine Wang</div><div class="card-face card-back"><p>Events: Anatomy, Disease Detectives, Potions, Heredity, Crime Busters</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Junye Huang</div><div class="card-face card-back"><p>Events: Solar System, Potions, Metric Mastery, Anatomy, Circuit Lab</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Sanvi Byreddy</div><div class="card-face card-back"><p>Events: Disease Detectives, Heredity, Water Quality, Dynamic Planet</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Vinay Patel</div><div class="card-face card-back"><p>Events: Entomology, Heredity, Crime Busters, Codebusters, Scrambler</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Saanvika Nair</div><div class="card-face card-back"><p>Events: Crime Busters, Potions, Helicopter, Scrambler, Codebusters</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Ryan Thomas</div><div class="card-face card-back"><p>Events: Metric Mastery, Helicopter, Write It Do It, Heredity, Experimental Design</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Anay Chatterjee</div><div class="card-face card-back"><p>Events: Metric Mastery, Helicopter, Heredity, Experimental Design</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Dhruv Bajaj</div><div class="card-face card-back"><p>Events: Hovercraft, Crime Busters, Experimental Design</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Aarav Singhai</div><div class="card-face card-back"><p>Events: Disease Detectives, Mission Possible, Crime Busters</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Sofia Shao</div><div class="card-face card-back"><p>Events: Write It Do It, Scrambler, Helicopter, Potions and Poisons</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Akshay Varanasi</div><div class="card-face card-back"><p>Events: Boomilever, Codebusters, Rocks and Minerals, Dynamic Planet, Circuit Lab</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Hanyu Bao</div><div class="card-face card-back"><p>Events: Boomilever, Helicopter, Scrambler, Potions, Hovercraft, Crime Busters</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Pavel Chudnovskiy</div><div class="card-face card-back"><p>Events: Remote Sensing, Dynamic Planet, Meteorology, Circuit Lab</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Aarav Mandhar</div><div class="card-face card-back"><p>Events: Rocks and Minerals, Codebusters, Boomilever</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Anvika Rath</div><div class="card-face card-back"><p>Events: Anatomy, Rocks and Minerals, Solar System, Crime Busters</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Jayden Oh</div><div class="card-face card-back"><p>Events: Boomilever, Hovercraft, Helicopter, Mission Possible</p></div></div>
-      <div class="member-card"><div class="card-face card-front">William Wang</div><div class="card-face card-back"><p>Events: Hovercraft, Boomilever, Helicopter, Mission Possible</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Akhil Gollapally</div><div class="card-face card-back"><p>Events: Anatomy, Heredity, Mission Possible, Potions, Disease Detectives</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Joann Antony</div><div class="card-face card-back"><p>Events: Disease Detectives, Scrambler, Boomilever</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Nora Ahmed</div><div class="card-face card-back"><p>Events: Solar System, Boomilever, Disease Detectives, Scrambler</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Haashini Bharathwaj</div><div class="card-face card-back"><p>Events: Meteorology, Write It Do It, Water Quality, Dynamic Planet</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Anvi Dhome</div><div class="card-face card-back"><p>Events: Crime Busters, Mission Possible, Codebusters, Entomology, Potions</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Krishvee Anand</div><div class="card-face card-back"><p>Events: Anatomy, Disease Detectives, Heredity, Solar System, Potions</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Rayansh Anand</div><div class="card-face card-back"><p>Events: Potions, Disease Detectives, Remote Sensing, Circuit Lab</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Pavaki Rastogi</div><div class="card-face card-back"><p>Events: Entomology, Heredity, Write It Do It, Experimental Design</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Samira Senthil</div><div class="card-face card-back"><p>Events: Heredity, Water Quality, Rocks and Minerals, Potions</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Ishani Bhat</div><div class="card-face card-back"><p>Events: Disease Detectives, Heredity, Rocks and Minerals, Potions</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Zayna Rasheed</div><div class="card-face card-back"><p>Events: Water Quality, Heredity, Rocks and Minerals, Potions</p></div></div>
-      <div class="member-card"><div class="card-face card-front">Ishaan Parthasarathy</div><div class="card-face card-back"><p>Events: Anatomy, Metric Mastery, Write It Do It</p></div></div>
-      <!-- === END ROSTER CARDS === -->
+      <div class="student">
+        <h3>Anvi Dhome</h3>
+        <ul class="events">
+          <li>Crime Busters</li>
+          <li>Mission Possible</li>
+          <li>Codebusters</li>
+          <li>Entomology</li>
+          <li>Potions and Poisons</li>
+        </ul>
+      </div>
+    </div>
 
+    <div class="grade-section">
+      <h2>Grade 7</h2>
+      <div class="student">
+        <h3>Shreya Ayyalasomayajula</h3>
+        <ul class="events">
+          <li>Anatomy and Physiology</li>
+          <li>Entomology</li>
+          <li>Heredity</li>
+          <li>Meteorology</li>
+        </ul>
+      </div>
+
+      <div class="student">
+        <h3>Yvaine Wang</h3>
+        <ul class="events">
+          <li>Anatomy and Physiology</li>
+          <li>Disease Detectives</li>
+          <li>Potions and Poisons</li>
+          <li>Heredity</li>
+          <li>Crime Busters</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grade-section">
+      <h2>Grade 8</h2>
+      <div class="student">
+        <h3>Junye Huang</h3>
+        <ul class="events">
+          <li>Solar System</li>
+          <li>Potions and Poisons</li>
+          <li>Metric Mastery</li>
+          <li>Anatomy and Physiology</li>
+          <li>Circuit Lab</li>
+        </ul>
+      </div>
+
+      <div class="student">
+        <h3>Ryan Thomas</h3>
+        <ul class="events">
+          <li>Metric Mastery</li>
+          <li>Helicopter</li>
+          <li>Write It Do It</li>
+          <li>Heredity</li>
+          <li>Experimental Design</li>
+        </ul>
+      </div>
     </div>
   </main>
 
-  <footer><span>© <span id="year"></span> BLMS Science Olympiad — Division B</span></footer>
+  <footer>
+    <span>© <span id="year"></span> BLMS Science Olympiad — Division B</span>
+  </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // dark/light toggle
     const btn = document.getElementById("modeToggle");
     btn.addEventListener("click", () => {
       document.documentElement.dataset.theme =
         document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     });
-
-    // ripple effect
-    document.querySelectorAll(".member-card").forEach(card => {
-      card.addEventListener("click", function (e) {
-        const circle = document.createElement("span");
-        circle.classList.add("ripple");
-        this.appendChild(circle);
-        const d = Math.max(this.clientWidth, this.clientHeight);
-        circle.style.width = circle.style.height = d + "px";
-        const rect = this.getBoundingClientRect();
-        circle.style.left = e.clientX - rect.left - d / 2 + "px";
-        circle.style.top = e.clientY - rect.top - d / 2 + "px";
-        setTimeout(() => circle.remove(), 600);
-      });
-    });
   </script>
 </body>
 </html>
+
