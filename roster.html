@@ -73,6 +73,36 @@ h1 {
   color: var(--text);
 }
 
+/* === NAV BAR === */
+.nav {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+[data-theme="dark"] .nav {
+  background: rgba(36,38,46,0.5);
+  border-color: rgba(255,255,255,0.18);
+}
+.nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.nav a:hover {
+  text-decoration: underline;
+}
+
 /* === GRID === */
 .grid {
   display: grid;
@@ -168,6 +198,13 @@ h1 {
 </head>
 <body>
 
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="roster.html">👥 Team Roster</a>
+  <a href="tournaments.html">🏆 Tournaments</a>
+  <a href="attendance.html">🗓️ Attendance</a>
+</nav>
+
 <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
 
 <header>
@@ -246,3 +283,4 @@ students.forEach((s, i) => {
 </script>
 </body>
 </html>
+
