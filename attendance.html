@@ -4,25 +4,158 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Attendance — BLMS Science Olympiad</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
-  <div class="gradient-bg"></div>
+  <style>
+  /* === THEME VARIABLES === */
+  :root {
+    --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
+                radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
+                linear-gradient(#eef3f9, #fafbff);
+    --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
+               radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
+               linear-gradient(#0b0d12, #141720);
+    --text: #111318;
+    --text-weak: #1c1f26cc;
+    --card: rgba(255,255,255,.35);
+    --card-bd: rgba(255,255,255,.25);
+    --shadow: rgba(0,0,0,.18);
+  }
+  [data-theme="dark"] {
+    --text: #f4f6ff;
+    --text-weak: #cfd5ffcc;
+    --card: rgba(36,38,46,.55);
+    --card-bd: rgba(255,255,255,.18);
+    --shadow: rgba(0,0,0,.6);
+  }
 
-  <header class="hero">
+  /* === GLOBAL STYLES === */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg-light);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.4s, color 0.4s;
+  }
+  [data-theme="dark"] body { background: var(--bg-dark); }
+
+  /* === NAV BAR === */
+  .nav {
+    position: fixed;
+    top: 18px;
+    left: 20px;
+    z-index: 10;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  [data-theme="dark"] .nav {
+    background: rgba(36,38,46,0.5);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .nav a:hover {
+    text-decoration: underline;
+  }
+
+  /* === TOGGLE BUTTON === */
+  .toggle {
+    position: fixed;
+    top: 18px;
+    right: 20px;
+    z-index: 10;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--card-bd);
+    background: rgba(255,255,255,.25);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  /* === HEADER === */
+  header {
+    text-align: center;
+    padding: 80px 20px 20px;
+  }
+  h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #007aff, #9b7bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .tagline {
+    opacity: 0.75;
+    margin-top: 10px;
+    font-size: 1.1rem;
+  }
+
+  /* === GLASS SECTIONS === */
+  .glass {
+    border-radius: 22px;
+    background: var(--card);
+    border: 1px solid var(--card-bd);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    box-shadow: 0 14px 30px var(--shadow);
+    overflow: hidden;
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px 10px;
+    font-size: 0.9rem;
+    color: var(--text-weak);
+  }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="roster.html">👥 Team Roster</a>
+    <a href="tournaments.html">🏆 Tournaments</a>
+    <a href="attendance.html">🗓️ Attendance</a>
+  </nav>
+
+  <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
+
+  <header>
     <h1>Attendance Tracker</h1>
     <p class="tagline">Mark attendance and review team presence</p>
   </header>
 
-  <main class="container">
+  <main>
+    <!-- Google Form for marking attendance -->
     <div class="glass">
       <iframe 
         src="https://forms.gle/Jyqr1uFJDkkh4LB57"
         width="100%" height="600px" frameborder="0"></iframe>
     </div>
 
-    <div class="glass" style="margin-top: 40px;">
+    <!-- Google Sheet for attendance results -->
+    <div class="glass">
       <iframe 
         src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQaTiAzTRg1uiMq5_SB5arffGGBPIDhbIDBmFeLJVBPiPzt5wHeWUX-lcLHR5P1CrprlxCZjL-Owd2A/pubhtml?widget=true&amp;headers=false" 
         width="100%" height="600px" frameborder="0"></iframe>
@@ -34,12 +167,15 @@
   </footer>
 
   <script>
+    // year auto update
     document.getElementById("year").textContent = new Date().getFullYear();
-    const btn = document.getElementById("modeToggle");
-    btn.addEventListener("click", () => {
-      document.documentElement.dataset.theme =
-        document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+
+    // dark/light mode toggle
+    document.getElementById("modeToggle").addEventListener("click", () => {
+      const html = document.documentElement;
+      html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
     });
   </script>
 </body>
 </html>
+
