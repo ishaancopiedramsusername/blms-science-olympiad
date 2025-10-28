@@ -7,88 +7,64 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Background Blobs -->
-  <svg width="0" height="0">
-    <filter id="goo">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur"/>
-      <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0
-                0 1 0 0 0
-                0 0 1 0 0
-                0 0 0 24 -12" result="goo"/>
-      <feBlend in="SourceGraphic" in2="goo"/>
-    </filter>
-  </svg>
-  <div class="liquid-bg">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
-    <div class="blob b4"></div>
-  </div>
 
-  <!-- Navigation -->
-  <header class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html">BLMS Science Olympiad — Div B</a>
-      <nav>
-        <ul>
-          <li><a class="active" href="index.html">Home</a></li>
-          <li><a href="tournaments.html">Tournaments</a></li>
-          <li><a href="roster.html">Roster</a></li>
-          <li><a href="attendance.html">Attendance</a></li>
-          <li><a href="resources.html">Study Resources</a></li>
-          <li><a href="about.html">About</a></li>
-        </ul>
-      </nav>
-    </div>
+  <!-- Theme toggle -->
+  <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
+
+  <!-- Fancy gradient background -->
+  <div class="gradient-bg"></div>
+
+  <!-- Hero (title outside of box) -->
+  <header class="hero">
+    <h1>BLMS Science Olympiad — Division B</h1>
+    <p class="tagline">Teamwork • Curiosity • Engineering • Scientific Thinking</p>
   </header>
 
-  <!-- Hero -->
   <main class="container">
-    <section class="glass hero">
-      <h1>BLMS Science Olympiad — Division B</h1>
-      <p class="tagline">Teamwork • Curiosity • Engineering • Scientific Thinking</p>
-      <div class="cta-row">
-        <a class="btn primary" href="tournaments.html">Tournament Schedule</a>
-        <a class="btn" href="resources.html">Study Resources</a>
-        <a class="btn" href="attendance.html">Attendance</a>
-      </div>
-    </section>
 
-    <!-- Content Sections -->
-    <section class="glass section">
-      <h2>Roster</h2>
-      <p>Meet the team and event assignments.</p>
-    </section>
+    <div class="card-grid">
 
-    <section class="glass section">
-      <h2>Tournaments</h2>
-      <p>Invitationals, Regionals, and State competitions.</p>
-    </section>
+      <a href="tournaments.html" class="glass card">
+        <h2>Tournaments</h2>
+        <p>Invitationals, Regionals, and State competitions.</p>
+      </a>
 
-    <section class="glass section">
-      <h2>Study Resources</h2>
-      <p>Guides, checklists, and practice materials.</p>
-    </section>
+      <a href="roster.html" class="glass card">
+        <h2>Roster</h2>
+        <p>Meet the team and view event assignments.</p>
+      </a>
 
-    <section class="glass section">
-      <h2>Coaches & Parents</h2>
-      <p>Expectations, calendar, and volunteering opportunities.</p>
-    </section>
+      <a href="attendance.html" class="glass card">
+        <h2>Attendance</h2>
+        <p>Mark attendance and view the weekly records.</p>
+      </a>
+
+      <a href="resources.html" class="glass card">
+        <h2>Event Study Resources</h2>
+        <p>Guides, notes, and practice materials for all events.</p>
+      </a>
+
+      <a href="about.html" class="glass card">
+        <h2>About & Coaches</h2>
+        <p>Meet the mentors, explore volunteering, and team info.</p>
+      </a>
+
+    </div>
+
   </main>
 
   <footer>
-    <div class="container footer-inner">
-      <span>© <span id="year"></span> BLMS Science Olympiad — Division B</span>
-      <nav>
-        <a href="code-of-conduct.html">Code of Conduct</a>
-        <a href="policies.html">Policies</a>
-      </nav>
-    </div>
+    <span>© <span id="year"></span> BLMS Science Olympiad — Division B</span>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const btn = document.getElementById("modeToggle");
+    btn.addEventListener("click", () => {
+      document.documentElement.dataset.theme =
+        document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    });
   </script>
 </body>
 </html>
