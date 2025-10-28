@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attendance Report — BLMS Science Olympiad</title>
+<style>
+:root {
+  --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
+              radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
+              linear-gradient(#eef3f9, #fafbff);
+  --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
+             radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
+             linear-gradient(#0b0d12, #141720);
+  --text: #111318;
+  --text-weak: #1c1f26cc;
+  --card: rgba(255,255,255,.35);
+  --card-bd: rgba(255,255,255,.25);
+  --shadow: rgba(0,0,0,.18);
+}
+[data-theme="dark"] {
+  --text: #f4f6ff;
+  --text-weak: #cfd5ffcc;
+  --card: rgba(36,38,46,.55);
+  --card-bd: rgba(255,255,255,.18);
+  --shadow: rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg-light);
+  color:var(--text);
+  min-height:100vh;
+  transition:background .4s,color .4s;
+}
+[data-theme="dark"] body{background:var(--bg-dark)}
+
+.nav{
+  position:fixed;top:18px;left:20px;z-index:10;
+  display:flex;gap:14px;flex-wrap:wrap;
+  padding:10px 16px;
+  background:rgba(255,255,255,0.25);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:999px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+[data-theme="dark"] .nav{background:rgba(36,38,46,0.5);border-color:rgba(255,255,255,0.18)}
+.nav a{color:var(--text);text-decoration:none;font-weight:600;font-size:.95rem}
+.nav a:hover{text-decoration:underline}
+
+.toggle{
+  position:fixed;top:18px;right:20px;z-index:10;
+  padding:8px 16px;border-radius:999px;
+  border:1px solid var(--card-bd);
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  cursor:pointer;color:var(--text);
+}
+
+header{text-align:center;padding:80px 20px 20px}
+h1{font-size:2.8rem;font-weight:800;
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.tag{opacity:.75;margin-top:10px;font-size:1.1rem}
+
+main{max-width:1000px;margin:0 auto;padding:30px 20px 100px}
+
+table{
+  width:100%;border-collapse:collapse;
+  border-radius:22px;overflow:hidden;
+  background:var(--card);
+  border:1px solid var(--card-bd);
+  backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);
+  box-shadow:0 14px 30px var(--shadow);
+}
+th,td{padding:14px 16px;text-align:left;font-size:1.05rem}
+th{background:rgba(255,255,255,.2);color:var(--text)}
+tr:nth-child(even){background:rgba(255,255,255,.12)}
+tr:hover{background:rgba(255,255,255,.2)}
+td{color:var(--text-weak)}
+
+footer{text-align:center;padding:40px 10px;font-size:.9rem;color:var(--text-weak)}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="roster.html">👥 Team Roster</a>
+  <a href="tournaments.html">🏆 Tournaments</a>
+  <a href="attendance.html">🗓️ Attendance</a>
+</nav>
+
+<button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
+
+<header>
+  <h1>Attendance Report</h1>
+  <p class="tag">Summary of total days attended</p>
+</header>
+
+<main>
+  <table id="attendanceTable">
+    <thead>
+      <tr><th>Student</th><th>Days Attended</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+
+<footer>
+  © <span id="year"></span> BLMS Science Olympiad — Division B
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("modeToggle").addEventListener("click",()=>{
+  const html=document.documentElement;
+  html.dataset.theme=html.dataset.theme==="dark"?"light":"dark";
+});
+
+const attendanceData=[
+  {name:"Shreya Ayyalasomayajula",days:9},
+  {name:"Yvaine Wang",days:8},
+  {name:"Junye Huang",days:7},
+  {name:"Anay Chatterjee",days:10},
+  {name:"Akhil Gollapally",days:11},
+  {name:"Akshay Varanasi",days:6}
+];
+const tbody=document.querySelector("tbody");
+attendanceData.forEach(a=>{
+  const row=document.createElement("tr");
+  row.innerHTML=`<td>${a.name}</td><td>${a.days}</td>`;
+  tbody.appendChild(row);
+});
+</script>
+</body>
+</html>
 
