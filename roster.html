@@ -4,178 +4,207 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Team Roster — BLMS Science Olympiad</title>
-  <link rel="stylesheet" href="styles.css" />
   <style>
+    :root {
+      --bg: #f2f3f7;
+      --card: rgba(255,255,255,0.25);
+      --text: #1c1c1e;
+      --shadow: rgba(0,0,0,0.15);
+    }
+    [data-theme="dark"] {
+      --bg: #0c0c0c;
+      --card: rgba(40,40,40,0.45);
+      --text: #f9f9f9;
+      --shadow: rgba(0,0,0,0.5);
+    }
+
     body {
+      margin: 0;
+      background: var(--bg);
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-      overflow-x: hidden;
+      color: var(--text);
+      transition: background 0.4s, color 0.4s;
     }
 
-    .grade-section {
-      margin-top: 60px;
-      padding: 32px;
-      border-radius: 30px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(25px) saturate(160%);
-      -webkit-backdrop-filter: blur(25px) saturate(160%);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-      animation: fadeIn 0.8s ease forwards;
+    header {
+      text-align: center;
+      padding: 60px 20px 20px;
     }
-
-    .grade-section h2 {
-      font-size: 1.8rem;
+    header h1 {
+      font-size: 2.4rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #007aff, #9b7bff);
+      background: linear-gradient(90deg,#007aff,#9b7bff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-    }
-
-    .student {
-      margin-bottom: 20px;
-      padding: 16px 20px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      animation: popUp 0.6s ease forwards;
-    }
-
-    .student:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-    }
-
-    .student h3 {
-      margin: 0 0 8px;
-      font-size: 1.2rem;
-      color: var(--text);
-    }
-
-    .events {
       margin: 0;
-      padding-left: 20px;
-      list-style-type: "• ";
-      color: var(--text);
-      opacity: 0.9;
+    }
+    header p {opacity:0.75;margin-top:6px;}
+
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:28px;
+      padding:40px;
+      max-width:1400px;
+      margin:auto;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .card {
+      background: var(--card);
+      backdrop-filter: blur(30px) saturate(160%);
+      -webkit-backdrop-filter: blur(30px) saturate(160%);
+      border:1px solid rgba(255,255,255,0.25);
+      border-radius:24px;
+      padding:22px 26px;
+      box-shadow:0 8px 25px var(--shadow);
+      transition:transform .3s ease, box-shadow .3s ease;
+      animation:fadeIn .7s ease both;
+    }
+    .card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 16px 40px var(--shadow);
     }
 
-    @keyframes popUp {
-      from { opacity: 0; transform: scale(0.97); }
-      to { opacity: 1; transform: scale(1); }
+    .name{
+      font-size:1.2rem;
+      font-weight:600;
+      margin-bottom:8px;
+    }
+    ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+    li{
+      padding:3px 0;
+      font-size:.95rem;
+      opacity:.9;
     }
 
-    footer {
-      margin-top: 80px;
+    .toggle{
+      position:fixed;
+      top:20px;
+      right:25px;
+      background:rgba(255,255,255,0.2);
+      border:1px solid rgba(255,255,255,0.3);
+      border-radius:20px;
+      padding:6px 14px;
+      font-size:.9rem;
+      cursor:pointer;
+      backdrop-filter:blur(15px);
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(10px);}
+      to{opacity:1;transform:translateY(0);}
     }
   </style>
 </head>
 <body>
   <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
-  <div class="gradient-bg"></div>
-
-  <header class="hero">
-    <h1>Team Roster</h1>
-    <p class="tagline">2025–26 Season — BLMS Science Olympiad</p>
+  <header>
+    <h1>BLMS Science Olympiad Roster</h1>
+    <p>2025 – 2026 Season · Division B</p>
   </header>
 
-  <main class="container">
-    <!-- Example data structure generated from your clean Excel -->
-    <div class="grade-section">
-      <h2>Grade 6</h2>
-      <div class="student">
-        <h3>Akhil Gollapally</h3>
-        <ul class="events">
-          <li>Anatomy and Physiology</li>
-          <li>Heredity</li>
-          <li>Boomilever</li>
-          <li>Mission Possible</li>
-          <li>Potions and Poisons</li>
-          <li>Disease Detectives</li>
-        </ul>
-      </div>
+  <main class="grid">
+    <!-- 1 -->
+    <div class="card"><div class="name">Shreya Ayyalasomayajula</div>
+      <ul><li>Anatomy and Physiology</li><li>Entomology</li><li>Heredity</li><li>Meteorology</li><li>Dynamic Planet</li></ul></div>
 
-      <div class="student">
-        <h3>Anvi Dhome</h3>
-        <ul class="events">
-          <li>Crime Busters</li>
-          <li>Mission Possible</li>
-          <li>Codebusters</li>
-          <li>Entomology</li>
-          <li>Potions and Poisons</li>
-        </ul>
-      </div>
-    </div>
+    <div class="card"><div class="name">Yvaine Wang</div>
+      <ul><li>Anatomy and Physiology</li><li>Disease Detectives</li><li>Potions and Poisons</li><li>Heredity</li><li>Crime Busters</li></ul></div>
 
-    <div class="grade-section">
-      <h2>Grade 7</h2>
-      <div class="student">
-        <h3>Shreya Ayyalasomayajula</h3>
-        <ul class="events">
-          <li>Anatomy and Physiology</li>
-          <li>Entomology</li>
-          <li>Heredity</li>
-          <li>Meteorology</li>
-        </ul>
-      </div>
+    <div class="card"><div class="name">Junye Huang</div>
+      <ul><li>Solar System</li><li>Potions and Poisons</li><li>Metric Mastery</li><li>Anatomy and Physiology</li><li>Circuit Lab</li></ul></div>
 
-      <div class="student">
-        <h3>Yvaine Wang</h3>
-        <ul class="events">
-          <li>Anatomy and Physiology</li>
-          <li>Disease Detectives</li>
-          <li>Potions and Poisons</li>
-          <li>Heredity</li>
-          <li>Crime Busters</li>
-        </ul>
-      </div>
-    </div>
+    <div class="card"><div class="name">Sanvi Byreddy</div>
+      <ul><li>Disease Detectives</li><li>Heredity</li><li>Water Quality</li><li>Dynamic Planet</li></ul></div>
 
-    <div class="grade-section">
-      <h2>Grade 8</h2>
-      <div class="student">
-        <h3>Junye Huang</h3>
-        <ul class="events">
-          <li>Solar System</li>
-          <li>Potions and Poisons</li>
-          <li>Metric Mastery</li>
-          <li>Anatomy and Physiology</li>
-          <li>Circuit Lab</li>
-        </ul>
-      </div>
+    <div class="card"><div class="name">Vinay Patel</div>
+      <ul><li>Entomology</li><li>Heredity</li><li>Crime Busters</li><li>Codebusters</li><li>Scrambler</li></ul></div>
 
-      <div class="student">
-        <h3>Ryan Thomas</h3>
-        <ul class="events">
-          <li>Metric Mastery</li>
-          <li>Helicopter</li>
-          <li>Write It Do It</li>
-          <li>Heredity</li>
-          <li>Experimental Design</li>
-        </ul>
-      </div>
-    </div>
+    <div class="card"><div class="name">Saanvika Nair</div>
+      <ul><li>Crime Busters</li><li>Potions and Poisons</li><li>Helicopter</li><li>Scrambler</li><li>Codebusters</li></ul></div>
+
+    <div class="card"><div class="name">Ryan Thomas</div>
+      <ul><li>Metric Mastery</li><li>Helicopter</li><li>Write It Do It</li><li>Heredity</li><li>Experimental Design</li></ul></div>
+
+    <div class="card"><div class="name">Anay Chatterjee</div>
+      <ul><li>Metric Mastery</li><li>Helicopter</li><li>Heredity</li><li>Experimental Design</li></ul></div>
+
+    <div class="card"><div class="name">Dhruv Bajaj</div>
+      <ul><li>Hovercraft</li><li>Crime Busters</li><li>Experimental Design</li></ul></div>
+
+    <div class="card"><div class="name">Aarav Singhai</div>
+      <ul><li>Disease Detectives</li><li>Mission Possible</li><li>Crime Busters</li></ul></div>
+
+    <div class="card"><div class="name">Sofia Shao</div>
+      <ul><li>Write It Do It</li><li>Scrambler</li><li>Helicopter</li><li>Potions and Poisons</li><li>Machines</li></ul></div>
+
+    <div class="card"><div class="name">Akshay Bhargav Varanasi</div>
+      <ul><li>Boomilever</li><li>Codebusters</li><li>Rocks and Minerals</li><li>Dynamic Planet</li><li>Meteorology</li><li>Circuit Lab</li></ul></div>
+
+    <div class="card"><div class="name">Edmund Bao</div>
+      <ul><li>Boomilever</li><li>Helicopter</li><li>Scrambler</li><li>Potions and Poisons</li><li>Hovercraft</li><li>Crime Busters</li><li>Disease Detectives</li><li>Heredity</li><li>Codebusters</li></ul></div>
+
+    <div class="card"><div class="name">Pavel Chudnovskiy</div>
+      <ul><li>Remote Sensing</li><li>Dynamic Planet</li><li>Meteorology</li><li>Circuit Lab</li></ul></div>
+
+    <div class="card"><div class="name">Aarav Singh Mandhar</div>
+      <ul><li>Rocks and Minerals</li><li>Codebusters</li><li>Boomilever</li></ul></div>
+
+    <div class="card"><div class="name">Anvika Rath</div>
+      <ul><li>Anatomy and Physiology</li><li>Rocks and Minerals</li><li>Solar System</li><li>Crime Busters</li></ul></div>
+
+    <div class="card"><div class="name">Jayden Oh</div>
+      <ul><li>Boomilever</li><li>Hovercraft</li><li>Helicopter</li><li>Mission Possible</li></ul></div>
+
+    <div class="card"><div class="name">William Wang</div>
+      <ul><li>Hovercraft</li><li>Boomilever</li><li>Helicopter</li><li>Mission Possible</li></ul></div>
+
+    <div class="card"><div class="name">Akhil Gollapally</div>
+      <ul><li>Anatomy and Physiology</li><li>Heredity</li><li>Boomilever</li><li>Mission Possible</li><li>Potions and Poisons</li><li>Disease Detectives</li></ul></div>
+
+    <div class="card"><div class="name">Joann Antony</div>
+      <ul><li>Disease Detectives</li><li>Scrambler</li><li>Boomilever</li></ul></div>
+
+    <div class="card"><div class="name">Nora Ahmed</div>
+      <ul><li>Solar System</li><li>Boomilever</li><li>Disease Detectives</li><li>Scrambler</li></ul></div>
+
+    <div class="card"><div class="name">Haasini Bharathwaj</div>
+      <ul><li>Meteorology</li><li>Write It Do It</li><li>Water Quality</li><li>Dynamic Planet</li><li>Solar System</li></ul></div>
+
+    <div class="card"><div class="name">Anvi Dhome</div>
+      <ul><li>Crime Busters</li><li>Mission Possible</li><li>Codebusters</li><li>Entomology</li><li>Potions and Poisons</li></ul></div>
+
+    <div class="card"><div class="name">Krishvee Anand</div>
+      <ul><li>Anatomy and Physiology</li><li>Disease Detectives</li><li>Heredity</li><li>Solar System</li><li>Potions and Poisons</li><li>Experimental Design</li></ul></div>
+
+    <div class="card"><div class="name">Rayansh Anand</div>
+      <ul><li>Potions and Poisons</li><li>Disease Detectives</li><li>Remote Sensing</li><li>Circuit Lab</li></ul></div>
+
+    <div class="card"><div class="name">Pavaki Rastogi</div>
+      <ul><li>Entomology</li><li>Heredity</li><li>Write It Do It</li><li>Experimental Design</li></ul></div>
+
+    <div class="card"><div class="name">Samira Senthil</div>
+      <ul><li>Heredity</li><li>Water Quality</li><li>Rocks and Minerals</li><li>Potions and Poisons</li></ul></div>
+
+    <div class="card"><div class="name">Ishani Bhat</div>
+      <ul><li>Disease Detectives</li><li>Heredity</li><li>Rocks and Minerals</li><li>Potions and Poisons</li></ul></div>
+
+    <div class="card"><div class="name">Zayna Rasheed</div>
+      <ul><li>Water Quality</li><li>Heredity</li><li>Rocks and Minerals</li><li>Potions and Poisons</li></ul></div>
+
+    <div class="card"><div class="name">Ishaan Parthasarathy</div>
+      <ul><li>Anatomy and Physiology</li><li>Metric Mastery</li><li>Write It Do It</li></ul></div>
   </main>
 
-  <footer>
-    <span>© <span id="year"></span> BLMS Science Olympiad — Division B</span>
-  </footer>
-
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const btn = document.getElementById("modeToggle");
-    btn.addEventListener("click", () => {
-      document.documentElement.dataset.theme =
-        document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    });
+    document.getElementById("modeToggle").onclick = () => {
+      const html = document.documentElement;
+      html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+    };
   </script>
 </body>
 </html>
