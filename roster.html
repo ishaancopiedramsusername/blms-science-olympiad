@@ -5,133 +5,169 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>BLMS Science Olympiad — Team Roster</title>
 <style>
-  :root {
-    --bg-light: radial-gradient(1200px 800px at 15% -10%, #e6efff, transparent 60%),
-                radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
-                linear-gradient(#eef2f8, #f9fafc);
-    --bg-dark:  radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
-                radial-gradient(1400px 900px at 110% 120%, #201433, transparent 60%),
-                linear-gradient(#0b0d12, #12141b);
-    --text: #111318;
-    --text-weak: #1c1f26cc;
-    --card: rgba(255,255,255,.40);
-    --card-bd: rgba(255,255,255,.28);
-    --shadow: rgba(0,0,0,.22);
-  }
-  [data-theme="dark"] {
-    --text: #f5f7ff;
-    --text-weak: #f5f7ffcc;
-    --card: rgba(36,38,46,.55);
-    --card-bd: rgba(255,255,255,.18);
-    --shadow: rgba(0,0,0,.55);
-  }
+/* === THEME VARIABLES === */
+:root {
+  --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
+              radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
+              linear-gradient(#eef3f9, #fafbff);
+  --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
+             radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
+             linear-gradient(#0b0d12, #141720);
+  --text: #111318;
+  --text-weak: #1c1f26cc;
+  --card: rgba(255,255,255,.35);
+  --card-bd: rgba(255,255,255,.25);
+  --shadow: rgba(0,0,0,.18);
+}
+[data-theme="dark"] {
+  --text: #f4f6ff;
+  --text-weak: #cfd5ffcc;
+  --card: rgba(36,38,46,.55);
+  --card-bd: rgba(255,255,255,.18);
+  --shadow: rgba(0,0,0,.6);
+}
 
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, Roboto, Arial, sans-serif;
-    background: var(--bg-light);
-    color: var(--text);
-    transition: background .4s, color .4s;
-    overflow-x: hidden;
-  }
-  [data-theme="dark"] body { background: var(--bg-dark); }
+/* === GLOBAL STYLES === */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg-light);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.4s, color 0.4s;
+}
+[data-theme="dark"] body { background: var(--bg-dark); }
 
-  header {
-    text-align: center;
-    padding: 56px 16px 8px;
-  }
-  h1 {
-    margin: 0;
-    font-size: 2.6rem;
-    font-weight: 800;
-    letter-spacing: .2px;
-    background: linear-gradient(90deg,#007aff,#9b7bff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .tag { opacity: .75; margin-top: 8px; }
+/* === HEADER === */
+header {
+  text-align: center;
+  padding: 60px 20px 10px;
+}
+h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tag {
+  opacity: .75;
+  margin-top: 8px;
+  font-size: 1rem;
+}
 
-  .toggle {
-    position: fixed;
-    top: 18px;
-    right: 20px;
-    z-index: 10;
-    padding: 8px 14px;
-    border-radius: 999px;
-    border: 1px solid var(--card-bd);
-    background: rgba(255,255,255,.25);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    cursor: pointer;
-  }
+/* === THEME TOGGLE === */
+.toggle {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  z-index: 10;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--card-bd);
+  background: rgba(255,255,255,.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+  color: var(--text);
+}
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    padding: 32px 24px 80px;
-    margin: 0 auto;
-  }
+/* === GRID === */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  max-width: 1200px;
+  padding: 32px 20px 100px;
+  margin: 0 auto;
+}
 
-  .flip-card { perspective: 1100px; height: 220px; }
-  .flip-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform .75s cubic-bezier(.2,.65,.2,1);
-    cursor: pointer;
-  }
-  .flip-card:hover .flip-inner { transform: rotateY(180deg); }
-  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+/* === CARD STRUCTURE === */
+.flip-card {
+  perspective: 1000px;
+  height: 230px;
+}
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(.2,.65,.2,1);
+  cursor: pointer;
+}
+.flip-card:hover .flip-inner,
+.flip-card.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
 
-  .face {
-    position: absolute; inset: 0; border-radius: 22px;
-    background: var(--card);
-    border: 1px solid var(--card-bd);
-    backdrop-filter: blur(26px) saturate(160%);
-    -webkit-backdrop-filter: blur(26px) saturate(160%);
-    box-shadow: 0 14px 28px var(--shadow);
-    padding: 18px 18px 20px;
-    display: flex; align-items: center; justify-content: center;
-    backface-visibility: hidden;
-    text-align: center;
-  }
+/* === CARD FACE === */
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: var(--card);
+  border: 1px solid var(--card-bd);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  box-shadow: 0 14px 30px var(--shadow);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backface-visibility: hidden;
+  overflow: hidden;
+  transition: transform 0.5s ease, background 0.5s ease;
+}
 
-  .front h3 {
-    margin: 0;
-    font-size: 2.3rem;
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    width: 100%;
-    word-wrap: break-word;
-    text-align: center;
-  }
+/* === FRONT SIDE === */
+.front h3 {
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  word-break: break-word;
+  white-space: normal;
+  font-size: clamp(1.2rem, 2.5vw, 2.6rem);
+  text-align: center;
+  width: 100%;
+  color: var(--text);
+  padding: 0 6px;
+}
 
-  /* Automatically scale long names */
-  .front h3 span {
-    display: inline-block;
-    transform-origin: center;
-  }
+/* === BACK SIDE === */
+.back {
+  transform: rotateY(180deg);
+  padding: 22px 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  overflow-y: auto;
+}
+.back ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+.back li {
+  margin: 5px 0;
+  font-size: 1.05rem;
+  color: var(--text-weak);
+}
 
-  .back {
-    transform: rotateY(180deg);
-    padding: 18px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  .back ul { margin: 0; padding-left: 18px; list-style: none; text-align: left; }
-  .back li { margin: 4px 0; color: var(--text-weak); font-size: 1rem; }
-
-  .flip-card { animation: rise .55s ease both; }
-  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+/* === ANIMATION === */
+.flip-card {
+  animation: fadeInUp .6s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
+
 <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
 
 <header>
@@ -142,13 +178,13 @@
 <main class="grid" id="grid"></main>
 
 <script>
-/* Toggle Dark/Light Mode */
+/* === DARK/LIGHT TOGGLE === */
 document.getElementById('modeToggle').addEventListener('click', () => {
   const html = document.documentElement;
   html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
 });
 
-/* Student Data */
+/* === STUDENT DATA === */
 const students = [
   {name:"Shreya Ayyalasomayajula", events:["Anatomy and Physiology","Entomology","Heredity","Meteorology","Dynamic Planet"]},
   {name:"Yvaine Wang", events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]},
@@ -182,21 +218,19 @@ const students = [
   {name:"Ishaan Parthasarathy", events:["Anatomy and Physiology","Metric Mastery","Write It Do It"]}
 ];
 
-/* Render Cards */
+/* === BUILD CARDS === */
 const grid = document.getElementById("grid");
 students.forEach((s, i) => {
   const card = document.createElement("div");
   card.className = "flip-card";
-  card.style.animationDelay = (i * 0.03) + "s";
+  card.style.animationDelay = (i * 0.04) + "s";
 
   const inner = document.createElement("div");
   inner.className = "flip-inner";
 
   const front = document.createElement("div");
   front.className = "face front";
-  const nameSpan = document.createElement("span");
-  nameSpan.textContent = s.name;
-  front.innerHTML = `<h3><span>${s.name}</span></h3>`;
+  front.innerHTML = `<h3>${s.name}</h3>`;
 
   const back = document.createElement("div");
   back.className = "face back";
@@ -207,25 +241,8 @@ students.forEach((s, i) => {
   card.appendChild(inner);
   grid.appendChild(card);
 
-  /* Flip on tap (mobile) */
-  card.addEventListener("click", () => {
-    card.classList.toggle("flipped");
-  });
-
-  /* Auto-scale long names */
-  const textEl = front.querySelector("span");
-  const parentWidth = front.clientWidth * 0.9;
-  const test = document.createElement("canvas");
-  const ctx = test.getContext("2d");
-  ctx.font = "800 2.3rem SF Pro Display";
-  let size = 2.3;
-  while (ctx.measureText(s.name).width > parentWidth && size > 1) {
-    size -= 0.1;
-    ctx.font = `800 ${size}rem SF Pro Display`;
-  }
-  textEl.style.fontSize = size + "rem";
+  card.addEventListener("click", () => card.classList.toggle("flipped"));
 });
 </script>
 </body>
 </html>
-
