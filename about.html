@@ -1,60 +1,48 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About — BLMS Science Olympiad</title>
-  <meta name="description" content="About the team, Division B, and coaches/parents info.">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  
-<div class="nav">
-  <div class="container nav-inner">
-    <a class="brand" href="index.html">BLMS Science Olympiad — Div B</a>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="tournaments.html">Tournaments</a></li>
-        <li><a href="roster.html">Roster</a></li>
-        <li><a href="attendance.html">Attendance</a></li>
-        <li><a href="resources.html">Event Study Resources</a></li>
-        <li><a href="about.html">About</a></li>
-      </ul>
-    </nav>
-  </div>
-</div>
+  <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
+  <div class="gradient-bg"></div>
+
+  <header class="hero">
+    <h1>About & Coaches</h1>
+    <p class="tagline">Our mission, mentors, and team values</p>
+  </header>
 
   <main class="container">
-    
-<h2 class="section-title">About</h2>
-<div class="grid">
-  <div class="card">
-    <h3 style="margin:0 0 6px;">What is Science Olympiad?</h3>
-    <p>Science Olympiad is a team-based academic STEM competition with 23 events across science and engineering.</p>
-  </div>
-  <div class="card">
-    <h3 style="margin:0 0 6px;">Division B</h3>
-    <p>Division B is for grades 6–9. BLMS competes in Washington State tournaments and selected invitationals.</p>
-  </div>
-  <div class="card">
-    <h3 style="margin:0 0 6px;">Coaches & Parents</h3>
-    <p>See expectations, volunteering info, chaperone guidelines, and calendar on our communications channels.</p>
-  </div>
-</div>
-
+    <div class="glass">
+      <p>
+        The BLMS Science Olympiad Team fosters scientific curiosity and teamwork.
+        We compete in regional and state tournaments, building problem-solving
+        and engineering skills through collaborative events.
+      </p>
+      <h3>Coaches</h3>
+      <ul>
+        <li>Coach A — Head Coach</li>
+        <li>Coach B — Assistant Coach</li>
+        <li>Coach C — Parent Coordinator</li>
+      </ul>
+    </div>
   </main>
-  
-<footer>
-  <div class="container footer-inner">
-    <span>© <span id="year"></span> BLMS Science Olympiad — Division B</span>
-    <nav style="display:flex;gap:12px;flex-wrap:wrap;">
-      <a href="code-of-conduct.html">Code of Conduct</a>
-      <a href="policies.html">Policies</a>
-    </nav>
-  </div>
-</footer>
 
-  <script src="script.js"></script>
+  <footer>
+    <span>© <span id="year"></span> BLMS Science Olympiad — Division B</span>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const btn = document.getElementById("modeToggle");
+    btn.addEventListener("click", () => {
+      document.documentElement.dataset.theme =
+        document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    });
+  </script>
 </body>
 </html>
+
