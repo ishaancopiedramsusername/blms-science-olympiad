@@ -1,6 +1,6 @@
 /* ===================================================
-   BLMS Science Olympiad — Still Liquid Glass Theme
-   Apple-inspired, smooth, calm, and premium aesthetic
+   BLMS Science Olympiad — Apple Liquid Glass UI
+   Elegant, still, and tactile with realistic reflections
    =================================================== */
 
 :root {
@@ -17,17 +17,17 @@
 html, body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Roboto, sans-serif;
   background:
-    radial-gradient(1000px 600px at 10% 20%, #0a66ff22, transparent 60%),
-    radial-gradient(1000px 800px at 90% 80%, #a67bff22, transparent 60%),
+    radial-gradient(900px 600px at 10% 20%, #0a66ff22, transparent 60%),
+    radial-gradient(900px 800px at 90% 80%, #a67bff22, transparent 60%),
     linear-gradient(140deg, #0f1218, #1a1f26);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ---------- Static Glow Background ---------- */
+/* ---------- Glow Background ---------- */
 .liquid-bg {
   position: fixed;
   inset: -10%;
@@ -35,7 +35,6 @@ html, body {
   filter: blur(120px);
   pointer-events: none;
 }
-
 .blob {
   position: absolute;
   width: 500px;
@@ -44,19 +43,10 @@ html, body {
   opacity: 0.6;
   mix-blend-mode: screen;
 }
-
 .b1 { background: radial-gradient(circle at 30% 30%, var(--accent1), transparent 70%); left: 5%; top: 10%; }
 .b2 { background: radial-gradient(circle at 70% 40%, var(--accent2), transparent 70%); right: 5%; top: 15%; }
 .b3 { background: radial-gradient(circle at 50% 70%, var(--accent3), transparent 70%); left: 15%; bottom: 10%; }
 .b4 { background: radial-gradient(circle at 60% 60%, var(--accent4), transparent 70%); right: 10%; bottom: 15%; }
-
-/* ---------- Container ---------- */
-.container {
-  width: min(1200px, 90vw);
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
 
 /* ---------- Navigation ---------- */
 .nav {
@@ -100,84 +90,100 @@ html, body {
 .glass {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  border-radius: 22px;
+  border-radius: 24px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  padding: clamp(20px, 4vw, 40px);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  padding: clamp(24px, 4vw, 40px);
   margin: clamp(24px, 4vw, 60px) auto;
   position: relative;
   overflow: hidden;
+  transition: all 0.4s ease;
+}
+.glass:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
-/* ---------- Glass Reflection ---------- */
+/* ---------- Reflections ---------- */
 .glass::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 60%, transparent 100%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.03) 60%, transparent 100%);
+  pointer-events: none;
+}
+.glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+  opacity: 0.6;
   pointer-events: none;
 }
 
-/* ---------- Hero ---------- */
-.hero {
-  text-align: center;
-  padding: clamp(40px, 8vw, 80px);
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255,255,255,0.18);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-}
-.hero h1 {
-  font-size: clamp(32px, 4vw, 52px);
-  font-weight: 700;
-  background: linear-gradient(90deg, #a7c4ff, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 12px;
-}
-.hero .tagline {
-  font-size: 1.2rem;
-  color: #dfe7ff;
-  margin-bottom: 30px;
-}
-.cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-}
-
-/* ---------- Buttons ---------- */
+/* ---------- Interactive Buttons ---------- */
 .btn {
   display: inline-block;
-  padding: 10px 16px;
-  border-radius: 12px;
+  padding: 12px 22px;
+  border-radius: 16px;
   font-weight: 600;
-  color: #eaf0ff;
+  color: #f0f4ff;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
   text-decoration: none;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.25);
-  transition: all .2s ease;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 rgba(255,255,255,0.2);
 }
-.btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-.btn.primary { background: #0a66ff; border-color: #4d8dff; }
-.btn.primary:hover { background: #2b79ff; }
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.15);
+}
+.btn:active {
+  transform: translateY(0);
+  background: rgba(255,255,255,0.25);
+}
+.btn.primary {
+  background: linear-gradient(145deg, #0a66ff, #5a9cff);
+  border: none;
+}
+.btn.primary:hover { filter: brightness(1.1); }
 
-/* ---------- Sections ---------- */
-.section {
-  padding: 30px 28px;
+/* ---------- Slider ---------- */
+.slider-container {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
 }
-h2 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-top: 0;
-  color: #f4f7ff;
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.2);
+  outline: none;
+  transition: background 0.3s;
 }
-p {
-  color: #dbe4ff;
-  line-height: 1.6;
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #7aa8ff, #a67bff);
+  box-shadow: 0 0 8px rgba(120,150,255,0.6);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
 }
 
 /* ---------- Footer ---------- */
@@ -187,22 +193,16 @@ footer {
   border-top: 1px solid rgba(255,255,255,0.15);
   text-align: center;
   padding: 16px 0;
+  color: #cdd6ff;
 }
-.footer-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.footer-inner nav a {
-  color: #dfe7ff;
-  margin: 0 8px;
-  text-decoration: none;
-}
-.footer-inner nav a:hover { color: #a8c4ff; }
 
-/* ---------- Utility ---------- */
-a { transition: color .2s; }
-a:hover { color: #b6ccff; }
+/* ---------- Typography ---------- */
+h2, h3 {
+  font-weight: 600;
+  color: #f7f9ff;
+}
+p { color: #dbe4ff; line-height: 1.6; }
+
 
 
 
