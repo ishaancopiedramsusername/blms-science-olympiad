@@ -94,10 +94,24 @@
     display:flex;align-items:flex-start;justify-content:flex-start;flex-direction:column;
     backface-visibility:hidden;
   }
-  .front h3{margin:0;font-size:1.15rem;font-weight:700}
-  .back{transform:rotateY(180deg);padding:18px 20px}
-  .back ul{margin:4px 0 0 0;padding-left:18px}
-  .back li{margin:4px 0;color:var(--text-weak)}
+  front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.front h3 {
+  margin: 0;
+  font-size: 2rem;        /* makes the name fill most of the card */
+  font-weight: 800;       /* strong Apple-like weight */
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+  width: 100%;
+  word-wrap: break-word;
+}
 
   /* entry animation */
   .flip-card{animation:rise .55s ease both}
