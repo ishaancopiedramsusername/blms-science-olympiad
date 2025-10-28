@@ -4,159 +4,223 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Attendance Report — BLMS Science Olympiad</title>
+
 <style>
+/* === BASE VARIABLES === */
 :root {
-  --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
-              radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
-              linear-gradient(#eef3f9, #fafbff);
-  --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
-             radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
-             linear-gradient(#0b0d12, #141720);
-  --text: #111318;
-  --text-weak: #1c1f26cc;
-  --card: rgba(255,255,255,.35);
-  --card-bd: rgba(255,255,255,.25);
-  --shadow: rgba(0,0,0,.18);
-}
-[data-theme="dark"] {
-  --text: #f4f6ff;
-  --text-weak: #cfd5ffcc;
-  --card: rgba(36,38,46,.55);
-  --card-bd: rgba(255,255,255,.18);
-  --shadow: rgba(0,0,0,.6);
+  --bg: radial-gradient(1000px 800px at 10% -10%, #0b1124, transparent 70%),
+        radial-gradient(1200px 900px at 120% 130%, #1b1f3a, transparent 70%),
+        linear-gradient(160deg, #0d1224 0%, #151b2f 100%);
+  --card: rgba(255,255,255,0.1);
+  --text: #e8ecff;
+  --accent: #00d4ff;
+  --shadow: rgba(0,0,0,0.6);
+  --present: #35ff88;
+  --absent: #ff5570;
+  --excused: #ffd95a;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
-  background:var(--bg-light);
+/* === GLOBAL STYLES === */
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.5s ease;
+}
+
+/* === HEADER === */
+header {
+  text-align:center;
+  padding:80px 20px 40px;
+}
+h1 {
+  font-size:3rem;
+  font-weight:900;
+  background:linear-gradient(90deg,#00d4ff,#6c63ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:-0.5px;
+  text-shadow:0 0 20px rgba(108,99,255,0.5);
+}
+.tagline {
+  margin-top:10px;
+  font-size:1.2rem;
+  opacity:0.8;
+}
+
+/* === NAV BAR === */
+.nav {
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  display:flex;
+  gap:20px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:50px;
+  padding:10px 25px;
+  backdrop-filter:blur(20px);
+}
+.nav a {
   color:var(--text);
-  min-height:100vh;
-  transition:background .4s,color .4s;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.95rem;
+  transition:color 0.3s ease;
 }
-[data-theme="dark"] body{background:var(--bg-dark)}
-
-.nav{
-  position:fixed;top:18px;left:20px;z-index:10;
-  display:flex;gap:14px;flex-wrap:wrap;
-  padding:10px 16px;
-  background:rgba(255,255,255,0.25);
-  border:1px solid rgba(255,255,255,0.3);
-  border-radius:999px;
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-}
-[data-theme="dark"] .nav{background:rgba(36,38,46,0.5);border-color:rgba(255,255,255,0.18)}
-.nav a{color:var(--text);text-decoration:none;font-weight:600;font-size:.95rem}
-.nav a:hover{text-decoration:underline}
-
-.toggle{
-  position:fixed;top:18px;right:20px;z-index:10;
-  padding:8px 16px;border-radius:999px;
-  border:1px solid var(--card-bd);
-  background:rgba(255,255,255,.25);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  cursor:pointer;color:var(--text);
+.nav a:hover {
+  color:var(--accent);
 }
 
-header{text-align:center;padding:80px 20px 20px}
-h1{font-size:2.8rem;font-weight:800;
-  background:linear-gradient(90deg,#007aff,#9b7bff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.tag{opacity:.75;margin-top:10px;font-size:1.1rem}
-
-main{max-width:1000px;margin:0 auto;padding:30px 20px 100px}
-
-table{
-  width:100%;border-collapse:collapse;
-  border-radius:22px;overflow:hidden;
+/* === TABLE WRAPPER === */
+.table-wrapper {
+  width:90%;
+  max-width:1200px;
+  border-radius:20px;
   background:var(--card);
-  border:1px solid var(--card-bd);
-  backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);
-  box-shadow:0 14px 30px var(--shadow);
+  backdrop-filter:blur(25px) saturate(180%);
+  box-shadow:0 8px 40px var(--shadow);
+  padding:20px;
+  overflow-x:auto;
 }
-th,td{padding:14px 16px;text-align:left;font-size:1.05rem}
-th{background:rgba(255,255,255,.2);color:var(--text)}
-tr:nth-child(even){background:rgba(255,255,255,.12)}
-tr:hover{background:rgba(255,255,255,.2)}
-td{color:var(--text-weak)}
 
-footer{text-align:center;padding:40px 10px;font-size:.9rem;color:var(--text-weak)}
+/* === TABLE === */
+table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:900px;
+}
+th {
+  text-align:center;
+  font-size:1rem;
+  font-weight:700;
+  color:var(--accent);
+  padding:14px 10px;
+  border-bottom:1px solid rgba(255,255,255,0.15);
+}
+td {
+  text-align:center;
+  padding:12px 10px;
+  font-size:1rem;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  transition:background 0.3s ease, transform 0.2s ease;
+}
+td:first-child {
+  text-align:left;
+  font-weight:600;
+  color:#fff;
+}
+
+/* === STATUS COLORS === */
+td.present {
+  color:var(--present);
+  font-weight:700;
+  text-shadow:0 0 10px rgba(53,255,136,0.6);
+}
+td.absent {
+  color:var(--absent);
+  font-weight:700;
+  text-shadow:0 0 10px rgba(255,85,112,0.6);
+}
+td.excused {
+  color:var(--excused);
+  font-weight:700;
+  text-shadow:0 0 10px rgba(255,217,90,0.6);
+}
+
+/* === HOVER EFFECT === */
+tr:hover td {
+  background:rgba(255,255,255,0.05);
+  transform:scale(1.01);
+}
+
+/* === FOOTER === */
+footer {
+  margin:60px 0 30px;
+  font-size:0.9rem;
+  opacity:0.7;
+  text-align:center;
+}
 </style>
 </head>
 <body>
+
 <nav class="nav">
   <a href="index.html">🏠 Home</a>
-  <a href="roster.html">👥 Team Roster</a>
+  <a href="roster.html">👥 Roster</a>
   <a href="tournaments.html">🏆 Tournaments</a>
   <a href="attendance.html">🗓️ Attendance</a>
 </nav>
 
-<button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
-
 <header>
   <h1>Attendance Report</h1>
-  <p class="tag">Summary of total days attended</p>
+  <p class="tagline">P = Present | A = Absent | E = Excused</p>
 </header>
 
-<main>
+<div class="table-wrapper">
   <table id="attendanceTable">
     <thead>
-      <tr><th>Student</th><th>Days Attended</th></tr>
+      <tr>
+        <th>Student</th>
+        <th>2024-11-06</th>
+        <th>2024-11-27</th>
+        <th>2025-02-26</th>
+        <th>2025-03-05</th>
+        <th>2025-03-12</th>
+        <th>Total</th>
+      </tr>
     </thead>
     <tbody></tbody>
   </table>
-</main>
+</div>
 
-<footer>
-  © <span id="year"></span> BLMS Science Olympiad — Division B
-</footer>
+<footer>© <span id="year"></span> BLMS Science Olympiad — Division B</footer>
 
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
-document.getElementById("modeToggle").addEventListener("click",()=>{
-  const html=document.documentElement;
-  html.dataset.theme=html.dataset.theme==="dark"?"light":"dark";
-});
 
-const attendanceData = [
-  {name:"Shreya Ayyalasomayajula",days:9},
-  {name:"Yvaine Wang",days:8},
-  {name:"Junye Huang",days:7},
-  {name:"Sanvi Byreddy",days:8},
-  {name:"Vinay Patel",days:9},
-  {name:"Saanvika Nair",days:7},
-  {name:"Ryan Thomas",days:10},
-  {name:"Anay Chatterjee",days:9},
-  {name:"Dhruv Bajaj",days:8},
-  {name:"Aarav Singhai",days:6},
-  {name:"Sofia Shao",days:9},
-  {name:"Akshay Bhargav Varanasi",days:7},
-  {name:"Edmund Bao",days:9},
-  {name:"Pavel Chudnovskiy",days:8},
-  {name:"Aarav Singh Mandhar",days:7},
-  {name:"Anvika Rath",days:10},
-  {name:"Jayden Oh",days:7},
-  {name:"William Wang",days:7},
-  {name:"Akhil Gollapally",days:11},
-  {name:"Joann Antony",days:6},
-  {name:"Nora Ahmed",days:7},
-  {name:"Haasini Bharathwaj",days:8},
-  {name:"Anvi Dhome",days:7},
-  {name:"Krishvee Anand",days:10},
-  {name:"Rayansh Anand",days:6},
-  {name:"Pavaki Rastogi",days:9},
-  {name:"Samira Senthil",days:7},
-  {name:"Ishani Bhat",days:8},
-  {name:"Zayna Rasheed",days:9},
-  {name:"Ishaan Parthasarathy",days:11}
+// Sample futuristic data with Present/Absent/Excused
+const students = [
+  "Shreya Ayyalasomayajula","Yvaine Wang","Junye Huang","Sanvi Byreddy",
+  "Vinay Patel","Saanvika Nair","Ryan Thomas","Anay Chatterjee","Dhruv Bajaj",
+  "Aarav Singhai","Sofia Shao","Akshay Bhargav Varanasi","Edmund Bao",
+  "Pavel Chudnovskiy","Aarav Singh Mandhar","Anvika Rath","Jayden Oh",
+  "William Wang","Akhil Gollapally","Joann Antony","Nora Ahmed",
+  "Haasini Bharathwaj","Anvi Dhome","Krishvee Anand","Rayansh Anand",
+  "Pavaki Rastogi","Samira Senthil","Ishani Bhat","Zayna Rasheed",
+  "Ishaan Parthasarathy"
 ];
 
+// random generator
+function randomStatus() {
+  const statuses = ["present","absent","excused"];
+  return statuses[Math.floor(Math.random()*statuses.length)];
+}
+
 const tbody = document.querySelector("tbody");
-attendanceData.forEach(a=>{
-  const row = document.createElement("tr");
-  row.innerHTML = `<td>${a.name}</td><td>${a.days}</td>`;
+students.forEach(name=>{
+  const row=document.createElement("tr");
+  let total=0;
+  const statuses=Array.from({length:5},()=>{
+    const s=randomStatus();
+    if(s==="present") total++;
+    return s;
+  });
+  row.innerHTML=`
+    <td>${name}</td>
+    ${statuses.map(s=>`<td class="${s}">${s==="present"?"P":s==="absent"?"A":"E"}</td>`).join("")}
+    <td>${total}</td>`;
   tbody.appendChild(row);
 });
 </script>
 </body>
 </html>
+
