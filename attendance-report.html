@@ -118,21 +118,45 @@ document.getElementById("modeToggle").addEventListener("click",()=>{
   html.dataset.theme=html.dataset.theme==="dark"?"light":"dark";
 });
 
-const attendanceData=[
+const attendanceData = [
   {name:"Shreya Ayyalasomayajula",days:9},
   {name:"Yvaine Wang",days:8},
   {name:"Junye Huang",days:7},
-  {name:"Anay Chatterjee",days:10},
+  {name:"Sanvi Byreddy",days:8},
+  {name:"Vinay Patel",days:9},
+  {name:"Saanvika Nair",days:7},
+  {name:"Ryan Thomas",days:10},
+  {name:"Anay Chatterjee",days:9},
+  {name:"Dhruv Bajaj",days:8},
+  {name:"Aarav Singhai",days:6},
+  {name:"Sofia Shao",days:9},
+  {name:"Akshay Bhargav Varanasi",days:7},
+  {name:"Edmund Bao",days:9},
+  {name:"Pavel Chudnovskiy",days:8},
+  {name:"Aarav Singh Mandhar",days:7},
+  {name:"Anvika Rath",days:10},
+  {name:"Jayden Oh",days:7},
+  {name:"William Wang",days:7},
   {name:"Akhil Gollapally",days:11},
-  {name:"Akshay Varanasi",days:6}
+  {name:"Joann Antony",days:6},
+  {name:"Nora Ahmed",days:7},
+  {name:"Haasini Bharathwaj",days:8},
+  {name:"Anvi Dhome",days:7},
+  {name:"Krishvee Anand",days:10},
+  {name:"Rayansh Anand",days:6},
+  {name:"Pavaki Rastogi",days:9},
+  {name:"Samira Senthil",days:7},
+  {name:"Ishani Bhat",days:8},
+  {name:"Zayna Rasheed",days:9},
+  {name:"Ishaan Parthasarathy",days:11}
 ];
-const tbody=document.querySelector("tbody");
+
+const tbody = document.querySelector("tbody");
 attendanceData.forEach(a=>{
-  const row=document.createElement("tr");
-  row.innerHTML=`<td>${a.name}</td><td>${a.days}</td>`;
+  const row = document.createElement("tr");
+  row.innerHTML = `<td>${a.name}</td><td>${a.days}</td>`;
   tbody.appendChild(row);
 });
 </script>
 </body>
 </html>
-
