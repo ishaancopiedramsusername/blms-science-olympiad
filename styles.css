@@ -1,138 +1,160 @@
-/* Apple Liquid Glass — Dark/Light Mode + Frosted Glass */
+/* ===================================================
+   Apple-Style Liquid Glass Site with Light/Dark Mode
+   =================================================== */
+
 :root {
   --accent: #007aff;
-  --bg: rgba(255, 255, 255, 0.4);
-  --fg: rgba(0, 0, 0, 0.75);
-  --card-bg: rgba(255, 255, 255, 0.25);
-  --border: rgba(255, 255, 255, 0.4);
-  --shadow: rgba(0, 0, 0, 0.15);
-  --backdrop: blur(30px) saturate(150%);
+  --bg1: #f5f7ff;
+  --bg2: #cce0ff;
+  --text: #1c1f27;
+  --glass-bg: rgba(255, 255, 255, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --shadow: rgba(0, 0, 0, 0.12);
+  --backdrop: blur(30px) saturate(180%);
 }
 
 [data-theme="dark"] {
-  --bg: rgba(15, 17, 25, 0.6);
-  --fg: rgba(240, 245, 255, 0.9);
-  --card-bg: rgba(25, 27, 37, 0.4);
-  --border: rgba(255, 255, 255, 0.08);
+  --bg1: #0d1117;
+  --bg2: #1a1f26;
+  --text: #f4f6ff;
+  --glass-bg: rgba(30, 34, 45, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
   --shadow: rgba(0, 0, 0, 0.6);
-  --backdrop: blur(40px) saturate(180%);
+  --backdrop: blur(35px) saturate(180%);
 }
 
-/* Global Layout */
+/* ---------- Background Animation ---------- */
+.gradient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(circle at 20% 30%, #7aa8ff55, transparent 60%),
+              radial-gradient(circle at 80% 70%, #a67bff55, transparent 60%),
+              linear-gradient(120deg, var(--bg1), var(--bg2));
+  background-size: 200% 200%;
+  animation: moveGradient 16s ease-in-out infinite;
+}
+@keyframes moveGradient {
+  0%,100% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+}
+
+/* ---------- Base ---------- */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-  background: var(--bg);
-  color: var(--fg);
+  color: var(--text);
   margin: 0;
-  transition: background 0.6s ease, color 0.6s ease;
-  backdrop-filter: var(--backdrop);
-  -webkit-backdrop-filter: var(--backdrop);
+  transition: background 0.6s, color 0.6s;
   min-height: 100vh;
 }
 
-/* Glass Cards */
+.container {
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 40px;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  background: linear-gradient(90deg, #007aff, #7aa8ff, #a67bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero .tagline {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* ---------- Card Grid ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 28px;
+}
+
+/* ---------- Frosted Glass Cards ---------- */
 .glass {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 24px;
-  padding: 32px;
-  margin: 40px auto;
-  max-width: 900px;
-  box-shadow: 0 8px 40px var(--shadow);
   backdrop-filter: var(--backdrop);
   -webkit-backdrop-filter: var(--backdrop);
-  position: relative;
+  box-shadow: 0 8px 30px var(--shadow);
+  padding: 24px 28px;
+  text-decoration: none;
+  color: var(--text);
   overflow: hidden;
+  transition: all 0.4s ease;
 }
+.glass h2 {
+  margin-top: 0;
+  font-weight: 600;
+}
+.glass p {
+  opacity: 0.85;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* Subtle light reflection */
 .glass::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.03));
-  mix-blend-mode: overlay;
+  background: linear-gradient(120deg, rgba(255,255,255,0.25), rgba(255,255,255,0.03));
+  opacity: 0.4;
   pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 
-/* Frost reflection streak */
-.glass::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -40%;
-  width: 60%;
-  height: 100%;
-  transform: skewX(-25deg);
-  background: linear-gradient(90deg, rgba(255,255,255,0.2), transparent 60%);
-  filter: blur(30px);
-  opacity: 0.3;
-  pointer-events: none;
+/* Hover glow + parallax */
+.glass:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+.glass:hover::before {
+  opacity: 0.7;
 }
 
-/* Headings and Text */
-h1, h2, h3 {
-  color: var(--fg);
-  margin-top: 0;
-}
-p {
-  color: var(--fg);
-  opacity: 0.8;
-}
-
-/* Buttons */
-.btn {
-  padding: 12px 24px;
-  border-radius: 14px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  color: var(--fg);
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-block;
-  transition: all 0.3s ease;
-  backdrop-filter: var(--backdrop);
-}
-.btn:hover {
-  background: rgba(255,255,255,0.35);
-  box-shadow: 0 6px 16px var(--shadow);
-  transform: translateY(-2px);
-}
-
-/* Toggle Button */
+/* ---------- Toggle Button ---------- */
 .toggle {
   position: fixed;
-  top: 18px;
-  right: 18px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  color: var(--fg);
-  padding: 10px 18px;
+  top: 20px;
+  right: 20px;
+  border: none;
   border-radius: 30px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
+  padding: 10px 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   backdrop-filter: var(--backdrop);
-  box-shadow: 0 4px 20px var(--shadow);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px var(--shadow);
   transition: all 0.4s ease;
 }
 .toggle:hover {
+  transform: translateY(-2px);
   background: rgba(255,255,255,0.5);
-  transform: translateY(-1px);
 }
 
-/* Subtle background gradient */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.25), transparent 60%),
-              radial-gradient(circle at 75% 75%, rgba(0,122,255,0.2), transparent 70%);
-  filter: blur(100px);
-  opacity: 0.5;
-  pointer-events: none;
-  transition: opacity 0.6s ease;
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 30px 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  border-top: 1px solid var(--glass-border);
+  backdrop-filter: var(--backdrop);
 }
-[data-theme="dark"] body::before {
-  opacity: 0.2;
-}
+
