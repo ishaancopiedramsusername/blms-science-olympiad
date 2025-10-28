@@ -6,12 +6,12 @@
 <title>Attendance Report — BLMS Science Olympiad</title>
 
 <style>
-/* === BASE VARIABLES === */
+/* === COLOR THEMES === */
 :root {
   --bg: radial-gradient(1000px 800px at 10% -10%, #0b1124, transparent 70%),
         radial-gradient(1200px 900px at 120% 130%, #1b1f3a, transparent 70%),
         linear-gradient(160deg, #0d1224 0%, #151b2f 100%);
-  --card: rgba(255,255,255,0.1);
+  --card: rgba(255,255,255,0.08);
   --text: #e8ecff;
   --accent: #00d4ff;
   --shadow: rgba(0,0,0,0.6);
@@ -20,138 +20,103 @@
   --excused: #ffd95a;
 }
 
-/* === GLOBAL STYLES === */
-* { box-sizing:border-box; margin:0; padding:0; }
-body {
-  font-family: "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-  background-attachment: fixed;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: background 0.5s ease;
+[data-theme="light"] {
+  --bg: radial-gradient(1000px 800px at 10% -10%, #f0f4ff, transparent 70%),
+        radial-gradient(1200px 900px at 120% 130%, #f7e7ff, transparent 70%),
+        linear-gradient(160deg, #fefeff 0%, #f6f8ff 100%);
+  --card: rgba(255,255,255,0.55);
+  --text: #1b1d2e;
+  --accent: #007aff;
+  --shadow: rgba(0,0,0,0.1);
 }
 
-/* === HEADER === */
-header {
-  text-align:center;
-  padding:80px 20px 40px;
-}
-h1 {
-  font-size:3rem;
-  font-weight:900;
-  background:linear-gradient(90deg,#00d4ff,#6c63ff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  letter-spacing:-0.5px;
-  text-shadow:0 0 20px rgba(108,99,255,0.5);
-}
-.tagline {
-  margin-top:10px;
-  font-size:1.2rem;
-  opacity:0.8;
-}
-
-/* === NAV BAR === */
-.nav {
-  position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:10;
+/* === GLOBAL === */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
   display:flex;
-  gap:20px;
-  background:rgba(255,255,255,0.05);
+  flex-direction:column;
+  align-items:center;
+  transition:background .6s ease,color .6s ease;
+}
+
+/* === NAV === */
+.nav{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;gap:20px;
+  background:rgba(255,255,255,0.07);
   border:1px solid rgba(255,255,255,0.2);
   border-radius:50px;
   padding:10px 25px;
   backdrop-filter:blur(20px);
 }
-.nav a {
-  color:var(--text);
-  text-decoration:none;
+.nav a{color:var(--text);text-decoration:none;font-weight:600;font-size:.95rem}
+.nav a:hover{color:var(--accent)}
+
+/* === THEME TOGGLE === */
+.toggle{
+  position:fixed;top:20px;right:20px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:50px;
+  padding:8px 16px;
+  backdrop-filter:blur(20px);
+  cursor:pointer;
   font-weight:600;
-  font-size:0.95rem;
-  transition:color 0.3s ease;
+  color:var(--text);
+  transition:0.3s;
 }
-.nav a:hover {
-  color:var(--accent);
+.toggle:hover{background:rgba(255,255,255,0.25)}
+
+/* === HEADER === */
+header{text-align:center;padding:80px 20px 40px}
+h1{
+  font-size:3rem;font-weight:900;
+  background:linear-gradient(90deg,#00d4ff,#6c63ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-shadow:0 0 20px rgba(108,99,255,0.4);
 }
+.tagline{margin-top:10px;font-size:1.2rem;opacity:.8}
 
 /* === TABLE WRAPPER === */
-.table-wrapper {
-  width:90%;
-  max-width:1200px;
+.table-wrapper{
+  width:90%;max-width:1200px;
   border-radius:20px;
   background:var(--card);
   backdrop-filter:blur(25px) saturate(180%);
   box-shadow:0 8px 40px var(--shadow);
-  padding:20px;
-  overflow-x:auto;
+  padding:20px;overflow-x:auto;
 }
 
 /* === TABLE === */
-table {
-  width:100%;
-  border-collapse:collapse;
-  min-width:900px;
-}
-th {
-  text-align:center;
-  font-size:1rem;
-  font-weight:700;
+table{width:100%;border-collapse:collapse;min-width:900px;}
+th{
+  text-align:center;font-size:1rem;font-weight:700;
   color:var(--accent);
   padding:14px 10px;
-  border-bottom:1px solid rgba(255,255,255,0.15);
+  border-bottom:1px solid rgba(255,255,255,0.2);
 }
-td {
-  text-align:center;
-  padding:12px 10px;
-  font-size:1rem;
+td{
+  text-align:center;padding:12px 10px;font-size:1rem;
   border-bottom:1px solid rgba(255,255,255,0.08);
-  transition:background 0.3s ease, transform 0.2s ease;
+  transition:background .3s ease;
 }
-td:first-child {
-  text-align:left;
-  font-weight:600;
-  color:#fff;
-}
+td:first-child{text-align:left;font-weight:600;color:var(--text)}
 
 /* === STATUS COLORS === */
-td.present {
-  color:var(--present);
-  font-weight:700;
-  text-shadow:0 0 10px rgba(53,255,136,0.6);
-}
-td.absent {
-  color:var(--absent);
-  font-weight:700;
-  text-shadow:0 0 10px rgba(255,85,112,0.6);
-}
-td.excused {
-  color:var(--excused);
-  font-weight:700;
-  text-shadow:0 0 10px rgba(255,217,90,0.6);
-}
+.present{color:var(--present);font-weight:700;text-shadow:0 0 8px rgba(53,255,136,.4)}
+.absent{color:var(--absent);font-weight:700;text-shadow:0 0 8px rgba(255,85,112,.4)}
+.excused{color:var(--excused);font-weight:700;text-shadow:0 0 8px rgba(255,217,90,.4)}
 
-/* === HOVER EFFECT === */
-tr:hover td {
-  background:rgba(255,255,255,0.05);
-  transform:scale(1.01);
-}
+tr:hover td{background:rgba(255,255,255,0.05)}
 
-/* === FOOTER === */
-footer {
-  margin:60px 0 30px;
-  font-size:0.9rem;
-  opacity:0.7;
-  text-align:center;
-}
+footer{margin:60px 0 30px;font-size:.9rem;opacity:.7;text-align:center}
 </style>
 </head>
-<body>
+<body data-theme="dark">
 
 <nav class="nav">
   <a href="index.html">🏠 Home</a>
@@ -159,6 +124,8 @@ footer {
   <a href="tournaments.html">🏆 Tournaments</a>
   <a href="attendance.html">🗓️ Attendance</a>
 </nav>
+
+<button class="toggle" id="modeToggle">🌙 Dark</button>
 
 <header>
   <h1>Attendance Report</h1>
@@ -168,15 +135,7 @@ footer {
 <div class="table-wrapper">
   <table id="attendanceTable">
     <thead>
-      <tr>
-        <th>Student</th>
-        <th>2024-11-06</th>
-        <th>2024-11-27</th>
-        <th>2025-02-26</th>
-        <th>2025-03-05</th>
-        <th>2025-03-12</th>
-        <th>Total</th>
-      </tr>
+      <tr id="tableHead"><th>Student</th></tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -187,40 +146,53 @@ footer {
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Sample futuristic data with Present/Absent/Excused
-const students = [
-  "Shreya Ayyalasomayajula","Yvaine Wang","Junye Huang","Sanvi Byreddy",
-  "Vinay Patel","Saanvika Nair","Ryan Thomas","Anay Chatterjee","Dhruv Bajaj",
-  "Aarav Singhai","Sofia Shao","Akshay Bhargav Varanasi","Edmund Bao",
-  "Pavel Chudnovskiy","Aarav Singh Mandhar","Anvika Rath","Jayden Oh",
-  "William Wang","Akhil Gollapally","Joann Antony","Nora Ahmed",
-  "Haasini Bharathwaj","Anvi Dhome","Krishvee Anand","Rayansh Anand",
-  "Pavaki Rastogi","Samira Senthil","Ishani Bhat","Zayna Rasheed",
-  "Ishaan Parthasarathy"
-];
+// === LIGHT/DARK TOGGLE ===
+const btn=document.getElementById("modeToggle");
+btn.addEventListener("click",()=>{
+  const html=document.documentElement;
+  const isDark=html.dataset.theme==="dark";
+  html.dataset.theme=isDark?"light":"dark";
+  btn.textContent=isDark?"☀️ Light":"🌙 Dark";
+});
 
-// random generator
-function randomStatus() {
-  const statuses = ["present","absent","excused"];
-  return statuses[Math.floor(Math.random()*statuses.length)];
-}
+// === GOOGLE SHEET SOURCE ===
+// Replace this link with your published CSV link from Sheets
+const sheetUrl="https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv";
 
-const tbody = document.querySelector("tbody");
-students.forEach(name=>{
-  const row=document.createElement("tr");
-  let total=0;
-  const statuses=Array.from({length:5},()=>{
-    const s=randomStatus();
-    if(s==="present") total++;
-    return s;
+// === FETCH AND BUILD TABLE ===
+fetch(sheetUrl)
+.then(res=>res.text())
+.then(csv=>{
+  const rows=csv.trim().split("\n").map(r=>r.split(","));
+  const headerRow=rows[0];
+  const tableHead=document.getElementById("tableHead");
+  headerRow.slice(1).forEach(date=>{
+    const th=document.createElement("th");
+    th.textContent=date;
+    tableHead.appendChild(th);
   });
-  row.innerHTML=`
-    <td>${name}</td>
-    ${statuses.map(s=>`<td class="${s}">${s==="present"?"P":s==="absent"?"A":"E"}</td>`).join("")}
-    <td>${total}</td>`;
-  tbody.appendChild(row);
+  const body=document.querySelector("tbody");
+  rows.slice(1).forEach(r=>{
+    const name=r[0];
+    const row=document.createElement("tr");
+    row.innerHTML=`<td>${name}</td>`+r.slice(1).map(v=>{
+      const val=v.trim().toUpperCase();
+      let cls="";
+      if(val==="P")cls="present";
+      else if(val==="A")cls="absent";
+      else if(val==="E")cls="excused";
+      return `<td class="${cls}">${val}</td>`;
+    }).join("");
+    body.appendChild(row);
+  });
+})
+.catch(err=>{
+  console.error(err);
+  document.querySelector("tbody").innerHTML=
+    `<tr><td colspan="6">⚠️ Unable to load Google Sheet data</td></tr>`;
 });
 </script>
 </body>
 </html>
+
 
