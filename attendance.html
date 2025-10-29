@@ -1,184 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Attendance — BLMS Science Olympiad</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Attendance Tracker — BLMS Science Olympiad</title>
 
-  <style>
-    :root {
-      --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
-                  radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
-                  linear-gradient(#eef3f9, #fafbff);
-      --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
-                 radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
-                 linear-gradient(#0b0d12, #141720);
-      --text: #111318;
-      --card: rgba(255,255,255,.3);
-      --border: rgba(255,255,255,.2);
-    }
+<style>
+:root {
+  --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
+              radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
+              linear-gradient(#eef3f9, #fafbff);
+  --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
+             radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
+             linear-gradient(#0b0d12, #141720);
+  --text: #111318;
+  --card: rgba(255,255,255,.3);
+  --border: rgba(255,255,255,.2);
+}
+[data-theme="dark"] {
+  --text: #f4f6ff;
+  --card: rgba(36,38,46,.6);
+  --border: rgba(255,255,255,.15);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bg-light);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+[data-theme="dark"] body { background: var(--bg-dark); }
 
-    [data-theme="dark"] {
-      --text: #f4f6ff;
-      --card: rgba(36,38,46,.6);
-      --border: rgba(255,255,255,.15);
-    }
+.toggle {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  color: var(--text);
+  cursor: pointer;
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
-      background: var(--bg-light);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      transition: background 0.4s ease, color 0.4s ease;
-    }
-
-    [data-theme="dark"] body { background: var(--bg-dark); }
-
-    .toggle {
-      position: fixed;
-      top: 16px;
-      right: 20px;
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      backdrop-filter: blur(20px);
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .glass-form {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 25px;
-      backdrop-filter: blur(25px) saturate(180%);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-      padding: 40px 50px;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      background: linear-gradient(90deg, #007aff, #9b7bff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    label { display:block; margin-top:20px; font-weight:600; text-align:left; }
-    input, select {
-      width:100%; padding:12px 14px; margin-top:8px;
-      border-radius:10px; border:1px solid var(--border);
-      background:rgba(255,255,255,0.6); font-size:1rem;
-    }
-
-    button {
-      margin-top:25px; padding:12px 28px; border:none;
-      border-radius:999px; background:linear-gradient(90deg,#007aff,#9b7bff);
-      color:white; font-weight:600; cursor:pointer;
-    }
-
-    .success {
-      margin-top:20px; color:limegreen; font-weight:600; opacity:0;
-      transition:opacity .5s ease;
-    }
-    .show { opacity:1; }
-  </style>
+.glass-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  backdrop-filter: blur(25px) saturate(180%);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  padding: 40px 50px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+label { display:block; margin-top:20px; font-weight:600; text-align:left; }
+input, select {
+  width:100%; padding:12px 14px; margin-top:8px;
+  border-radius:10px; border:1px solid var(--border);
+  background:rgba(255,255,255,0.6); font-size:1rem;
+}
+button {
+  margin-top:25px; padding:12px 28px; border:none;
+  border-radius:999px; background:linear-gradient(90deg,#007aff,#9b7bff);
+  color:white; font-weight:600; cursor:pointer;
+}
+.success {
+  margin-top:20px; color:limegreen; font-weight:600; opacity:0;
+  transition:opacity .5s ease;
+}
+.show { opacity:1; }
+</style>
 </head>
-
 <body>
-  <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
 
-  <div class="glass-form">
-    <h1>Attendance Tracker</h1>
-    <form id="attendanceForm">
-      <label>Date</label>
-      <input type="date" id="date" required>
+<button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
 
-      <label>Name</label>
-      <select id="name" required>
-        <option value="">-- Select Student --</option>
-        <option>Shreya Ayyalasomayajula</option>
-        <option>Yvaine Wang</option>
-        <option>Junye Huang</option>
-        <option>Sanvi Byreddy</option>
-        <option>Vinay Patel</option>
-        <option>Saanvika Nair</option>
-        <option>Ryan Thomas</option>
-        <option>Anay Chatterjee</option>
-        <option>Dhruv Bajaj</option>
-        <option>Aarav Singhai</option>
-        <option>Sofia Shao</option>
-        <option>Akshay Bhargav Varanasi</option>
-        <option>Edmund Bao</option>
-        <option>Pavel Chudnovskiy</option>
-        <option>Aarav Singh Mandhar</option>
-        <option>Anvika Rath</option>
-        <option>Jayden Oh</option>
-        <option>William Wang</option>
-        <option>Akhil Gollapally</option>
-        <option>Joann Antony</option>
-        <option>Nora Ahmed</option>
-        <option>Haasini Bharathwaj</option>
-        <option>Anvi Dhome</option>
-        <option>Krishvee Anand</option>
-        <option>Rayansh Anand</option>
-        <option>Pavaki Rastogi</option>
-        <option>Samira Senthil</option>
-        <option>Ishani Bhat</option>
-        <option>Zayna Rasheed</option>
-        <option>Ishaan Parthasarathy</option>
-      </select>
+<div class="glass-form">
+  <h1>Attendance Tracker</h1>
+  <form id="attendanceForm">
+    <label>Date</label>
+    <input type="date" id="date" required>
 
-      <label>Status</label>
-      <select id="status" required>
-        <option value="">-- Select Status --</option>
-        <option value="P">Present</option>
-        <option value="A">Absent</option>
-        <option value="E">Excused</option>
-      </select>
+    <label>Name</label>
+    <select id="name" required>
+      <option value="">-- Select Student --</option>
+      <option>Aarav Singh Mandhar</option>
+      <option>Shreya Ayyalasomayajula</option>
+      <option>Yvaine Wang</option>
+      <option>Junye Huang</option>
+      <option>Sanvi Byreddy</option>
+      <option>Vinay Patel</option>
+      <option>Saanvika Nair</option>
+      <option>Ryan Thomas</option>
+      <option>Anay Chatterjee</option>
+      <option>Dhruv Bajaj</option>
+      <option>Sofia Shao</option>
+      <option>Akshay Bhargav Varanasi</option>
+      <option>Edmund Bao</option>
+      <option>Pavel Chudnovskiy</option>
+      <option>Anvika Rath</option>
+      <option>Jayden Oh</option>
+      <option>William Wang</option>
+      <option>Akhil Gollapally</option>
+      <option>Joann Antony</option>
+      <option>Nora Ahmed</option>
+      <option>Haasini Bharathwaj</option>
+      <option>Anvi Dhome</option>
+      <option>Krishvee Anand</option>
+      <option>Rayansh Anand</option>
+      <option>Pavaki Rastogi</option>
+      <option>Samira Senthil</option>
+      <option>Ishani Bhat</option>
+      <option>Zayna Rasheed</option>
+      <option>Ishaan Parthasarathy</option>
+    </select>
 
-      <button type="submit">Submit</button>
-    </form>
-    <div class="success" id="successMsg">✅ Attendance Recorded!</div>
-  </div>
+    <label>Status</label>
+    <select id="status" required>
+      <option value="">-- Select Status --</option>
+      <option value="P">Present</option>
+      <option value="A">Absent</option>
+      <option value="E">Excused</option>
+    </select>
 
-  <script>
-    // === THEME TOGGLE ===
-    document.getElementById("modeToggle").addEventListener("click", () => {
-      const html = document.documentElement;
-      html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+    <button type="submit">Submit</button>
+  </form>
+  <div class="success" id="successMsg">✅ Attendance Recorded!</div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVXEkj7bOk9L9eCOBs_5qUWoJOr8D_28NKQp4aFGzO9Lbvlw_CKJa97Ava2p2XM5Lsag/exec";
+
+// === THEME TOGGLE ===
+document.getElementById("modeToggle").addEventListener("click", () => {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+});
+
+// === FORM HANDLER ===
+document.getElementById("attendanceForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const date = document.getElementById("date").value;
+  const name = document.getElementById("name").value;
+  const status = document.getElementById("status").value;
+
+  try {
+    const response = await fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ date, name, status })
     });
 
-    // === GOOGLE APPS SCRIPT ENDPOINT ===
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVXEkj7bOk9L9eCOBs_5qUWoJOr8D_28NKQp4aFGzO9Lbvlw_CKJa97Ava2p2XM5Lsag/exec";
-
-    document.getElementById("attendanceForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const data = {
-        date: document.getElementById("date").value,
-        name: document.getElementById("name").value,
-        status: document.getElementById("status").value
-      };
-
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(res => res.text())
-      .then(() => {
-        document.getElementById("successMsg").classList.add("show");
-        setTimeout(() => document.getElementById("successMsg").classList.remove("show"), 2000);
-        e.target.reset();
-      })
-      .catch(err => alert("❌ " + err.message));
-    });
-  </script>
+    document.getElementById("successMsg").classList.add("show");
+    setTimeout(() => document.getElementById("successMsg").classList.remove("show"), 2500);
+    e.target.reset();
+  } catch (err) {
+    alert("❌ Error: " + err.message);
+  }
+});
+</script>
 </body>
 </html>
+
