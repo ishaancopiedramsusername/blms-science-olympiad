@@ -17,11 +17,13 @@
       --card: rgba(255,255,255,.3);
       --border: rgba(255,255,255,.2);
     }
+
     [data-theme="dark"] {
       --text: #f4f6ff;
       --card: rgba(36,38,46,.6);
       --border: rgba(255,255,255,.15);
     }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
       background: var(--bg-light);
@@ -32,6 +34,7 @@
       min-height: 100vh;
       transition: background 0.4s ease, color 0.4s ease;
     }
+
     [data-theme="dark"] body { background: var(--bg-dark); }
 
     .toggle {
@@ -152,8 +155,7 @@
     });
 
     // === GOOGLE APPS SCRIPT ENDPOINT ===
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVXEkj7bOk9L9eCOBs_5qUWoJOr8D_28NKQp4aFGzO9Lbvlw_CKJa97Ava2p2XM5Lsag/exec
-";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxVXEkj7bOk9L9eCOBs_5qUWoJOr8D_28NKQp4aFGzO9Lbvlw_CKJa97Ava2p2XM5Lsag/exec";
 
     document.getElementById("attendanceForm").addEventListener("submit", (e) => {
       e.preventDefault();
@@ -180,5 +182,3 @@
   </script>
 </body>
 </html>
-
-
