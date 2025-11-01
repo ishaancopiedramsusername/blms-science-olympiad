@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Teacher Attendance Tracker — BLMS Science Olympiad</title>
+<title>BLMS Science Olympiad — Attendance Tracker</title>
 
 <style>
 :root {
@@ -186,89 +186,95 @@ button:hover { opacity: 0.9; }
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEcerEeYrjg8ZVyFXEtmatQCuEF0Fg6739b9AK1Z6jzbhSLyq6dEO7foQAmpdSbukVDw/exec";
-const TEACHER_PASSWORD = "blms2025"; // 🔒 Change this password
+document.addEventListener("DOMContentLoaded", function() {
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEcerEeYrjg8ZVyFXEtmatQCuEF0Fg6739b9AK1Z6jzbhSLyq6dEO7foQAmpdSbukVDw/exec";
+  const TEACHER_PASSWORD = "blms2025";
 
-// === LOGIN HANDLER ===
-document.getElementById("loginBtn").addEventListener("click", () => {
-  const entered = document.getElementById("passwordInput").value.trim();
-  if (entered === TEACHER_PASSWORD) {
-    document.getElementById("loginOverlay").style.display = "none";
-    document.getElementById("mainContainer").style.display = "block";
-  } else {
-    document.getElementById("errorMsg").textContent = "Incorrect password!";
-  }
-});
+  // === LOGIN HANDLER ===
+  const loginOverlay = document.getElementById("loginOverlay");
+  const mainContainer = document.getElementById("mainContainer");
+  const loginBtn = document.getElementById("loginBtn");
 
-// === DARK MODE ===
-document.getElementById("modeToggle").addEventListener("click", () => {
-  const html = document.documentElement;
-  html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
-});
-
-// === ATTENDANCE FORM ===
-const students = [
-  "Aarav Singh Mandhar","Shreya Ayyalasomayajula","Yvaine Wang","Junye Huang","Sanvi Byreddy",
-  "Vinay Patel","Saanvika Nair","Ryan Thomas","Anay Chatterjee","Dhruv Bajaj","Sofia Shao",
-  "Akshay Bhargav Varanasi","Edmund Bao","Pavel Chudnovskiy","Anvika Rath","Jayden Oh",
-  "William Wang","Akhil Gollapally","Joann Antony","Nora Ahmed","Haasini Bharathwaj",
-  "Anvi Dhome","Krishvee Anand","Rayansh Anand","Pavaki Rastogi","Samira Senthil","Ishani Bhat",
-  "Zayna Rasheed","Ishaan Parthasarathy","Aarav Singhai"
-];
-
-const listContainer = document.getElementById("studentList");
-students.forEach(name => {
-  const div = document.createElement("div");
-  div.className = "student";
-  div.innerHTML = `<input type="checkbox" name="student" value="${name}" /> <label>${name}</label>`;
-  listContainer.appendChild(div);
-});
-
-function markStatus(status) {
-  document.querySelectorAll("input[name='student']:checked").forEach(cb => {
-    cb.dataset.status = status;
-    cb.nextElementSibling.style.color =
-      status === "P" ? "green" : status === "A" ? "red" : "orange";
-  });
-}
-
-document.getElementById("markPresent").addEventListener("click", () => markStatus("P"));
-document.getElementById("markAbsent").addEventListener("click", () => markStatus("A"));
-document.getElementById("markExcused").addEventListener("click", () => markStatus("E"));
-
-document.getElementById("submitBtn").addEventListener("click", async () => {
-  const date = document.getElementById("date").value;
-  if (!date) return alert("Please select a date first.");
-
-  const records = [];
-  document.querySelectorAll("input[name='student']").forEach(cb => {
-    if (cb.dataset.status) {
-      records.push({ date, name: cb.value, status: cb.dataset.status });
+  loginBtn.addEventListener("click", () => {
+    const entered = document.getElementById("passwordInput").value.trim();
+    if (entered === TEACHER_PASSWORD) {
+      loginOverlay.style.display = "none";
+      mainContainer.style.display = "block";
+    } else {
+      document.getElementById("errorMsg").textContent = "Incorrect password!";
     }
   });
 
-  if (records.length === 0) return alert("No attendance marked!");
+  // === DARK MODE ===
+  document.getElementById("modeToggle").addEventListener("click", () => {
+    const html = document.documentElement;
+    html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+  });
 
-  try {
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(records)
+  // === ATTENDANCE FORM ===
+  const students = [
+    "Aarav Singh Mandhar","Shreya Ayyalasomayajula","Yvaine Wang","Junye Huang","Sanvi Byreddy",
+    "Vinay Patel","Saanvika Nair","Ryan Thomas","Anay Chatterjee","Dhruv Bajaj","Sofia Shao",
+    "Akshay Bhargav Varanasi","Edmund Bao","Pavel Chudnovskiy","Anvika Rath","Jayden Oh",
+    "William Wang","Akhil Gollapally","Joann Antony","Nora Ahmed","Haasini Bharathwaj",
+    "Anvi Dhome","Krishvee Anand","Rayansh Anand","Pavaki Rastogi","Samira Senthil","Ishani Bhat",
+    "Zayna Rasheed","Ishaan Parthasarathy","Aarav Singhai"
+  ];
+
+  const listContainer = document.getElementById("studentList");
+  students.forEach(name => {
+    const div = document.createElement("div");
+    div.className = "student";
+    div.innerHTML = `<input type="checkbox" name="student" value="${name}" /> <label>${name}</label>`;
+    listContainer.appendChild(div);
+  });
+
+  function markStatus(status) {
+    document.querySelectorAll("input[name='student']:checked").forEach(cb => {
+      cb.dataset.status = status;
+      cb.nextElementSibling.style.color =
+        status === "P" ? "green" : status === "A" ? "red" : "orange";
     });
-    document.getElementById("successMsg").classList.add("show");
-    setTimeout(() => document.getElementById("successMsg").classList.remove("show"), 2500);
-    document.querySelectorAll("input[name='student']").forEach(cb => {
-      cb.checked = false;
-      cb.dataset.status = "";
-      cb.nextElementSibling.style.color = "";
-    });
-  } catch (err) {
-    alert("❌ Error: " + err.message);
   }
+
+  document.getElementById("markPresent").addEventListener("click", () => markStatus("P"));
+  document.getElementById("markAbsent").addEventListener("click", () => markStatus("A"));
+  document.getElementById("markExcused").addEventListener("click", () => markStatus("E"));
+
+  document.getElementById("submitBtn").addEventListener("click", async () => {
+    const date = document.getElementById("date").value;
+    if (!date) return alert("Please select a date first.");
+
+    const records = [];
+    document.querySelectorAll("input[name='student']").forEach(cb => {
+      if (cb.dataset.status) {
+        records.push({ date, name: cb.value, status: cb.dataset.status });
+      }
+    });
+
+    if (records.length === 0) return alert("No attendance marked!");
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(records)
+      });
+      document.getElementById("successMsg").classList.add("show");
+      setTimeout(() => document.getElementById("successMsg").classList.remove("show"), 2500);
+      document.querySelectorAll("input[name='student']").forEach(cb => {
+        cb.checked = false;
+        cb.dataset.status = "";
+        cb.nextElementSibling.style.color = "";
+      });
+    } catch (err) {
+      alert("❌ Error: " + err.message);
+    }
+  });
 });
 </script>
-
 </body>
 </html>
+
 
