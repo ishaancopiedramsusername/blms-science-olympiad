@@ -98,8 +98,20 @@ h1 {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
+  position: relative;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
-.nav a:hover { text-decoration: underline; }
+.nav a:hover {
+  color: #007aff;
+  text-shadow: 0 0 10px rgba(0,122,255,0.4);
+  transform: scale(1.05);
+}
+.nav a.active {
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
 
 /* === FILTER BAR === */
 .filter-bar {
@@ -212,11 +224,13 @@ h1 {
 </head>
 <body>
 
+<!-- === NAVIGATION BAR === -->
 <nav class="nav">
-  <a href="index.html">🏠 Home</a>
-  <a href="roster.html">👥 Team Roster</a>
-  <a href="tournaments.html">🏆 Tournaments</a>
-  <a href="attendance.html">🗓️ Attendance</a>
+  <a href="index.html" data-page="index">🏠 Home</a>
+  <a href="roster.html" data-page="roster">👥 Team Roster</a>
+  <a href="tournaments.html" data-page="tournaments">🏆 Tournaments</a>
+  <a href="attendance.html" data-page="attendance">🗓️ Attendance</a>
+  <a href="attendance_report.html" data-page="attendance_report">📊 Attendance Report</a>
 </nav>
 
 <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
@@ -236,6 +250,14 @@ h1 {
 <main class="grid" id="grid"></main>
 
 <script>
+/* === HIGHLIGHT ACTIVE PAGE === */
+const currentFile = location.pathname.split('/').pop().replace('.html', '');
+document.querySelectorAll('.nav a').forEach(a => {
+  if (a.dataset.page === currentFile || (currentFile === '' && a.dataset.page === 'index')) {
+    a.classList.add('active');
+  }
+});
+
 /* === DARK/LIGHT TOGGLE === */
 document.getElementById('modeToggle').addEventListener('click', () => {
   const html = document.documentElement;
