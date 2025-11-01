@@ -107,13 +107,67 @@ button:hover { opacity: 0.9; }
   cursor: pointer;
 }
 [data-theme="dark"] .toggle { border: 1px solid var(--border-dark); background: var(--card-dark); color: white; }
+
+/* === LOGIN OVERLAY === */
+#loginOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.login-box {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+.login-box h2 {
+  margin-bottom: 20px;
+  color: #007aff;
+}
+.login-box input {
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.login-box button {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,#007aff,#9b7bff);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+#errorMsg { color: red; font-weight: 600; margin-top: 8px; }
 </style>
 </head>
 <body>
 
+<!-- === DARK MODE TOGGLE === -->
 <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
 
-<div class="container">
+<!-- === LOGIN OVERLAY === -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <h2>Teacher Access</h2>
+    <input type="password" id="passwordInput" placeholder="Enter password" />
+    <button id="loginBtn">Login</button>
+    <div id="errorMsg"></div>
+  </div>
+</div>
+
+<!-- === ATTENDANCE FORM === -->
+<div class="container" id="mainContainer" style="display:none;">
   <h1>BLMS Science Olympiad Attendance</h1>
 
   <div class="controls">
@@ -133,7 +187,26 @@ button:hover { opacity: 0.9; }
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzYcmLYaRHspp9Ct2LF6zAquP7MozSI6CiDmE9_Z94WDpvBnT70FbLLCLDSaoR1Feo0A/exec";
+const TEACHER_PASSWORD = "blms2025"; // 🔒 Change this password
 
+// === LOGIN HANDLER ===
+document.getElementById("loginBtn").addEventListener("click", () => {
+  const entered = document.getElementById("passwordInput").value.trim();
+  if (entered === TEACHER_PASSWORD) {
+    document.getElementById("loginOverlay").style.display = "none";
+    document.getElementById("mainContainer").style.display = "block";
+  } else {
+    document.getElementById("errorMsg").textContent = "Incorrect password!";
+  }
+});
+
+// === DARK MODE ===
+document.getElementById("modeToggle").addEventListener("click", () => {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+});
+
+// === ATTENDANCE FORM ===
 const students = [
   "Aarav Singh Mandhar","Shreya Ayyalasomayajula","Yvaine Wang","Junye Huang","Sanvi Byreddy",
   "Vinay Patel","Saanvika Nair","Ryan Thomas","Anay Chatterjee","Dhruv Bajaj","Sofia Shao",
@@ -194,15 +267,10 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     alert("❌ Error: " + err.message);
   }
 });
-
-// Dark/light mode toggle
-document.getElementById("modeToggle").addEventListener("click", () => {
-  const html = document.documentElement;
-  html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
-});
 </script>
 
 </body>
 </html>
+
 
 
