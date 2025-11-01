@@ -6,212 +6,158 @@
 <title>BLMS Science Olympiad — Attendance Tracker</title>
 
 <style>
-:root {
-  --bg-light: linear-gradient(135deg, #e9f0ff, #f7f8ff);
-  --bg-dark: linear-gradient(135deg, #0f1320, #1a1227);
-  --text-light: #111318;
-  --text-dark: #f4f6ff;
-  --card-light: rgba(255,255,255,0.7);
-  --card-dark: rgba(36,38,46,0.8);
-  --border-light: rgba(0,0,0,0.1);
-  --border-dark: rgba(255,255,255,0.15);
+:root{
+  --bg-light: linear-gradient(135deg,#e9f0ff,#f7f8ff);
+  --bg-dark: linear-gradient(135deg,#0f1320,#1a1227);
+  --text: #111318;
+  --text-inv: #f4f6ff;
+  --card: rgba(255,255,255,.7);
+  --card-dark: rgba(36,38,46,.85);
+  --border: rgba(0,0,0,.1);
+  --border-dark: rgba(255,255,255,.15);
 }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+html[data-theme="dark"] body{ background: var(--bg-dark); color: var(--text-inv); }
+body{
+  font-family: -apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
   background: var(--bg-light);
-  color: var(--text-light);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 40px;
-  transition: background 0.4s ease, color 0.4s ease;
+  color: var(--text);
+  min-height: 100vh; margin:0; display:flex; justify-content:center; align-items:flex-start; padding:36px;
 }
-[data-theme="dark"] body { background: var(--bg-dark); color: var(--text-dark); }
-
-.container {
-  background: var(--card-light);
-  border: 1px solid var(--border-light);
+.container{
+  width: min(920px, 96vw);
+  background: var(--card);
+  border:1px solid var(--border);
   border-radius: 20px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  padding: 30px 40px;
-  width: 95%;
-  max-width: 700px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.18);
+  backdrop-filter: blur(18px);
+  padding: 24px 28px;
 }
-[data-theme="dark"] .container {
-  background: var(--card-dark);
-  border: 1px solid var(--border-dark);
-}
-h1 {
-  text-align: center;
-  background: linear-gradient(90deg, #007aff, #9b7bff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
-}
-.controls {
-  text-align: center;
-  margin-bottom: 15px;
-}
-button {
-  margin: 8px;
-  padding: 10px 22px;
-  border: none;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #007aff, #9b7bff);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-}
-button:hover { opacity: 0.9; }
+html[data-theme="dark"] .container{ background: var(--card-dark); border:1px solid var(--border-dark); }
 
-.student-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 10px;
-  margin-top: 15px;
-}
-.student {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.5);
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border-light);
-}
-[data-theme="dark"] .student {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid var(--border-dark);
-}
-.success {
-  text-align: center;
-  color: limegreen;
-  font-weight: 600;
-  margin-top: 15px;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.show { opacity: 1; }
-
-.toggle {
-  position: fixed;
-  top: 16px;
-  right: 20px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--border-light);
-  background: var(--card-light);
-  backdrop-filter: blur(20px);
-  cursor: pointer;
-}
-[data-theme="dark"] .toggle { border: 1px solid var(--border-dark); background: var(--card-dark); color: white; }
-
-/* === LOGIN OVERLAY === */
-#loginOverlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(10px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-.login-box {
-  background: white;
-  padding: 40px 50px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-}
-.login-box h2 {
-  margin-bottom: 20px;
-  color: #007aff;
-}
-.login-box input {
-  padding: 10px 14px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: 100%;
-  margin-bottom: 15px;
-}
-.login-box button {
-  width: 100%;
-  padding: 10px 16px;
-  border-radius: 999px;
+h1{
+  margin: 6px 0 14px;
+  text-align:center;
   background: linear-gradient(90deg,#007aff,#9b7bff);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-#errorMsg { color: red; font-weight: 600; margin-top: 8px; }
+
+.toolbar{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center;
+  margin-bottom: 10px;
+}
+.toolbar label{ font-weight:600; }
+.toolbar input[type="date"]{
+  padding:10px 12px; border-radius:10px; border:1px solid var(--border);
+}
+.btn{
+  padding:10px 18px; border:none; border-radius:999px; cursor:pointer; font-weight:650; color:#fff;
+  background: linear-gradient(90deg,#007aff,#9b7bff);
+}
+.btn.secondary{ background:#6b7280; }
+.btn.warn{ background:#ef4444; }
+.btn.ok{ background:#10b981; }
+.btn.info{ background:#6366f1; }
+
+.helpers{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; margin: 6px 0 4px;
+  font-size:.95rem;
+}
+.helpers label{ display:flex; gap:6px; align-items:center; cursor:pointer; }
+
+.grid{
+  margin-top:10px;
+  display:grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap:10px;
+}
+.card{
+  display:flex; align-items:center; gap:10px;
+  border:1px solid var(--border); border-radius:12px; padding:10px 12px; background:rgba(255,255,255,.55);
+}
+html[data-theme="dark"] .card{ border:1px solid var(--border-dark); background:rgba(255,255,255,.08); }
+.card label{ flex:1; }
+
+.status-dot{
+  width:10px; height:10px; border-radius:50%;
+  background:#d1d5db; border:1px solid rgba(0,0,0,.12);
+}
+.card[data-status="P"] .status-dot{ background:#10b981; }
+.card[data-status="A"] .status-dot{ background:#ef4444; }
+.card[data-status="E"] .status-dot{ background:#f59e0b; }
+
+.toast{
+  position: fixed; left:50%; transform:translateX(-50%);
+  bottom: 22px; padding:10px 16px; border-radius:10px; color:#fff; background:#10b981;
+  box-shadow:0 8px 22px rgba(0,0,0,.28); opacity:0; pointer-events:none; transition: opacity .35s ease;
+}
+.toast.show{ opacity:1; }
+
+.toggle{
+  position: fixed; top:12px; right:14px; padding:8px 14px; border-radius:999px; border:1px solid var(--border);
+  background: rgba(255,255,255,.7); cursor:pointer;
+}
+html[data-theme="dark"] .toggle{ border:1px solid var(--border-dark); background: rgba(36,38,46,.85); color:#f4f6ff; }
+
+/* Login overlay */
+#loginOverlay{
+  position: fixed; inset:0; background: rgba(0,0,0,.8); backdrop-filter: blur(8px);
+  display:flex; align-items:center; justify-content:center; z-index:9999;
+}
+.login{
+  width:min(420px,92vw); background:#fff; border-radius:18px; padding:28px;
+  box-shadow:0 12px 32px rgba(0,0,0,.5); text-align:center;
+}
+.login h2{ margin:0 0 10px; color:#007aff; }
+.login input{
+  width:100%; padding:11px 13px; border-radius:10px; border:1px solid #d1d5db; margin:10px 0 14px; font-size:1rem;
+}
+.login .btn{ width:100%; }
+.login .err{ color:#ef4444; font-weight:700; min-height:20px; margin-top:6px; }
+.small{ font-size:.9rem; opacity:.8; }
 </style>
 </head>
 <body>
 
-<!-- === DARK MODE TOGGLE === -->
-<button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
+<button class="toggle" id="themeToggle">☀️ Light / 🌙 Dark</button>
 
-<!-- === LOGIN OVERLAY === -->
+<!-- Login -->
 <div id="loginOverlay">
-  <div class="login-box">
+  <div class="login">
     <h2>Teacher Access</h2>
-    <input type="password" id="passwordInput" placeholder="Enter password" />
-    <button id="loginBtn">Login</button>
-    <div id="errorMsg"></div>
+    <input type="password" id="pw" placeholder="Enter password" />
+    <button class="btn info" id="loginBtn">Login</button>
+    <div class="err" id="loginErr"></div>
+    <div class="small">Tip: this login is page-only (not Google auth). You can change the password in the code.</div>
   </div>
 </div>
 
-<!-- === ATTENDANCE FORM === -->
-<div class="container" id="mainContainer" style="display:none;">
-  <h1>BLMS Science Olympiad Attendance</h1>
+<div class="container" id="app" style="display:none;">
+  <h1>Attendance — BLMS Science Olympiad</h1>
 
-  <div class="controls">
-    <label><b>Date:</b> <input type="date" id="date" required /></label>
-    <div>
-      <button type="button" id="markPresent">Mark Present</button>
-      <button type="button" id="markAbsent">Mark Absent</button>
-      <button type="button" id="markExcused">Mark Excused</button>
-      <button type="button" id="submitBtn">Submit</button>
-    </div>
+  <div class="toolbar">
+    <label>Date: <input type="date" id="datePicker" required></label>
+    <button class="btn ok" id="markP">Mark Present</button>
+    <button class="btn warn" id="markA">Mark Absent</button>
+    <button class="btn" id="markE" style="background:#f59e0b">Mark Excused</button>
+    <button class="btn secondary" id="clearSel">Clear Selection</button>
+    <button class="btn info" id="submitBtn">Submit</button>
   </div>
 
-  <div class="student-list" id="studentList"></div>
+  <div class="helpers">
+    <label><input type="checkbox" id="selectAll"> Select all</label>
+    <span id="selCount">0 selected</span>
+  </div>
 
-  <div class="success" id="successMsg">✅ Attendance Recorded!</div>
+  <div class="grid" id="list"></div>
 </div>
+
+<div class="toast" id="toast">✅ Attendance recorded</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEcerEeYrjg8ZVyFXEtmatQCuEF0Fg6739b9AK1Z6jzbhSLyq6dEO7foQAmpdSbukVDw/exec";
+document.addEventListener("DOMContentLoaded", () => {
+  // ===== CONFIG =====
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQYbK705nfUfHE5VBcJtF5JLN4E1zM2N5_pz9DcFkAePq5k-pbeuU5G6HGzMEI-3k8/exec";
   const TEACHER_PASSWORD = "blms2025";
 
-  // === LOGIN HANDLER ===
-  const loginOverlay = document.getElementById("loginOverlay");
-  const mainContainer = document.getElementById("mainContainer");
-  const loginBtn = document.getElementById("loginBtn");
-
-  loginBtn.addEventListener("click", () => {
-    const entered = document.getElementById("passwordInput").value.trim();
-    if (entered === TEACHER_PASSWORD) {
-      loginOverlay.style.display = "none";
-      mainContainer.style.display = "block";
-    } else {
-      document.getElementById("errorMsg").textContent = "Incorrect password!";
-    }
-  });
-
-  // === DARK MODE ===
-  document.getElementById("modeToggle").addEventListener("click", () => {
-    const html = document.documentElement;
-    html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
-  });
-
-  // === ATTENDANCE FORM ===
   const students = [
     "Aarav Singh Mandhar","Shreya Ayyalasomayajula","Yvaine Wang","Junye Huang","Sanvi Byreddy",
     "Vinay Patel","Saanvika Nair","Ryan Thomas","Anay Chatterjee","Dhruv Bajaj","Sofia Shao",
@@ -221,60 +167,133 @@ document.addEventListener("DOMContentLoaded", function() {
     "Zayna Rasheed","Ishaan Parthasarathy","Aarav Singhai"
   ];
 
-  const listContainer = document.getElementById("studentList");
-  students.forEach(name => {
-    const div = document.createElement("div");
-    div.className = "student";
-    div.innerHTML = `<input type="checkbox" name="student" value="${name}" /> <label>${name}</label>`;
-    listContainer.appendChild(div);
+  // ===== THEME =====
+  const themeToggle = document.getElementById("themeToggle");
+  themeToggle.addEventListener("click", () => {
+    const html = document.documentElement;
+    html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+    localStorage.setItem("att_theme", html.dataset.theme || "light");
+  });
+  // restore theme
+  const savedTheme = localStorage.getItem("att_theme") || "light";
+  if (savedTheme === "dark") document.documentElement.dataset.theme = "dark";
+
+  // ===== LOGIN =====
+  const loginOverlay = document.getElementById("loginOverlay");
+  const loginBtn = document.getElementById("loginBtn");
+  const loginErr = document.getElementById("loginErr");
+  const app = document.getElementById("app");
+  // auto-unlock if previously logged this session
+  if (sessionStorage.getItem("att_ok") === "1") {
+    loginOverlay.style.display = "none";
+    app.style.display = "block";
+  }
+  loginBtn.addEventListener("click", () => {
+    const pw = document.getElementById("pw").value.trim();
+    if (pw === TEACHER_PASSWORD) {
+      sessionStorage.setItem("att_ok","1");
+      loginOverlay.style.display = "none";
+      app.style.display = "block";
+    } else {
+      loginErr.textContent = "Incorrect password.";
+    }
   });
 
-  function markStatus(status) {
-    document.querySelectorAll("input[name='student']:checked").forEach(cb => {
-      cb.dataset.status = status;
-      cb.nextElementSibling.style.color =
-        status === "P" ? "green" : status === "A" ? "red" : "orange";
+  // ===== RENDER LIST =====
+  const list = document.getElementById("list");
+  const selCount = document.getElementById("selCount");
+  const selectAll = document.getElementById("selectAll");
+
+  function render(){
+    list.innerHTML = "";
+    students.forEach(name => {
+      const row = document.createElement("div");
+      row.className = "card";
+      row.innerHTML = `
+        <input type="checkbox" class="pick" />
+        <span class="status-dot"></span>
+        <label>${name}</label>
+      `;
+      row.dataset.name = name;
+      list.appendChild(row);
     });
+    updateSelCount();
+  }
+  render();
+
+  function getCheckedRows(){
+    return Array.from(document.querySelectorAll(".card .pick:checked"))
+      .map(cb => cb.closest(".card"));
+  }
+  function mark(status){
+    getCheckedRows().forEach(row => row.dataset.status = status);
+  }
+  function clearSelection(){
+    document.querySelectorAll(".card .pick").forEach(cb => cb.checked = false);
+    updateSelCount();
+  }
+  function updateSelCount(){
+    const count = document.querySelectorAll(".card .pick:checked").length;
+    selCount.textContent = `${count} selected`;
   }
 
-  document.getElementById("markPresent").addEventListener("click", () => markStatus("P"));
-  document.getElementById("markAbsent").addEventListener("click", () => markStatus("A"));
-  document.getElementById("markExcused").addEventListener("click", () => markStatus("E"));
+  list.addEventListener("change", e => {
+    if (e.target.classList.contains("pick")) updateSelCount();
+  });
+  selectAll.addEventListener("change", e => {
+    const on = e.target.checked;
+    document.querySelectorAll(".card .pick").forEach(cb => cb.checked = on);
+    updateSelCount();
+  });
+
+  document.getElementById("markP").addEventListener("click", () => mark("P"));
+  document.getElementById("markA").addEventListener("click", () => mark("A"));
+  document.getElementById("markE").addEventListener("click", () => mark("E"));
+  document.getElementById("clearSel").addEventListener("click", clearSelection);
+
+  // ===== SUBMIT =====
+  const toast = document.getElementById("toast");
+  function showToast(msg="✅ Attendance recorded"){
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"), 1800);
+  }
 
   document.getElementById("submitBtn").addEventListener("click", async () => {
-    const date = document.getElementById("date").value;
-    if (!date) return alert("Please select a date first.");
+    const date = document.getElementById("datePicker").value;
+    if (!date) { alert("Pick a date first."); return; }
 
-    const records = [];
-    document.querySelectorAll("input[name='student']").forEach(cb => {
-      if (cb.dataset.status) {
-        records.push({ date, name: cb.value, status: cb.dataset.status });
-      }
-    });
+    const rows = Array.from(document.querySelectorAll(".card"))
+      .filter(row => row.dataset.status) // only rows that have a status set
+      .map(row => ({
+        date,
+        name: row.dataset.name,
+        status: row.dataset.status
+      }));
 
-    if (records.length === 0) return alert("No attendance marked!");
+    if (rows.length === 0) { alert("Select students and set a status first."); return; }
 
-    try {
+    try{
+      // Send JSON array (Apps Script will read e.postData.contents)
       await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(records)
+        body: JSON.stringify(rows)
       });
-      document.getElementById("successMsg").classList.add("show");
-      setTimeout(() => document.getElementById("successMsg").classList.remove("show"), 2500);
-      document.querySelectorAll("input[name='student']").forEach(cb => {
-        cb.checked = false;
-        cb.dataset.status = "";
-        cb.nextElementSibling.style.color = "";
-      });
-    } catch (err) {
-      alert("❌ Error: " + err.message);
+
+      showToast();
+      // reset statuses & selection
+      document.querySelectorAll(".card").forEach(row => { row.dataset.status=""; });
+      clearSelection();
+    }catch(err){
+      alert("Submit failed: " + err.message);
     }
   });
 });
 </script>
 </body>
 </html>
+
 
 
