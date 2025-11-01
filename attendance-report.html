@@ -1,212 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Attendance Report — BLMS Science Olympiad</title>
 
 <style>
-:root {
-  --bg: radial-gradient(1000px 800px at 10% -10%, #0b1124, transparent 70%),
-        radial-gradient(1200px 900px at 120% 130%, #1b1f3a, transparent 70%),
-        linear-gradient(160deg, #0d1224 0%, #151b2f 100%);
-  --card: rgba(255,255,255,0.1);
-  --text: #e8ecff;
-  --accent: #00d4ff;
-  --shadow: rgba(0,0,0,0.6);
-  --present: #35ff88;
-  --absent: #ff5570;
-  --excused: #ffd95a;
-}
-* { box-sizing:border-box; margin:0; padding:0; }
 body {
-  font-family: "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-  background-attachment: fixed;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:linear-gradient(135deg,#eef2ff,#fefefe);
+  color:#111;
+  padding:40px;
 }
-header {
+h1{
   text-align:center;
-  padding:80px 20px 40px;
-}
-h1 {
-  font-size:3rem;
-  font-weight:900;
-  background:linear-gradient(90deg,#00d4ff,#6c63ff);
+  background:linear-gradient(90deg,#007aff,#9b7bff);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  letter-spacing:-0.5px;
-  text-shadow:0 0 20px rgba(108,99,255,0.5);
 }
-.tagline {
-  margin-top:10px;
-  font-size:1.2rem;
-  opacity:0.8;
-}
-.nav {
-  position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:10;
-  display:flex;
-  gap:20px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.2);
-  border-radius:50px;
-  padding:10px 25px;
-  backdrop-filter:blur(20px);
-}
-.nav a {
-  color:var(--text);
-  text-decoration:none;
-  font-weight:600;
-  font-size:0.95rem;
-  transition:color 0.3s ease;
-}
-.nav a:hover { color:var(--accent); }
-.table-wrapper {
-  width:90%;
-  max-width:1200px;
-  border-radius:20px;
-  background:var(--card);
-  backdrop-filter:blur(25px) saturate(180%);
-  box-shadow:0 8px 40px var(--shadow);
-  padding:20px;
-  overflow-x:auto;
-}
-table {
+table{
   width:100%;
   border-collapse:collapse;
-  min-width:900px;
+  margin-top:30px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
-th {
-  text-align:center;
-  font-size:1rem;
-  font-weight:700;
-  color:var(--accent);
-  padding:14px 10px;
-  border-bottom:1px solid rgba(255,255,255,0.15);
-}
-td {
-  text-align:center;
-  padding:12px 10px;
-  font-size:1rem;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  transition:background 0.3s ease, transform 0.2s ease;
-}
-td:first-child {
+th,td{
+  padding:10px 14px;
+  border-bottom:1px solid #ddd;
   text-align:left;
-  font-weight:600;
-  color:#fff;
 }
-td.present {
-  color:var(--present);
-  font-weight:700;
-  text-shadow:0 0 10px rgba(53,255,136,0.6);
+th{
+  background:#007aff;
+  color:white;
+  position:sticky;
+  top:0;
 }
-td.absent {
-  color:var(--absent);
-  font-weight:700;
-  text-shadow:0 0 10px rgba(255,85,112,0.6);
-}
-td.excused {
-  color:var(--excused);
-  font-weight:700;
-  text-shadow:0 0 10px rgba(255,217,90,0.6);
-}
-tr:hover td {
-  background:rgba(255,255,255,0.05);
-  transform:scale(1.01);
-}
-footer {
-  margin:60px 0 30px;
-  font-size:0.9rem;
-  opacity:0.7;
+tr:hover{background:#f5f7ff;}
+.status{font-weight:600;text-align:center;}
+.status.P{color:#10b981;}
+.status.A{color:#ef4444;}
+.status.E{color:#f59e0b;}
+.filter-bar{
   text-align:center;
+  margin-top:20px;
+}
+.filter-bar input{
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  width:220px;
+}
+button{
+  margin-left:6px;
+  padding:8px 16px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+}
+.summary{
+  margin-top:25px;
+  text-align:center;
+  font-weight:600;
+  font-size:1.1rem;
 }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <a href="index.html">🏠 Home</a>
-  <a href="roster.html">👥 Roster</a>
-  <a href="tournaments.html">🏆 Tournaments</a>
-  <a href="attendance.html">🗓️ Attendance</a>
-</nav>
+<h1>Attendance Report</h1>
 
-<header>
-  <h1>Attendance Report</h1>
-  <p class="tagline">P = Present | A = Absent | E = Excused</p>
-</header>
-
-<div class="table-wrapper">
-  <table id="attendanceTable">
-    <thead>
-      <tr>
-        <th>Student</th>
-        <th>Date 1</th>
-        <th>Date 2</th>
-        <th>Date 3</th>
-        <th>Date 4</th>
-        <th>Date 5</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<div class="filter-bar">
+  <input type="text" id="search" placeholder="Search name or date (YYYY-MM-DD)">
+  <button onclick="loadData()">Refresh</button>
 </div>
 
-<footer>© <span id="year"></span> BLMS Science Olympiad — Division B</footer>
+<div class="summary" id="summary"></div>
+
+<table id="attendanceTable">
+  <thead>
+    <tr>
+      <th>Timestamp</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwWH7UUFQ0IMom905bc47iPryybnGVinCsL_JFMu8zU6rDzjSoVQdOeGKn4vdOi3ZR7/exec";
 
-// Your NEW Apps Script URL
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzYcmLYaRHspp9Ct2LF6zAquP7MozSI6CiDmE9_Z94WDpvBnT70FbLLCLDSaoR1Feo0A/exec";
+async function loadData(){
+  const res = await fetch(SCRIPT_URL);
+  const data = await res.json();
+  const search = document.getElementById("search").value.toLowerCase();
+  const tbody = document.querySelector("#attendanceTable tbody");
+  const summary = document.getElementById("summary");
+  tbody.innerHTML = "";
 
-async function loadAttendance() {
-  try {
-    const res = await fetch(SCRIPT_URL);
-    const data = await res.json();
-    const { dates, records } = data;
+  let counts = {P:0,A:0,E:0};
 
-    const table = document.getElementById("attendanceTable");
-    const headerRow = table.querySelector("thead tr");
-    const tbody = table.querySelector("tbody");
-    tbody.innerHTML = "";
-
-    // Dynamic header
-    headerRow.innerHTML = `<th>Student</th>${dates.map(d => `<th>${d}</th>`).join("")}<th>Total</th>`;
-
-    // Populate rows
-    Object.keys(records).forEach(name => {
-      const row = document.createElement("tr");
-      let total = 0;
-      const cells = dates.map(date => {
-        const status = records[name][date] || "";
-        let cls = "", symbol = "";
-        if (status === "P") { cls = "present"; symbol = "P"; total++; }
-        else if (status === "A") { cls = "absent"; symbol = "A"; }
-        else if (status === "E") { cls = "excused"; symbol = "E"; }
-        return `<td class="${cls}">${symbol}</td>`;
-      });
-      row.innerHTML = `<td>${name}</td>${cells.join("")}<td>${total}</td>`;
-      tbody.appendChild(row);
+  data
+    .filter(r => !search || 
+      (r.name && r.name.toLowerCase().includes(search)) || 
+      (r.date && r.date.includes(search)))
+    .forEach(r => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.timestamp}</td>
+        <td>${r.date}</td>
+        <td>${r.name}</td>
+        <td class="status ${r.status}">${r.status}</td>
+      `;
+      tbody.appendChild(tr);
+      if(counts[r.status] !== undefined) counts[r.status]++;
     });
-  } catch (err) {
-    console.error("Error loading attendance:", err);
-  }
+
+  summary.textContent = 
+    `Present: ${counts.P} | Absent: ${counts.A} | Excused: ${counts.E}`;
 }
 
-loadAttendance();
-setInterval(loadAttendance, 60000);
+loadData();
 </script>
 </body>
 </html>
+
 
