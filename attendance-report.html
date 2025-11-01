@@ -14,14 +14,45 @@ body {
   margin: 0;
   padding: 0;
 }
-  <!-- === NAV BAR === -->
-<nav class="nav">
-  <a href="index.html" data-page="index">🏠 Home</a>
-  <a href="roster.html" data-page="roster">👥 Team Roster</a>
-  <a href="tournaments.html" data-page="tournaments">🏆 Tournaments</a>
-  <a href="attendance.html" data-page="attendance">🗓️ Attendance</a>
-  <a href="attendance_report.html" data-page="attendance_report">📊 Attendance Report</a>
-</nav>
+
+/* === NAV BAR === */
+.nav {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.nav a {
+  color: #111;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.nav a:hover {
+  color: #007aff;
+  text-shadow: 0 0 10px rgba(0,122,255,0.4);
+  transform: scale(1.05);
+}
+.nav a.active {
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* === HEADER === */
 header {
   background: linear-gradient(90deg, #007aff, #8b5cff);
   color: #fff;
@@ -29,9 +60,15 @@ header {
   padding: 1.3rem 0;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
-h1 { margin: 0; font-size: 1.9rem; letter-spacing: 0.3px; }
+h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: 0.3px;
+}
+
+/* === MAIN === */
 main {
-  padding: 40px 8%;
+  padding: 80px 8%; /* add top padding so nav doesn’t overlap */
   max-width: 1100px;
   margin: auto;
 }
@@ -60,12 +97,14 @@ main {
   transition: transform 0.15s ease;
 }
 .filter-bar button:hover { transform: scale(1.05); }
+
 .summary {
   text-align: right;
   font-weight: 600;
   margin: 8px 0 14px;
   font-size: 1.05rem;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -83,6 +122,7 @@ th, td {
 }
 tbody tr:nth-child(even) { background: #f6f8ff; }
 tbody tr:hover { background: #eef3ff; }
+
 .status {
   text-align: center;
   font-weight: 700;
@@ -90,6 +130,7 @@ tbody tr:hover { background: #eef3ff; }
 .status.P { color: #10b981; }
 .status.A { color: #ef4444; }
 .status.E { color: #f59e0b; }
+
 footer {
   text-align: center;
   font-size: 0.85rem;
@@ -106,6 +147,15 @@ footer {
 </style>
 </head>
 <body>
+
+<!-- === NAVIGATION BAR === -->
+<nav class="nav">
+  <a href="index.html" data-page="index">🏠 Home</a>
+  <a href="roster.html" data-page="roster">👥 Team Roster</a>
+  <a href="tournaments.html" data-page="tournaments">🏆 Tournaments</a>
+  <a href="attendance.html" data-page="attendance">🗓️ Attendance</a>
+  <a href="attendance_report.html" data-page="attendance_report">📊 Attendance Report</a>
+</nav>
 
 <header>
   <h1>BLMS Science Olympiad — Attendance Report</h1>
@@ -137,6 +187,14 @@ footer {
 <footer>© 2025 BLMS Science Olympiad Attendance Tracker</footer>
 
 <script>
+/* === Highlight current page === */
+const currentFile = location.pathname.split('/').pop().replace('.html', '');
+document.querySelectorAll('.nav a').forEach(a => {
+  if (a.dataset.page === currentFile || (currentFile === '' && a.dataset.page === 'index')) {
+    a.classList.add('active');
+  }
+});
+
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoBlmpsgE_IhSnuH5ao9LgNzOtwkmqnbupyFno04QUN01Pcuk30eX09xIs1GlklTDi/exec";
 
 async function loadData() {
@@ -173,7 +231,6 @@ async function loadData() {
       });
 
     if (rows === 0) noData.style.display = "block";
-
     summary.textContent = `Present: ${counts.P} | Absent: ${counts.A} | Excused: ${counts.E}`;
   } catch (err) {
     summary.textContent = "⚠️ Error loading data.";
@@ -185,6 +242,3 @@ loadData();
 </script>
 </body>
 </html>
-
-
-
