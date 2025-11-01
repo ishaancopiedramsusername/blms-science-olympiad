@@ -16,12 +16,51 @@
   --border: rgba(0,0,0,.1);
   --border-dark: rgba(255,255,255,.15);
 }
+
+/* === NAV BAR === */
+.nav {
+  position: fixed;
+  top: 18px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.nav a:hover {
+  color: #007aff;
+  text-shadow: 0 0 10px rgba(0,122,255,0.4);
+  transform: scale(1.05);
+}
+.nav a.active {
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* === PAGE BASE === */
 html[data-theme="dark"] body{ background: var(--bg-dark); color: var(--text-inv); }
 body{
   font-family: -apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
   background: var(--bg-light);
   color: var(--text);
-  min-height: 100vh; margin:0; display:flex; justify-content:center; align-items:flex-start; padding:36px;
+  min-height: 100vh; margin:0; display:flex; justify-content:center; align-items:flex-start; padding:70px 36px 36px;
 }
 .container{
   width: min(920px, 96vw);
@@ -97,7 +136,7 @@ html[data-theme="dark"] .card{ border:1px solid var(--border-dark); background:r
 }
 html[data-theme="dark"] .toggle{ border:1px solid var(--border-dark); background: rgba(36,38,46,.85); color:#f4f6ff; }
 
-/* Login overlay */
+/* === Login overlay === */
 #loginOverlay{
   position: fixed; inset:0; background: rgba(0,0,0,.8); backdrop-filter: blur(8px);
   display:flex; align-items:center; justify-content:center; z-index:9999;
@@ -117,9 +156,18 @@ html[data-theme="dark"] .toggle{ border:1px solid var(--border-dark); background
 </head>
 <body>
 
+<!-- === NAVIGATION BAR === -->
+<nav class="nav">
+  <a href="index.html" data-page="index">🏠 Home</a>
+  <a href="roster.html" data-page="roster">👥 Team Roster</a>
+  <a href="tournaments.html" data-page="tournaments">🏆 Tournaments</a>
+  <a href="attendance.html" data-page="attendance">🗓️ Attendance</a>
+  <a href="attendance_report.html" data-page="attendance_report">📊 Attendance Report</a>
+</nav>
+
 <button class="toggle" id="themeToggle">☀️ Light / 🌙 Dark</button>
 
-<!-- Login -->
+<!-- === Login === -->
 <div id="loginOverlay">
   <div class="login">
     <h2>Teacher Access</h2>
@@ -130,6 +178,7 @@ html[data-theme="dark"] .toggle{ border:1px solid var(--border-dark); background
   </div>
 </div>
 
+<!-- === Attendance Tracker === -->
 <div class="container" id="app" style="display:none;">
   <h1>Attendance — BLMS Science Olympiad</h1>
 
@@ -153,6 +202,14 @@ html[data-theme="dark"] .toggle{ border:1px solid var(--border-dark); background
 <div class="toast" id="toast">✅ Attendance recorded</div>
 
 <script>
+/* === Highlight current page in nav === */
+const currentFile = location.pathname.split('/').pop().replace('.html', '');
+document.querySelectorAll('.nav a').forEach(a => {
+  if (a.dataset.page === currentFile || (currentFile === '' && a.dataset.page === 'index')) {
+    a.classList.add('active');
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   // ===== CONFIG =====
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyoBlmpsgE_IhSnuH5ao9LgNzOtwkmqnbupyFno04QUN01Pcuk30eX09xIs1GlklTDi/exec";
@@ -174,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
     html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
     localStorage.setItem("att_theme", html.dataset.theme || "light");
   });
-  // restore theme
   const savedTheme = localStorage.getItem("att_theme") || "light";
   if (savedTheme === "dark") document.documentElement.dataset.theme = "dark";
 
@@ -183,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("loginBtn");
   const loginErr = document.getElementById("loginErr");
   const app = document.getElementById("app");
-  // auto-unlock if previously logged this session
   if (sessionStorage.getItem("att_ok") === "1") {
     loginOverlay.style.display = "none";
     app.style.display = "block";
@@ -264,27 +319,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!date) { alert("Pick a date first."); return; }
 
     const rows = Array.from(document.querySelectorAll(".card"))
-      .filter(row => row.dataset.status) // only rows that have a status set
-      .map(row => ({
-        date,
-        name: row.dataset.name,
-        status: row.dataset.status
-      }));
+      .filter(row => row.dataset.status)
+      .map(row => ({ date, name: row.dataset.name, status: row.dataset.status }));
 
     if (rows.length === 0) { alert("Select students and set a status first."); return; }
 
     try{
-      // Send JSON array (Apps Script will read e.postData.contents)
       await fetch(SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(rows)
       });
-
       showToast();
-      // reset statuses & selection
-      document.querySelectorAll(".card").forEach(row => { row.dataset.status=""; });
+      document.querySelectorAll(".card").forEach(row => row.dataset.status="");
       clearSelection();
     }catch(err){
       alert("Submit failed: " + err.message);
@@ -294,6 +342,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-
-
-
