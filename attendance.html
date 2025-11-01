@@ -3,36 +3,97 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Attendance Tracker — BLMS Science Olympiad</title>
+<title>Teacher Attendance Tracker — BLMS Science Olympiad</title>
 
 <style>
 :root {
-  --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
-              radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
-              linear-gradient(#eef3f9, #fafbff);
-  --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
-             radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
-             linear-gradient(#0b0d12, #141720);
-  --text: #111318;
-  --card: rgba(255,255,255,.3);
-  --border: rgba(255,255,255,.2);
-}
-[data-theme="dark"] {
-  --text: #f4f6ff;
-  --card: rgba(36,38,46,.6);
-  --border: rgba(255,255,255,.15);
+  --bg-light: linear-gradient(135deg, #e9f0ff, #f7f8ff);
+  --bg-dark: linear-gradient(135deg, #0f1320, #1a1227);
+  --text-light: #111318;
+  --text-dark: #f4f6ff;
+  --card-light: rgba(255,255,255,0.7);
+  --card-dark: rgba(36,38,46,0.8);
+  --border-light: rgba(0,0,0,0.1);
+  --border-dark: rgba(255,255,255,0.15);
 }
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg-light);
-  color: var(--text);
+  color: var(--text-light);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
+  padding: 40px;
   transition: background 0.4s ease, color 0.4s ease;
 }
-[data-theme="dark"] body { background: var(--bg-dark); }
+[data-theme="dark"] body { background: var(--bg-dark); color: var(--text-dark); }
+
+.container {
+  background: var(--card-light);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  padding: 30px 40px;
+  width: 95%;
+  max-width: 700px;
+}
+[data-theme="dark"] .container {
+  background: var(--card-dark);
+  border: 1px solid var(--border-dark);
+}
+h1 {
+  text-align: center;
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+.controls {
+  text-align: center;
+  margin-bottom: 15px;
+}
+button {
+  margin: 8px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:hover { opacity: 0.9; }
+
+.student-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 15px;
+}
+.student {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.5);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+[data-theme="dark"] .student {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--border-dark);
+}
+.success {
+  text-align: center;
+  color: limegreen;
+  font-weight: 600;
+  margin-top: 15px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.show { opacity: 1; }
 
 .toggle {
   position: fixed;
@@ -40,138 +101,108 @@ body {
   right: 20px;
   padding: 8px 16px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--card);
+  border: 1px solid var(--border-light);
+  background: var(--card-light);
   backdrop-filter: blur(20px);
-  color: var(--text);
   cursor: pointer;
 }
-
-.glass-form {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 25px;
-  backdrop-filter: blur(25px) saturate(180%);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-  padding: 40px 50px;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-}
-h1 {
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, #007aff, #9b7bff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-label { display:block; margin-top:20px; font-weight:600; text-align:left; }
-input, select {
-  width:100%; padding:12px 14px; margin-top:8px;
-  border-radius:10px; border:1px solid var(--border);
-  background:rgba(255,255,255,0.6); font-size:1rem;
-}
-button {
-  margin-top:25px; padding:12px 28px; border:none;
-  border-radius:999px; background:linear-gradient(90deg,#007aff,#9b7bff);
-  color:white; font-weight:600; cursor:pointer;
-}
-.success {
-  margin-top:20px; color:limegreen; font-weight:600; opacity:0;
-  transition:opacity .5s ease;
-}
-.show { opacity:1; }
+[data-theme="dark"] .toggle { border: 1px solid var(--border-dark); background: var(--card-dark); color: white; }
 </style>
 </head>
 <body>
 
 <button class="toggle" id="modeToggle">☀️ Light / 🌙 Dark</button>
 
-<div class="glass-form">
-  <h1>Attendance Tracker</h1>
-  <form id="attendanceForm">
-    <label>Date</label>
-    <input type="date" id="date" required>
+<div class="container">
+  <h1>BLMS Science Olympiad Attendance</h1>
 
-    <label>Name</label>
-    <select id="name" required>
-      <option value="">-- Select Student --</option>
-      <option>Aarav Singh Mandhar</option>
-      <option>Shreya Ayyalasomayajula</option>
-      <option>Yvaine Wang</option>
-      <option>Junye Huang</option>
-      <option>Sanvi Byreddy</option>
-      <option>Vinay Patel</option>
-      <option>Saanvika Nair</option>
-      <option>Ryan Thomas</option>
-      <option>Anay Chatterjee</option>
-      <option>Dhruv Bajaj</option>
-      <option>Sofia Shao</option>
-      <option>Akshay Bhargav Varanasi</option>
-      <option>Edmund Bao</option>
-      <option>Pavel Chudnovskiy</option>
-      <option>Anvika Rath</option>
-      <option>Jayden Oh</option>
-      <option>William Wang</option>
-      <option>Akhil Gollapally</option>
-      <option>Joann Antony</option>
-      <option>Nora Ahmed</option>
-      <option>Haasini Bharathwaj</option>
-      <option>Anvi Dhome</option>
-      <option>Krishvee Anand</option>
-      <option>Rayansh Anand</option>
-      <option>Pavaki Rastogi</option>
-      <option>Samira Senthil</option>
-      <option>Ishani Bhat</option>
-      <option>Zayna Rasheed</option>
-      <option>Ishaan Parthasarathy</option>
-       <option>Aarav Singhai </option>
-    </select>
+  <div class="controls">
+    <label><b>Date:</b> <input type="date" id="date" required /></label>
+    <div>
+      <button type="button" id="markPresent">Mark Present</button>
+      <button type="button" id="markAbsent">Mark Absent</button>
+      <button type="button" id="markExcused">Mark Excused</button>
+      <button type="button" id="submitBtn">Submit</button>
+    </div>
+  </div>
 
-    <label>Status</label>
-    <select id="status" required>
-      <option value="">-- Select Status --</option>
-      <option value="P">Present</option>
-      <option value="A">Absent</option>
-      <option value="E">Excused</option>
-    </select>
+  <div class="student-list" id="studentList"></div>
 
-    <button type="submit">Submit</button>
-  </form>
   <div class="success" id="successMsg">✅ Attendance Recorded!</div>
 </div>
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzYcmLYaRHspp9Ct2LF6zAquP7MozSI6CiDmE9_Z94WDpvBnT70FbLLCLDSaoR1Feo0A/exec";
 
-// === THEME TOGGLE ===
-document.getElementById("modeToggle").addEventListener("click", () => {
-  const html = document.documentElement;
-  html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+const students = [
+  "Aarav Singh Mandhar","Shreya Ayyalasomayajula","Yvaine Wang","Junye Huang","Sanvi Byreddy",
+  "Vinay Patel","Saanvika Nair","Ryan Thomas","Anay Chatterjee","Dhruv Bajaj","Sofia Shao",
+  "Akshay Bhargav Varanasi","Edmund Bao","Pavel Chudnovskiy","Anvika Rath","Jayden Oh",
+  "William Wang","Akhil Gollapally","Joann Antony","Nora Ahmed","Haasini Bharathwaj",
+  "Anvi Dhome","Krishvee Anand","Rayansh Anand","Pavaki Rastogi","Samira Senthil","Ishani Bhat",
+  "Zayna Rasheed","Ishaan Parthasarathy","Aarav Singhai"
+];
+
+const listContainer = document.getElementById("studentList");
+students.forEach(name => {
+  const div = document.createElement("div");
+  div.className = "student";
+  div.innerHTML = `<input type="checkbox" name="student" value="${name}" /> <label>${name}</label>`;
+  listContainer.appendChild(div);
 });
 
-// === FORM HANDLER ===
-document.getElementById("attendanceForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+function markStatus(status) {
+  document.querySelectorAll("input[name='student']:checked").forEach(cb => {
+    cb.dataset.status = status;
+    cb.nextElementSibling.style.color =
+      status === "P" ? "green" : status === "A" ? "red" : "orange";
+  });
+}
+
+document.getElementById("markPresent").addEventListener("click", () => markStatus("P"));
+document.getElementById("markAbsent").addEventListener("click", () => markStatus("A"));
+document.getElementById("markExcused").addEventListener("click", () => markStatus("E"));
+
+document.getElementById("submitBtn").addEventListener("click", async () => {
   const date = document.getElementById("date").value;
-  const name = document.getElementById("name").value;
-  const status = document.getElementById("status").value;
+  if (!date) return alert("Please select a date first.");
+
+  const records = [];
+  document.querySelectorAll("input[name='student']").forEach(cb => {
+    if (cb.dataset.status) {
+      records.push({ date, name: cb.value, status: cb.dataset.status });
+    }
+  });
+
+  if (records.length === 0) return alert("No attendance marked!");
 
   try {
-    const response = await fetch(SCRIPT_URL, {
+    await fetch(SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ date, name, status })
+      body: JSON.stringify(records)
     });
-
     document.getElementById("successMsg").classList.add("show");
     setTimeout(() => document.getElementById("successMsg").classList.remove("show"), 2500);
-    e.target.reset();
+    document.querySelectorAll("input[name='student']").forEach(cb => {
+      cb.checked = false;
+      cb.dataset.status = "";
+      cb.nextElementSibling.style.color = "";
+    });
   } catch (err) {
     alert("❌ Error: " + err.message);
   }
 });
+
+// Dark/light mode toggle
+document.getElementById("modeToggle").addEventListener("click", () => {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === "dark" ? "light" : "dark";
+});
 </script>
+
 </body>
 </html>
+
 
