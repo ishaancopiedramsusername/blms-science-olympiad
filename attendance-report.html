@@ -39,6 +39,7 @@ body {
   font-size: 0.95rem;
   position: relative;
   transition: color 0.2s ease, transform 0.2s ease;
+  background: none;
 }
 .nav a:hover {
   color: #007aff;
@@ -49,7 +50,26 @@ body {
   background: linear-gradient(90deg, #007aff, #9b7bff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   font-weight: 800;
+  text-shadow: 0 0 10px rgba(155,123,255,0.3);
+}
+.nav a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #007aff, #9b7bff);
+  border-radius: 2px;
+  opacity: 0.8;
+  animation: glowline 1.8s ease-in-out infinite alternate;
+}
+@keyframes glowline {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
 }
 
 /* === HEADER === */
@@ -152,7 +172,6 @@ footer {
 <nav class="nav">
   <a href="index.html" data-page="index">🏠 Home</a>
   <a href="roster.html" data-page="roster">👥 Team Roster</a>
-  <a href="tournaments.html" data-page="tournaments">🏆 Tournaments</a>
   <a href="attendance-tracker.html" data-page="attendance-tracker">🗓️ Attendance Tracker</a>
   <a href="attendance-report.html" data-page="attendance-report">📊 Attendance Report</a>
 </nav>
@@ -242,3 +261,4 @@ loadData();
 </script>
 </body>
 </html>
+
