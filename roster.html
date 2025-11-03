@@ -33,7 +33,7 @@ body{
 }
 [data-theme="dark"] body{background:var(--bg-dark);}
 
-/* --- NAV + TOGGLE --- */
+/* NAV */
 .nav{position:fixed;top:18px;left:20px;z-index:10;display:flex;gap:14px;
   padding:10px 16px;background:rgba(255,255,255,0.25);
   backdrop-filter:blur(14px);border-radius:999px;
@@ -47,19 +47,19 @@ body{
   border-radius:999px;border:1px solid var(--card-bd);
   background:rgba(255,255,255,.25);backdrop-filter:blur(14px);cursor:pointer;}
 
-/* --- HEADER --- */
+/* HEADER */
 header{text-align:center;padding:60px 20px 10px;}
 h1{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#007aff,#9b7bff);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .tag{opacity:.75;margin-top:8px;}
 
-/* --- FILTER --- */
+/* FILTER */
 .filter-bar{text-align:center;margin:20px 0 10px;}
 .filter-bar select{padding:10px 16px;border-radius:10px;border:1px solid var(--card-bd);
   background:rgba(255,255,255,0.7);font-size:1rem;cursor:pointer;}
 [data-theme="dark"] .filter-bar select{background:rgba(36,38,46,0.7);color:var(--text);}
 
-/* --- GRID & CARDS --- */
+/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:32px;max-width:1200px;padding:32px 20px 100px;margin:0 auto;}
 .flip-card{perspective:1000px;height:240px;}
@@ -78,13 +78,20 @@ h1{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#007aff,#9b
 .edit-btn{margin-top:10px;padding:6px 12px;border:none;border-radius:8px;
   background:linear-gradient(90deg,#007aff,#9b7bff);color:#fff;font-weight:600;cursor:pointer;display:none;}
 .teacher .edit-btn{display:inline-block;}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
+.delete-btn{display:none;margin-top:6px;padding:5px 10px;background:#ef4444;border:none;color:white;border-radius:8px;cursor:pointer;}
+.teacher .delete-btn{display:inline-block;}
 
-/* --- LOGIN PANEL (teacher only toggle) --- */
+/* LOGIN PANEL */
 #loginPanel{position:fixed;bottom:20px;right:20px;z-index:10;}
 #loginPanel input{padding:6px 8px;border-radius:6px;border:1px solid #ccc;}
 #loginPanel button{padding:6px 10px;border:none;border-radius:6px;
   background:#007aff;color:white;cursor:pointer;margin-left:6px;}
+
+/* TEACHER BAR */
+#teacherTools{text-align:center;margin:20px;}
+#teacherTools button{padding:10px 14px;border:none;border-radius:8px;color:#fff;font-weight:600;margin:0 5px;cursor:pointer;}
+#addBtn{background:#10b981;}
+#deleteBtn{background:#ef4444;}
 </style>
 </head>
 <body>
@@ -110,51 +117,71 @@ h1{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#007aff,#9b
 
 <main class="grid" id="grid"></main>
 
-<!-- simple login toggle (students can still see everything) -->
 <div id="loginPanel">
   <input type="password" id="pw" placeholder="Teacher password">
   <button id="loginBtn">Login</button>
 </div>
 
 <script>
-/* theme toggle */
+/* Theme toggle */
 document.getElementById("modeToggle").onclick=()=>{const h=document.documentElement;
   h.dataset.theme=h.dataset.theme==="dark"?"light":"dark";};
 
-/* highlight current page */
+/* Nav highlight */
 const cur=location.pathname.split("/").pop().replace(".html","");
 document.querySelectorAll(".nav a").forEach(a=>{
   if(a.dataset.page===cur||(cur===""&&a.dataset.page==="index"))a.classList.add("active");
 });
 
-/* teacher login */
+/* Login */
 const PW="blms2025";
 document.getElementById("loginBtn").onclick=()=>{
   const val=document.getElementById("pw").value.trim();
   if(val===PW){
     sessionStorage.setItem("teacherMode","1");
     document.body.classList.add("teacher");
-    alert("✅ Teacher mode enabled");
     showTeacherToolbar();
-  } else alert("Incorrect password");
+    alert("✅ Teacher mode enabled");
+  }else alert("Incorrect password");
 };
 if(sessionStorage.getItem("teacherMode")==="1"){
   document.body.classList.add("teacher");
   showTeacherToolbar();
 }
 
-/* data */
+/* Full student data */
 let students=[
-  {name:"Aarav Mandhar",events:["Rocks and Minerals","Codebusters","Boomilever"]},
-  {name:"Anay Chatterjee",events:["Metric Mastery","Helicopter","Heredity","Experimental Design"]},
-  {name:"Edmund Bao",events:["Boomilever","Helicopter","Scrambler","Potions and Poisons","Hovercraft","Crime Busters","Disease Detectives","Heredity","Codebusters"]},
-  {name:"Joann Antony",events:["Disease Detectives","Scrambler","Boomilever"]},
-  {name:"Sanvi Byreddy",events:["Disease Detectives","Heredity","Water Quality","Dynamic Planet"]},
-  {name:"Shreya Ayyalasomayajula",events:["Anatomy and Physiology","Entomology","Heredity","Dynamic Planet"]},
-  {name:"Yvaine Wang",events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]}
+{name:"Aarav Mandhar",events:["Rocks and Minerals","Codebusters","Boomilever"]},
+{name:"Aarav Singhai",events:["Disease Detectives","Mission Possible","Crime Busters"]},
+{name:"Akhil Gollapally",events:["Anatomy and Physiology","Heredity","Boomilever","Mission Possible","Potions and Poisons","Disease Detectives"]},
+{name:"Akshay Varanasi",events:["Dynamic Planet","Meteorology","Circuit Lab"]},
+{name:"Anay Chatterjee",events:["Metric Mastery","Helicopter","Heredity","Experimental Design"]},
+{name:"Anvi Dhome",events:["Crime Busters","Mission Possible","Codebusters","Entomology","Potions and Poisons"]},
+{name:"Anvika Rath",events:["Rocks and Minerals","Solar System","Crime Busters"]},
+{name:"Dhruv Bajaj",events:["Experimental Design","Crime Busters","Circuit Lab"]},
+{name:"Edmund Bao",events:["Boomilever","Helicopter","Scrambler","Potions and Poisons","Hovercraft","Crime Busters","Disease Detectives","Heredity","Codebusters"]},
+{name:"Haasini Bharathwaj",events:["Dynamic Planet","Write It Do It","Solar System"]},
+{name:"Ishani Bhat",events:["Disease Detectives","Heredity","Rocks and Minerals","Potions and Poisons"]},
+{name:"Jayden Oh",events:["Boomilever","Hovercraft","Helicopter","Mission Possible"]},
+{name:"Joann Antony",events:["Disease Detectives","Scrambler","Boomilever"]},
+{name:"Krishvee Anand",events:["Anatomy and Physiology","Disease Detectives","Heredity","Solar System","Potions and Poisons","Experimental Design"]},
+{name:"Nora Ahmed",events:["Solar System","Boomilever","Disease Detectives","Scrambler"]},
+{name:"Pavaki Rastogi",events:["Entomology","Heredity","Write It Do It","Experimental Design"]},
+{name:"Pavel Chudnovskiy",events:["Dynamic Planet","Meteorology","Circuit Lab"]},
+{name:"Rayansh Anand",events:["Disease Detectives","Remote Sensing","Circuit Lab"]},
+{name:"Ryan Thomas",events:["Metric Mastery","Helicopter","Write It Do It","Heredity","Experimental Design"]},
+{name:"Samira Senthil",events:["Heredity","Water Quality","Rocks and Minerals","Potions and Poisons"]},
+{name:"Sanvi Byreddy",events:["Disease Detectives","Heredity","Water Quality","Dynamic Planet"]},
+{name:"Saanvika Nair",events:["Crime Busters","Potions and Poisons","Helicopter","Scrambler","Codebusters"]},
+{name:"Shreya Ayyalasomayajula",events:["Anatomy and Physiology","Entomology","Heredity","Dynamic Planet"]},
+{name:"Sofia Shao",events:["Machines","Potions and Poisons","Helicopter","Scrambler","Write It Do It"]},
+{name:"Vinay Patel",events:["Entomology","Heredity","Crime Busters","Codebusters","Scrambler"]},
+{name:"William Wang",events:["Hovercraft","Boomilever","Helicopter","Mission Possible"]},
+{name:"Yvaine Wang",events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]},
+{name:"Zayna Rasheed",events:["Water Quality","Heredity","Rocks and Minerals","Potions and Poisons"]}
 ];
 
-/* build cards */
+/* Build cards */
 const grid=document.getElementById("grid");
 function build(list){
   grid.innerHTML="";
@@ -170,34 +197,26 @@ function build(list){
     b.className="face back";
     b.innerHTML=`<ul>${s.events.map(e=>`<li>${e}</li>`).join("")}</ul>
       <button class='edit-btn'>✏️ Edit</button>
-      <button class='delete-btn' style='display:none;'>🗑️ Delete</button>`;
+      <button class='delete-btn'>🗑️ Delete</button>`;
     inner.append(f,b); c.append(inner); grid.append(c);
 
-    const editBtn=b.querySelector(".edit-btn");
-    const delBtn=b.querySelector(".delete-btn");
-    editBtn.onclick=e=>{e.stopPropagation();edit(i);};
-    delBtn.onclick=e=>{e.stopPropagation();deleteStudent(i);};
-
+    b.querySelector(".edit-btn").onclick=e=>{e.stopPropagation();edit(i);};
+    b.querySelector(".delete-btn").onclick=e=>{e.stopPropagation();deleteStudent(i);};
     c.onclick=()=>c.classList.toggle("flipped");
   });
-
-  // show delete buttons only in teacher mode
-  if(document.body.classList.contains("teacher")){
-    document.querySelectorAll(".delete-btn").forEach(btn=>btn.style.display="inline-block");
-  }
 }
 
-/* edit */
+/* Edit */
 function edit(i){
   const s=students[i];
-  const n=prompt("Edit student name:",s.name);
+  const n=prompt("Edit name:",s.name);
   if(!n)return;
   const ev=prompt("Edit events (; separated):",s.events.join("; "));
   students[i]={name:n.trim(),events:ev.split(/;|,/).map(x=>x.trim()).filter(Boolean)};
   populate();build(students);
 }
 
-/* add */
+/* Add/Delete */
 function addStudent(){
   const n=prompt("Enter new student name:");
   if(!n)return;
@@ -205,8 +224,6 @@ function addStudent(){
   students.push({name:n.trim(),events:ev.split(/;|,/).map(x=>x.trim()).filter(Boolean)});
   populate();build(students);
 }
-
-/* delete */
 function deleteStudent(i){
   if(confirm(`Delete ${students[i].name}?`)){
     students.splice(i,1);
@@ -214,30 +231,26 @@ function deleteStudent(i){
   }
 }
 
-/* teacher toolbar */
+/* Teacher toolbar */
 function showTeacherToolbar(){
   if(document.getElementById("teacherTools")) return;
   const bar=document.createElement("div");
   bar.id="teacherTools";
-  bar.style.textAlign="center";
-  bar.style.margin="20px";
   bar.innerHTML=`
-    <button id="addBtn" style="padding:10px 14px;border:none;border-radius:8px;background:#10b981;color:#fff;font-weight:600;margin-right:10px;cursor:pointer;">➕ Add Student</button>
-    <button id="deleteBtn" style="padding:10px 14px;border:none;border-radius:8px;background:#ef4444;color:#fff;font-weight:600;cursor:pointer;">❌ Delete Student (select via card)</button>
+    <button id="addBtn">➕ Add Student</button>
+    <button id="deleteBtn">🗑️ Delete from Card</button>
   `;
   document.querySelector("header").after(bar);
   document.getElementById("addBtn").onclick=addStudent;
-  document.getElementById("deleteBtn").onclick=()=>alert("You can delete from each card’s back 🗑️ or here later we'll add a picker.");
 }
 
-/* populate filter */
+/* Filter */
 function populate(){
   const sel=document.getElementById("eventFilter");
   const evs=[...new Set(students.flatMap(s=>s.events))].sort();
   sel.innerHTML="<option value='All'>All Events</option>";
   evs.forEach(e=>{
-    const o=document.createElement("option");
-    o.value=e;o.textContent=e;
+    const o=document.createElement("option");o.value=e;o.textContent=e;
     sel.append(o);
   });
 }
@@ -247,7 +260,7 @@ document.getElementById("eventFilter").onchange=e=>{
   else build(students.filter(s=>s.events.includes(v)));
 };
 
-/* initial */
+/* Initial */
 populate();build(students);
 </script>
 </body>
