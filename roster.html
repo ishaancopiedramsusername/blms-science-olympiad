@@ -264,38 +264,36 @@ document.getElementById('modeToggle').addEventListener('click', () => {
   html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
 });
 
-/* === STUDENT DATA === */
+/* === STUDENT DATA (updated) === */
 const students = [
-  {name:"Shreya Ayyalasomayajula", events:["Anatomy and Physiology","Entomology","Heredity","Meteorology","Dynamic Planet"]},
-  {name:"Yvaine Wang", events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]},
-  {name:"Junye Huang", events:["Solar System","Potions and Poisons","Metric Mastery","Anatomy and Physiology","Circuit Lab"]},
-  {name:"Sanvi Byreddy", events:["Disease Detectives","Heredity","Water Quality","Dynamic Planet"]},
-  {name:"Vinay Patel", events:["Entomology","Heredity","Crime Busters","Codebusters","Scrambler"]},
-  {name:"Saanvika Nair", events:["Crime Busters","Potions and Poisons","Helicopter","Scrambler","Codebusters"]},
-  {name:"Ryan Thomas", events:["Metric Mastery","Write It Do It","Experimental Design"]},
-  {name:"Anay Chatterjee", events:["Metric Mastery","Helicopter","Heredity","Experimental Design","Write It Do It"]},
-  {name:"Dhruv Bajaj", events:["Hovercraft","Crime Busters","Experimental Design"]},
-  {name:"Aarav Singhai", events:["Disease Detectives","Mission Possible","Crime Busters","Hovercraft"]},
-  {name:"Sofia Shao", events:["Write It Do It","Scrambler","Helicopter","Potions and Poisons","Machines"]},
-  {name:"Akshay Bhargav Varanasi", events:["Boomilever","Codebusters","Rocks and Minerals","Dynamic Planet","Meteorology","Circuit Lab"]},
-  {name:"Edmund Bao", events:["Boomilever","Helicopter","Scrambler","Potions and Poisons","Hovercraft","Crime Busters","Disease Detectives","Heredity","Codebusters"]},
-  {name:"Pavel Chudnovskiy", events:["Remote Sensing","Dynamic Planet","Meteorology","Circuit Lab"]},
-  {name:"Aarav Singh Mandhar", events:["Rocks and Minerals","Codebusters","Boomilever"]},
-  {name:"Anvika Rath", events:["Anatomy and Physiology","Rocks and Minerals","Solar System","Crime Busters"]},
-  {name:"Jayden Oh", events:["Boomilever","Hovercraft","Helicopter","Mission Possible"]},
-  {name:"William Wang", events:["Hovercraft","Boomilever","Helicopter","Mission Possible"]},
+  {name:"Aarav Mandhar", events:["Rocks and Minerals","Codebusters","Boomilever"]},
+  {name:"Aarav Singhai", events:["Disease Detectives","Mission Possible","Crime Busters"]},
   {name:"Akhil Gollapally", events:["Anatomy and Physiology","Heredity","Boomilever","Mission Possible","Potions and Poisons","Disease Detectives"]},
-  {name:"Joann Antony", events:["Disease Detectives","Scrambler","Boomilever"]},
-  {name:"Nora Ahmed", events:["Solar System","Boomilever","Disease Detectives","Scrambler"]},
-  {name:"Haasini Bharathwaj", events:["Meteorology","Write It Do It","Water Quality","Dynamic Planet","Solar System"]},
+  {name:"Akshay Varanasi", events:["Dynamic Planet","Meteorology","Circuit Lab"]},
+  {name:"Anay Chatterjee", events:["Metric Mastery","Helicopter","Heredity","Experimental Design"]},
   {name:"Anvi Dhome", events:["Crime Busters","Mission Possible","Codebusters","Entomology","Potions and Poisons"]},
-  {name:"Krishvee Anand", events:["Anatomy and Physiology","Disease Detectives","Heredity","Solar System","Potions and Poisons","Experimental Design"]},
-  {name:"Rayansh Anand", events:["Potions and Poisons","Disease Detectives","Remote Sensing","Circuit Lab"]},
-  {name:"Pavaki Rastogi", events:["Entomology","Heredity","Write It Do It","Experimental Design"]},
-  {name:"Samira Senthil", events:["Heredity","Water Quality","Rocks and Minerals","Potions and Poisons"]},
+  {name:"Anvika Rath", events:["Rocks and Minerals","Solar System","Crime Busters"]},
+  {name:"Dhruv Bajaj", events:["Experimental Design","Crime Busters","Circuit Lab"]},
+  {name:"Edmund Bao", events:["Boomilever","Helicopter","Scrambler","Potions and Poisons","Hovercraft","Crime Busters","Disease Detectives","Heredity","Codebusters"]},
+  {name:"Haasini Bharathwaj", events:["Dynamic Planet","Write It Do It","Solar System"]},
   {name:"Ishani Bhat", events:["Disease Detectives","Heredity","Rocks and Minerals","Potions and Poisons"]},
-  {name:"Zayna Rasheed", events:["Water Quality","Heredity","Rocks and Minerals","Potions and Poisons"]},
-  {name:"Ishaan Parthasarathy", events:["Anatomy and Physiology","Metric Mastery","Write It Do It"]}
+  {name:"Jayden Oh", events:["Boomilever","Hovercraft","Helicopter","Mission Possible"]},
+  {name:"Joann Antony", events:["Disease Detectives","Scrambler","Boomilever"]},
+  {name:"Krishvee Anand", events:["Anatomy and Physiology","Disease Detectives","Heredity","Solar System","Potions and Poisons","Experimental Design"]},
+  {name:"Nora Ahmed", events:["Solar System","Boomilever","Disease Detectives","Scrambler"]},
+  {name:"Pavaki Rastogi", events:["Entomology","Heredity","Write It Do It","Experimental Design"]},
+  {name:"Pavel Chudnovskiy", events:["Dynamic Planet","Meteorology","Circuit Lab"]},
+  {name:"Rayansh Anand", events:["Disease Detectives","Remote Sensing","Circuit Lab"]},
+  {name:"Ryan Thomas", events:["Metric Mastery","Helicopter","Write It Do It","Heredity","Experimental Design"]},
+  {name:"Samira Senthil", events:["Heredity","Water Quality","Rocks and Minerals","Potions and Poisons"]},
+  {name:"Sanvi Byreddy", events:["Disease Detectives","Heredity","Water Quality","Dynamic Planet"]},
+  {name:"Saanvika Nair", events:["Crime Busters","Potions and Poisons","Helicopter","Scrambler","Codebusters"]},
+  {name:"Shreya Ayyalasomayajula", events:["Anatomy and Physiology","Entomology","Heredity","Dynamic Planet"]},
+  {name:"Sofia Shao", events:["Machines","Potions and Poisons","Helicopter","Scrambler","Write It Do It"]},
+  {name:"Vinay Patel", events:["Entomology","Heredity","Crime Busters","Codebusters","Scrambler"]},
+  {name:"William Wang", events:["Hovercraft","Boomilever","Helicopter","Mission Possible"]},
+  {name:"Yvaine Wang", events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]},
+  {name:"Zayna Rasheed", events:["Water Quality","Heredity","Rocks and Minerals","Potions and Poisons"]}
 ];
 
 /* === BUILD CARDS === */
@@ -349,5 +347,3 @@ buildCards(students);
 </script>
 </body>
 </html>
-
-
