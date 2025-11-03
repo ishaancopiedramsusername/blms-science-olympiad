@@ -39,7 +39,6 @@ body {
   font-size: 0.95rem;
   position: relative;
   transition: color 0.2s ease, transform 0.2s ease;
-  background: none;
 }
 .nav a:hover {
   color: #007aff;
@@ -78,6 +77,7 @@ header {
   color: #fff;
   text-align: center;
   padding: 1.3rem 0;
+  margin-top: 100px; /* ✅ pushes header below nav bar */
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 h1 {
@@ -88,7 +88,7 @@ h1 {
 
 /* === MAIN === */
 main {
-  padding: 140px 8% 80px; /* ✅ This moves content below fixed nav */
+  padding: 40px 8% 80px;
   max-width: 1100px;
   margin: auto;
 }
@@ -163,6 +163,13 @@ footer {
   padding: 20px;
   color: #777;
   font-style: italic;
+}
+
+/* === RESPONSIVE FIX === */
+@media (max-width: 700px) {
+  header { margin-top: 130px; } /* extra top space for multi-line nav */
+  .filter-bar { flex-direction: column; gap: 10px; align-items: stretch; }
+  .filter-bar input { width: 100%; }
 }
 </style>
 </head>
