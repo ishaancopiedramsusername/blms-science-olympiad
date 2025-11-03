@@ -182,14 +182,23 @@ h1 {
 /* === FRONT SIDE === */
 .front h3 {
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  font-size: clamp(1.2rem, 2.5vw, 2.6rem);
+  font-size: clamp(1.1rem, 2vw, 1.9rem);
   text-align: center;
   width: 100%;
   color: var(--text);
-  padding: 0 6px;
+  padding: 0 8px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  white-space: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 
 /* === BACK SIDE === */
 .back {
