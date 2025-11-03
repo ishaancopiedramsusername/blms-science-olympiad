@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>BLMS Science Olympiad — Team Roster</title>
+<title>BLMS Science Olympiad — Editable Team Roster</title>
 <style>
-/* === THEME VARIABLES === */
 :root {
   --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
               radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
@@ -26,11 +25,9 @@
   --card-bd: rgba(255,255,255,.18);
   --shadow: rgba(0,0,0,.6);
 }
-
-/* === GLOBAL STYLES === */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
   background: var(--bg-light);
   color: var(--text);
   min-height: 100vh;
@@ -39,201 +36,132 @@ body {
 }
 [data-theme="dark"] body { background: var(--bg-dark); }
 
-/* === HEADER === */
-header {
-  text-align: center;
-  padding: 60px 20px 10px;
-}
+/* Header */
+header { text-align:center; padding:60px 20px 10px; }
 h1 {
-  font-size: 2.8rem;
-  font-weight: 800;
-  background: linear-gradient(90deg, #007aff, #9b7bff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size:2.8rem; font-weight:800;
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
-.tag {
-  opacity: .75;
-  margin-top: 8px;
-  font-size: 1rem;
-}
+.tag { opacity:.75; margin-top:8px; font-size:1rem; }
 
-/* === THEME TOGGLE === */
+/* Toggle */
 .toggle {
-  position: fixed;
-  top: 18px;
-  right: 20px;
-  z-index: 10;
-  padding: 8px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--card-bd);
-  background: rgba(255,255,255,.25);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  cursor: pointer;
-  color: var(--text);
+  position:fixed; top:18px; right:20px; z-index:10;
+  padding:8px 16px; border-radius:999px;
+  border:1px solid var(--card-bd);
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(14px);
+  cursor:pointer; color:var(--text);
 }
 
-/* === NAV BAR === */
+/* Nav */
 .nav {
-  position: fixed;
-  top: 18px;
-  left: 20px;
-  z-index: 10;
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  padding: 10px 16px;
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.3);
+  position:fixed; top:18px; left:20px; z-index:10;
+  display:flex; gap:14px; flex-wrap:wrap;
+  padding:10px 16px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(14px);
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.3);
 }
 [data-theme="dark"] .nav {
-  background: rgba(36,38,46,0.5);
-  border-color: rgba(255,255,255,0.18);
+  background:rgba(36,38,46,0.5);
+  border-color:rgba(255,255,255,0.18);
 }
 .nav a {
-  color: var(--text);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  position: relative;
-  transition: color 0.2s ease, transform 0.2s ease;
+  color:var(--text); text-decoration:none;
+  font-weight:600; font-size:0.95rem;
+  transition:color .2s, transform .2s;
 }
-.nav a:hover {
-  color: #007aff;
-  text-shadow: 0 0 10px rgba(0,122,255,0.4);
-  transform: scale(1.05);
-}
+.nav a:hover { color:#007aff; transform:scale(1.05); }
 .nav a.active {
-  background: linear-gradient(90deg, #007aff, #9b7bff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 800;
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  font-weight:800;
 }
 
-/* === FILTER BAR === */
+/* Filter bar */
 .filter-bar {
-  text-align: center;
-  margin: 20px 0 10px;
+  text-align:center; margin:20px 0 10px;
 }
 .filter-bar select {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: 1px solid var(--card-bd);
-  background: rgba(255,255,255,0.7);
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  padding:10px 16px; border-radius:10px; border:1px solid var(--card-bd);
+  background:rgba(255,255,255,0.7); font-size:1rem; cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,0.1);
 }
 [data-theme="dark"] .filter-bar select {
-  background: rgba(36,38,46,0.7);
-  color: var(--text);
+  background:rgba(36,38,46,0.7); color:var(--text);
 }
 
-/* === GRID === */
+/* Grid */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 32px;
-  max-width: 1200px;
-  padding: 32px 20px 100px;
-  margin: 0 auto;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px; max-width:1200px; padding:32px 20px 100px; margin:0 auto;
 }
 
-/* === CARD STRUCTURE === */
-.flip-card {
-  perspective: 1000px;
-  height: 230px;
-}
+/* Cards */
+.flip-card { perspective:1000px; height:auto; }
 .flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.8s cubic-bezier(.2,.65,.2,1);
-  cursor: pointer;
+  position:relative; width:100%; height:100%;
+  transform-style:preserve-3d;
+  transition:transform .8s cubic-bezier(.2,.65,.2,1);
+  cursor:pointer;
 }
-.flip-card:hover .flip-inner,
-.flip-card.flipped .flip-inner {
-  transform: rotateY(180deg);
-}
-
-/* === CARD FACE === */
 .face {
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  background: var(--card);
-  border: 1px solid var(--card-bd);
-  backdrop-filter: blur(30px) saturate(180%);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-  box-shadow: 0 14px 30px var(--shadow);
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  backface-visibility: hidden;
-  overflow: hidden;
+  position:absolute; inset:0; border-radius:22px;
+  background:var(--card); border:1px solid var(--card-bd);
+  backdrop-filter:blur(30px) saturate(180%);
+  box-shadow:0 14px 30px var(--shadow);
+  padding:20px; display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  text-align:center; backface-visibility:hidden; overflow:hidden;
 }
-
-/* === FRONT SIDE === */
 .front h3 {
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  font-size: clamp(1.1rem, 2vw, 1.9rem);
-  text-align: center;
-  width: 100%;
-  color: var(--text);
-  padding: 0 8px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-  white-space: normal;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  font-weight:800; line-height:1.15; font-size:clamp(1.1rem,2vw,1.9rem);
+  text-align:center; color:var(--text);
+  word-wrap:break-word; overflow-wrap:break-word; white-space:normal;
 }
+.back { transform:rotateY(180deg); padding:22px; overflow-y:auto; text-align:left; }
+.back ul { list-style:none; margin:0; padding-left:0; }
+.back li { margin:5px 0; font-size:1.05rem; color:var(--text-weak); }
+.flip-card:hover .flip-inner, .flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+.flip-card { animation:fadeInUp .6s ease both; }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(15px);} to{opacity:1;transform:translateY(0);} }
 
+/* Edit Mode */
+.edit-btn {
+  margin-top:10px;
+  padding:6px 12px;
+  border:none; border-radius:8px;
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  color:white; font-weight:600; cursor:pointer;
+  display:none;
+}
+.teacher .edit-btn { display:inline-block; }
 
-/* === BACK SIDE === */
-.back {
-  transform: rotateY(180deg);
-  padding: 22px 20px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  text-align: left;
-  overflow-y: auto;
+/* Login overlay */
+#loginOverlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.8);
+  backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center; z-index:9999;
 }
-.back ul {
-  list-style: none;
-  margin: 0;
-  padding-left: 0;
+.login {
+  width:min(420px,92vw); background:#fff; border-radius:18px; padding:28px;
+  box-shadow:0 12px 32px rgba(0,0,0,.5); text-align:center;
 }
-.back li {
-  margin: 5px 0;
-  font-size: 1.05rem;
-  color: var(--text-weak);
+.login h2{margin:0 0 10px;color:#007aff;}
+.login input{
+  width:100%; padding:11px 13px; border-radius:10px; border:1px solid #d1d5db;
+  margin:10px 0 14px; font-size:1rem;
 }
-
-/* === ANIMATION === */
-.flip-card {
-  animation: fadeInUp .6s ease both;
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+.login .btn{width:100%; padding:10px 14px; border:none; border-radius:8px;
+  background:linear-gradient(90deg,#007aff,#9b7bff); color:#fff; font-weight:600; cursor:pointer;}
+.login .err{color:#ef4444; font-weight:700; min-height:20px; margin-top:6px;}
 </style>
 </head>
 <body>
 
-<!-- === NAVIGATION BAR === -->
 <nav class="nav">
   <a href="index.html" data-page="index">🏠 Home</a>
   <a href="roster.html" data-page="roster">👥 Team Roster</a>
@@ -246,35 +174,54 @@ h1 {
 
 <header>
   <h1>Team Roster</h1>
-  <p class="tag">Flip a card to view events · 2025–26 · BLMS Science Olympiad</p>
+  <p class="tag">Flip or edit cards · Teacher Login Enabled</p>
 </header>
 
-<!-- FILTER BAR -->
+<!-- LOGIN OVERLAY -->
+<div id="loginOverlay">
+  <div class="login">
+    <h2>Teacher Access</h2>
+    <input type="password" id="pw" placeholder="Enter password" />
+    <button class="btn" id="loginBtn">Login</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+</div>
+
 <div class="filter-bar">
-  <select id="eventFilter">
-    <option value="All">All Events</option>
-  </select>
+  <select id="eventFilter"><option value="All">All Events</option></select>
 </div>
 
 <main class="grid" id="grid"></main>
 
 <script>
-/* === HIGHLIGHT ACTIVE PAGE === */
-const currentFile = location.pathname.split('/').pop().replace('.html', '');
-document.querySelectorAll('.nav a').forEach(a => {
-  if (a.dataset.page === currentFile || (currentFile === '' && a.dataset.page === 'index')) {
-    a.classList.add('active');
+const TEACHER_PASSWORD = "blms2025"; // change if you like
+const grid = document.getElementById("grid");
+
+/* Theme toggle */
+document.getElementById('modeToggle').addEventListener('click',()=>{
+  const html=document.documentElement;
+  html.dataset.theme=html.dataset.theme==='dark'?'light':'dark';
+});
+
+/* Login */
+const loginOverlay=document.getElementById("loginOverlay");
+document.getElementById("loginBtn").addEventListener("click",()=>{
+  const pw=document.getElementById("pw").value.trim();
+  if(pw===TEACHER_PASSWORD){
+    sessionStorage.setItem("roster_teacher","1");
+    loginOverlay.style.display="none";
+    document.body.classList.add("teacher");
+  } else {
+    document.getElementById("loginErr").textContent="Incorrect password.";
   }
 });
+if(sessionStorage.getItem("roster_teacher")==="1"){
+  loginOverlay.style.display="none";
+  document.body.classList.add("teacher");
+}
 
-/* === DARK/LIGHT TOGGLE === */
-document.getElementById('modeToggle').addEventListener('click', () => {
-  const html = document.documentElement;
-  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
-});
-
-/* === STUDENT DATA (updated) === */
-const students = [
+/* Data */
+let students=[
   {name:"Aarav Mandhar", events:["Rocks and Minerals","Codebusters","Boomilever"]},
   {name:"Aarav Singhai", events:["Disease Detectives","Mission Possible","Crime Busters"]},
   {name:"Akhil Gollapally", events:["Anatomy and Physiology","Heredity","Boomilever","Mission Possible","Potions and Poisons","Disease Detectives"]},
@@ -305,54 +252,67 @@ const students = [
   {name:"Zayna Rasheed", events:["Water Quality","Heredity","Rocks and Minerals","Potions and Poisons"]}
 ];
 
-/* === BUILD CARDS === */
-const grid = document.getElementById("grid");
+/* Build */
 function buildCards(list){
-  grid.innerHTML = "";
-  list.forEach((s, i) => {
-    const card = document.createElement("div");
-    card.className = "flip-card";
-    card.style.animationDelay = (i * 0.04) + "s";
-
-    const inner = document.createElement("div");
-    inner.className = "flip-inner";
-
-    const front = document.createElement("div");
-    front.className = "face front";
-    front.innerHTML = `<h3>${s.name}</h3>`;
-
-    const back = document.createElement("div");
-    back.className = "face back";
-    back.innerHTML = `<ul>${s.events.map(e => `<li>${e}</li>`).join("")}</ul>`;
-
-    inner.appendChild(front);
-    inner.appendChild(back);
-    card.appendChild(inner);
+  grid.innerHTML="";
+  list.forEach((s,i)=>{
+    const card=document.createElement("div");
+    card.className="flip-card";
+    card.style.animationDelay=(i*0.04)+"s";
+    const inner=document.createElement("div");
+    inner.className="flip-inner";
+    const front=document.createElement("div");
+    front.className="face front";
+    front.innerHTML=`<h3>${s.name}</h3>`;
+    const back=document.createElement("div");
+    back.className="face back";
+    back.innerHTML=`<ul>${s.events.map(e=>`<li>${e}</li>`).join("")}</ul>
+      <button class='edit-btn'>✏️ Edit</button>`;
+    inner.appendChild(front); inner.appendChild(back); card.appendChild(inner);
     grid.appendChild(card);
 
-    card.addEventListener("click", () => card.classList.toggle("flipped"));
+    const editBtn=back.querySelector(".edit-btn");
+    editBtn.addEventListener("click",(e)=>{
+      e.stopPropagation();
+      editStudent(i);
+    });
+
+    card.addEventListener("click",()=>card.classList.toggle("flipped"));
   });
 }
 
-/* === POPULATE EVENT FILTER === */
-const allEvents = [...new Set(students.flatMap(s => s.events))].sort();
-const eventSelect = document.getElementById("eventFilter");
-allEvents.forEach(ev => {
-  const opt = document.createElement("option");
-  opt.value = ev;
-  opt.textContent = ev;
-  eventSelect.appendChild(opt);
+/* Edit modal (simple prompt style) */
+function editStudent(index){
+  const s=students[index];
+  const newName=prompt("Edit Student Name:",s.name);
+  if(!newName) return;
+  const newEvents=prompt("Edit Events (separate by ;):",s.events.join("; "));
+  students[index]={name:newName.trim(),events:newEvents.split(/;|,/).map(e=>e.trim()).filter(Boolean)};
+  buildCards(students);
+  populateFilter();
+}
+
+/* Filter dropdown */
+const eventSelect=document.getElementById("eventFilter");
+function populateFilter(){
+  const allEvents=[...new Set(students.flatMap(s=>s.events))].sort();
+  eventSelect.innerHTML="<option value='All'>All Events</option>";
+  allEvents.forEach(ev=>{
+    const opt=document.createElement("option");
+    opt.value=ev; opt.textContent=ev;
+    eventSelect.appendChild(opt);
+  });
+}
+eventSelect.addEventListener("change",()=>{
+  const val=eventSelect.value;
+  if(val==="All") buildCards(students);
+  else buildCards(students.filter(s=>s.events.includes(val)));
 });
 
-/* === FILTER FUNCTION === */
-eventSelect.addEventListener("change", () => {
-  const val = eventSelect.value;
-  if (val === "All") buildCards(students);
-  else buildCards(students.filter(s => s.events.includes(val)));
-});
-
-/* === INITIAL LOAD === */
+/* Initial */
+populateFilter();
 buildCards(students);
 </script>
 </body>
 </html>
+
