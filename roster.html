@@ -33,31 +33,79 @@ body{
 }
 [data-theme="dark"] body{background:var(--bg-dark);}
 
-/* NAV */
-.nav{position:fixed;top:18px;left:20px;z-index:10;display:flex;gap:14px;
+/* NAV BAR */
+.nav{
+  position:fixed;top:18px;left:20px;z-index:10;display:flex;gap:14px;
   padding:10px 16px;background:rgba(255,255,255,0.25);
   backdrop-filter:blur(14px);border-radius:999px;
-  border:1px solid rgba(255,255,255,0.3);}
+  border:1px solid rgba(255,255,255,0.3);
+}
 [data-theme="dark"] .nav{background:rgba(36,38,46,.5);}
-.nav a{color:var(--text);text-decoration:none;font-weight:600;font-size:.95rem;}
-.nav a:hover{color:#007aff;}
-.nav a.active{-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background:linear-gradient(90deg,#007aff,#9b7bff);}
-.toggle{position:fixed;top:18px;right:20px;z-index:10;padding:8px 16px;
-  border-radius:999px;border:1px solid var(--card-bd);
-  background:rgba(255,255,255,.25);backdrop-filter:blur(14px);cursor:pointer;}
+.nav a{
+  position:relative;
+  color:var(--text);
+  text-decoration:none;
+  font-weight:600;
+  font-size:.95rem;
+  transition:color 0.2s ease, transform 0.2s ease;
+  background:none;
+}
+.nav a:hover{
+  color:#007aff;
+  text-shadow:0 0 10px rgba(0,122,255,0.4);
+  transform:scale(1.05);
+}
+.nav a.active{
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  color:transparent;
+  font-weight:800;
+  text-shadow:0 0 10px rgba(155,123,255,0.3);
+}
+.nav a.active::after{
+  content:"";
+  position:absolute;
+  bottom:-3px;
+  left:0;
+  width:100%;
+  height:2px;
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  border-radius:2px;
+  opacity:0.8;
+  animation:glowline 1.8s ease-in-out infinite alternate;
+}
+@keyframes glowline{
+  from{opacity:0.3;}
+  to{opacity:1;}
+}
+
+.toggle{
+  position:fixed;top:18px;right:20px;z-index:10;
+  padding:8px 16px;border-radius:999px;border:1px solid var(--card-bd);
+  background:rgba(255,255,255,.25);backdrop-filter:blur(14px);
+  cursor:pointer;color:var(--text);
+}
 
 /* HEADER */
 header{text-align:center;padding:60px 20px 10px;}
-h1{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#007aff,#9b7bff);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+h1{
+  font-size:2.4rem;font-weight:800;
+  background:linear-gradient(90deg,#007aff,#9b7bff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
 .tag{opacity:.75;margin-top:8px;}
 
 /* FILTER */
 .filter-bar{text-align:center;margin:20px 0 10px;}
-.filter-bar select{padding:10px 16px;border-radius:10px;border:1px solid var(--card-bd);
-  background:rgba(255,255,255,0.7);font-size:1rem;cursor:pointer;}
-[data-theme="dark"] .filter-bar select{background:rgba(36,38,46,0.7);color:var(--text);}
+.filter-bar select{
+  padding:10px 16px;border-radius:10px;border:1px solid var(--card-bd);
+  background:rgba(255,255,255,0.7);font-size:1rem;cursor:pointer;
+}
+[data-theme="dark"] .filter-bar select{
+  background:rgba(36,38,46,0.7);color:var(--text);
+}
 
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -66,12 +114,16 @@ h1{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#007aff,#9b
 .flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;
   transition:transform .8s cubic-bezier(.2,.65,.2,1);}
 .flip-card:hover .flip-inner,.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
-.face{position:absolute;inset:0;border-radius:22px;background:var(--card);
+.face{
+  position:absolute;inset:0;border-radius:22px;background:var(--card);
   border:1px solid var(--card-bd);backdrop-filter:blur(30px) saturate(180%);
   box-shadow:0 14px 30px var(--shadow);display:flex;flex-direction:column;
-  align-items:center;justify-content:center;backface-visibility:hidden;padding:20px;}
-.front h3{font-weight:800;font-size:1.4rem;line-height:1.2;text-align:center;
-  word-wrap:break-word;overflow-wrap:break-word;max-width:90%;}
+  align-items:center;justify-content:center;backface-visibility:hidden;padding:20px;
+}
+.front h3{
+  font-weight:800;font-size:1.4rem;line-height:1.2;text-align:center;
+  word-wrap:break-word;overflow-wrap:break-word;max-width:90%;
+}
 .back{transform:rotateY(180deg);padding:22px;text-align:left;overflow:auto;}
 .back ul{list-style:none;padding-left:0;}
 .back li{margin:4px 0;font-size:1rem;color:var(--text-weak);}
@@ -89,7 +141,9 @@ h1{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#007aff,#9b
 
 /* TEACHER BAR */
 #teacherTools{text-align:center;margin:20px;}
-#teacherTools button{padding:10px 14px;border:none;border-radius:8px;color:#fff;font-weight:600;margin:0 5px;cursor:pointer;}
+#teacherTools button{
+  padding:10px 14px;border:none;border-radius:8px;color:#fff;font-weight:600;margin:0 5px;cursor:pointer;
+}
 #addBtn{background:#10b981;}
 #deleteBtn{background:#ef4444;}
 </style>
@@ -238,7 +292,6 @@ function showTeacherToolbar(){
   bar.id="teacherTools";
   bar.innerHTML=`
     <button id="addBtn">➕ Add Student</button>
-    <button id="deleteBtn">🗑️ Delete from Card</button>
   `;
   document.querySelector("header").after(bar);
   document.getElementById("addBtn").onclick=addStudent;
