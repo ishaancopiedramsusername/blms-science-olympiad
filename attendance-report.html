@@ -77,8 +77,8 @@ header {
   background: linear-gradient(90deg, #007aff, #8b5cff);
   color: #fff;
   text-align: center;
- padding-top: 120px; /* add this line or increase value until it looks good */
- box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  padding: 1.3rem 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 h1 {
   margin: 0;
@@ -88,7 +88,7 @@ h1 {
 
 /* === MAIN === */
 main {
-  padding: 80px 8%; /* add top padding so nav doesn’t overlap */
+  padding: 140px 8% 80px; /* ✅ This moves content below fixed nav */
   max-width: 1100px;
   margin: auto;
 }
@@ -261,4 +261,3 @@ loadData();
 </script>
 </body>
 </html>
-
