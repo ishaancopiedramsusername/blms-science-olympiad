@@ -3,161 +3,88 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>BLMS Science Olympiad — Editable Team Roster</title>
+<title>BLMS Science Olympiad — Team Roster</title>
 <style>
 :root {
   --bg-light: radial-gradient(1200px 800px at 10% -10%, #e7eeff, transparent 60%),
               radial-gradient(1400px 900px at 110% 120%, #e9d9ff, transparent 60%),
-              linear-gradient(#eef3f9, #fafbff);
+              linear-gradient(#eef3f9,#fafbff);
   --bg-dark: radial-gradient(1200px 800px at 15% -10%, #0f1320, transparent 60%),
              radial-gradient(1400px 900px at 110% 120%, #1a1227, transparent 60%),
-             linear-gradient(#0b0d12, #141720);
-  --text: #111318;
-  --text-weak: #1c1f26cc;
-  --card: rgba(255,255,255,.35);
-  --card-bd: rgba(255,255,255,.25);
-  --shadow: rgba(0,0,0,.18);
+             linear-gradient(#0b0d12,#141720);
+  --text:#111318;
+  --text-weak:#1c1f26cc;
+  --card:rgba(255,255,255,.35);
+  --card-bd:rgba(255,255,255,.25);
+  --shadow:rgba(0,0,0,.18);
 }
-[data-theme="dark"] {
-  --text: #f4f6ff;
-  --text-weak: #cfd5ffcc;
-  --card: rgba(36,38,46,.55);
-  --card-bd: rgba(255,255,255,.18);
-  --shadow: rgba(0,0,0,.6);
+[data-theme="dark"]{
+  --text:#f4f6ff;
+  --text-weak:#cfd5ffcc;
+  --card:rgba(36,38,46,.55);
+  --card-bd:rgba(255,255,255,.18);
+  --shadow:rgba(0,0,0,.6);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
-  background: var(--bg-light);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  transition: background 0.4s, color 0.4s;
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg-light);color:var(--text);
+  min-height:100vh;overflow-x:hidden;transition:background .4s,color .4s;
 }
-[data-theme="dark"] body { background: var(--bg-dark); }
+[data-theme="dark"] body{background:var(--bg-dark);}
 
-/* Header */
-header { text-align:center; padding:60px 20px 10px; }
-h1 {
-  font-size:2.8rem; font-weight:800;
-  background:linear-gradient(90deg,#007aff,#9b7bff);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-}
-.tag { opacity:.75; margin-top:8px; font-size:1rem; }
+/* --- NAV + TOGGLE --- */
+.nav{position:fixed;top:18px;left:20px;z-index:10;display:flex;gap:14px;
+  padding:10px 16px;background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(14px);border-radius:999px;
+  border:1px solid rgba(255,255,255,0.3);}
+[data-theme="dark"] .nav{background:rgba(36,38,46,.5);}
+.nav a{color:var(--text);text-decoration:none;font-weight:600;font-size:.95rem;}
+.nav a:hover{color:#007aff;}
+.nav a.active{-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background:linear-gradient(90deg,#007aff,#9b7bff);}
+.toggle{position:fixed;top:18px;right:20px;z-index:10;padding:8px 16px;
+  border-radius:999px;border:1px solid var(--card-bd);
+  background:rgba(255,255,255,.25);backdrop-filter:blur(14px);cursor:pointer;}
 
-/* Toggle */
-.toggle {
-  position:fixed; top:18px; right:20px; z-index:10;
-  padding:8px 16px; border-radius:999px;
-  border:1px solid var(--card-bd);
-  background:rgba(255,255,255,.25);
-  backdrop-filter:blur(14px);
-  cursor:pointer; color:var(--text);
-}
+/* --- HEADER --- */
+header{text-align:center;padding:60px 20px 10px;}
+h1{font-size:2.4rem;font-weight:800;background:linear-gradient(90deg,#007aff,#9b7bff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.tag{opacity:.75;margin-top:8px;}
 
-/* Nav */
-.nav {
-  position:fixed; top:18px; left:20px; z-index:10;
-  display:flex; gap:14px; flex-wrap:wrap;
-  padding:10px 16px;
-  background:rgba(255,255,255,0.25);
-  backdrop-filter:blur(14px);
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,0.3);
-}
-[data-theme="dark"] .nav {
-  background:rgba(36,38,46,0.5);
-  border-color:rgba(255,255,255,0.18);
-}
-.nav a {
-  color:var(--text); text-decoration:none;
-  font-weight:600; font-size:0.95rem;
-  transition:color .2s, transform .2s;
-}
-.nav a:hover { color:#007aff; transform:scale(1.05); }
-.nav a.active {
-  background:linear-gradient(90deg,#007aff,#9b7bff);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  font-weight:800;
-}
+/* --- FILTER --- */
+.filter-bar{text-align:center;margin:20px 0 10px;}
+.filter-bar select{padding:10px 16px;border-radius:10px;border:1px solid var(--card-bd);
+  background:rgba(255,255,255,0.7);font-size:1rem;cursor:pointer;}
+[data-theme="dark"] .filter-bar select{background:rgba(36,38,46,0.7);color:var(--text);}
 
-/* Filter bar */
-.filter-bar {
-  text-align:center; margin:20px 0 10px;
-}
-.filter-bar select {
-  padding:10px 16px; border-radius:10px; border:1px solid var(--card-bd);
-  background:rgba(255,255,255,0.7); font-size:1rem; cursor:pointer;
-  box-shadow:0 6px 16px rgba(0,0,0,0.1);
-}
-[data-theme="dark"] .filter-bar select {
-  background:rgba(36,38,46,0.7); color:var(--text);
-}
+/* --- GRID & CARDS --- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;max-width:1200px;padding:32px 20px 100px;margin:0 auto;}
+.flip-card{perspective:1000px;height:240px;}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;
+  transition:transform .8s cubic-bezier(.2,.65,.2,1);}
+.flip-card:hover .flip-inner,.flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+.face{position:absolute;inset:0;border-radius:22px;background:var(--card);
+  border:1px solid var(--card-bd);backdrop-filter:blur(30px) saturate(180%);
+  box-shadow:0 14px 30px var(--shadow);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;backface-visibility:hidden;padding:20px;}
+.front h3{font-weight:800;font-size:1.4rem;line-height:1.2;text-align:center;
+  word-wrap:break-word;overflow-wrap:break-word;max-width:90%;}
+.back{transform:rotateY(180deg);padding:22px;text-align:left;overflow:auto;}
+.back ul{list-style:none;padding-left:0;}
+.back li{margin:4px 0;font-size:1rem;color:var(--text-weak);}
+.edit-btn{margin-top:10px;padding:6px 12px;border:none;border-radius:8px;
+  background:linear-gradient(90deg,#007aff,#9b7bff);color:#fff;font-weight:600;cursor:pointer;display:none;}
+.teacher .edit-btn{display:inline-block;}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
 
-/* Grid */
-.grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:32px; max-width:1200px; padding:32px 20px 100px; margin:0 auto;
-}
-
-/* Cards */
-.flip-card { perspective:1000px; height:auto; }
-.flip-inner {
-  position:relative; width:100%; height:100%;
-  transform-style:preserve-3d;
-  transition:transform .8s cubic-bezier(.2,.65,.2,1);
-  cursor:pointer;
-}
-.face {
-  position:absolute; inset:0; border-radius:22px;
-  background:var(--card); border:1px solid var(--card-bd);
-  backdrop-filter:blur(30px) saturate(180%);
-  box-shadow:0 14px 30px var(--shadow);
-  padding:20px; display:flex; flex-direction:column;
-  justify-content:center; align-items:center;
-  text-align:center; backface-visibility:hidden; overflow:hidden;
-}
-.front h3 {
-  font-weight:800; line-height:1.15; font-size:clamp(1.1rem,2vw,1.9rem);
-  text-align:center; color:var(--text);
-  word-wrap:break-word; overflow-wrap:break-word; white-space:normal;
-}
-.back { transform:rotateY(180deg); padding:22px; overflow-y:auto; text-align:left; }
-.back ul { list-style:none; margin:0; padding-left:0; }
-.back li { margin:5px 0; font-size:1.05rem; color:var(--text-weak); }
-.flip-card:hover .flip-inner, .flip-card.flipped .flip-inner { transform:rotateY(180deg); }
-.flip-card { animation:fadeInUp .6s ease both; }
-@keyframes fadeInUp { from{opacity:0;transform:translateY(15px);} to{opacity:1;transform:translateY(0);} }
-
-/* Edit Mode */
-.edit-btn {
-  margin-top:10px;
-  padding:6px 12px;
-  border:none; border-radius:8px;
-  background:linear-gradient(90deg,#007aff,#9b7bff);
-  color:white; font-weight:600; cursor:pointer;
-  display:none;
-}
-.teacher .edit-btn { display:inline-block; }
-
-/* Login overlay */
-#loginOverlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.8);
-  backdrop-filter:blur(8px);
-  display:flex; align-items:center; justify-content:center; z-index:9999;
-}
-.login {
-  width:min(420px,92vw); background:#fff; border-radius:18px; padding:28px;
-  box-shadow:0 12px 32px rgba(0,0,0,.5); text-align:center;
-}
-.login h2{margin:0 0 10px;color:#007aff;}
-.login input{
-  width:100%; padding:11px 13px; border-radius:10px; border:1px solid #d1d5db;
-  margin:10px 0 14px; font-size:1rem;
-}
-.login .btn{width:100%; padding:10px 14px; border:none; border-radius:8px;
-  background:linear-gradient(90deg,#007aff,#9b7bff); color:#fff; font-weight:600; cursor:pointer;}
-.login .err{color:#ef4444; font-weight:700; min-height:20px; margin-top:6px;}
+/* --- LOGIN PANEL (teacher only toggle) --- */
+#loginPanel{position:fixed;bottom:20px;right:20px;z-index:10;}
+#loginPanel input{padding:6px 8px;border-radius:6px;border:1px solid #ccc;}
+#loginPanel button{padding:6px 10px;border:none;border-radius:6px;
+  background:#007aff;color:white;cursor:pointer;margin-left:6px;}
 </style>
 </head>
 <body>
@@ -174,18 +101,8 @@ h1 {
 
 <header>
   <h1>Team Roster</h1>
-  <p class="tag">Flip or edit cards · Teacher Login Enabled</p>
+  <p class="tag">Flip cards to view events · Teachers can log in to edit</p>
 </header>
-
-<!-- LOGIN OVERLAY -->
-<div id="loginOverlay">
-  <div class="login">
-    <h2>Teacher Access</h2>
-    <input type="password" id="pw" placeholder="Enter password" />
-    <button class="btn" id="loginBtn">Login</button>
-    <div class="err" id="loginErr"></div>
-  </div>
-</div>
 
 <div class="filter-bar">
   <select id="eventFilter"><option value="All">All Events</option></select>
@@ -193,126 +110,110 @@ h1 {
 
 <main class="grid" id="grid"></main>
 
+<!-- simple login toggle (students can still see everything) -->
+<div id="loginPanel">
+  <input type="password" id="pw" placeholder="Teacher password">
+  <button id="loginBtn">Login</button>
+</div>
+
 <script>
-const TEACHER_PASSWORD = "blms2025"; // change if you like
-const grid = document.getElementById("grid");
+/* theme */
+document.getElementById("modeToggle").onclick=()=>{const h=document.documentElement;
+  h.dataset.theme=h.dataset.theme==="dark"?"light":"dark";};
 
-/* Theme toggle */
-document.getElementById('modeToggle').addEventListener('click',()=>{
-  const html=document.documentElement;
-  html.dataset.theme=html.dataset.theme==='dark'?'light':'dark';
+/* highlight */
+const cur=location.pathname.split("/").pop().replace(".html","");
+document.querySelectorAll(".nav a").forEach(a=>{
+  if(a.dataset.page===cur||(cur===""&&a.dataset.page==="index"))a.classList.add("active");
 });
 
-/* Login */
-const loginOverlay=document.getElementById("loginOverlay");
-document.getElementById("loginBtn").addEventListener("click",()=>{
-  const pw=document.getElementById("pw").value.trim();
-  if(pw===TEACHER_PASSWORD){
-    sessionStorage.setItem("roster_teacher","1");
-    loginOverlay.style.display="none";
+/* login toggle */
+const PW="blms2025";
+document.getElementById("loginBtn").onclick=()=>{
+  const val=document.getElementById("pw").value.trim();
+  if(val===PW){
+    sessionStorage.setItem("teacherMode","1");
     document.body.classList.add("teacher");
-  } else {
-    document.getElementById("loginErr").textContent="Incorrect password.";
-  }
-});
-if(sessionStorage.getItem("roster_teacher")==="1"){
-  loginOverlay.style.display="none";
-  document.body.classList.add("teacher");
-}
+    alert("Teacher edit mode enabled ✅");
+  }else alert("Incorrect password");
+};
+if(sessionStorage.getItem("teacherMode")==="1")document.body.classList.add("teacher");
 
-/* Data */
+/* data */
 let students=[
-  {name:"Aarav Mandhar", events:["Rocks and Minerals","Codebusters","Boomilever"]},
-  {name:"Aarav Singhai", events:["Disease Detectives","Mission Possible","Crime Busters"]},
-  {name:"Akhil Gollapally", events:["Anatomy and Physiology","Heredity","Boomilever","Mission Possible","Potions and Poisons","Disease Detectives"]},
-  {name:"Akshay Varanasi", events:["Dynamic Planet","Meteorology","Circuit Lab"]},
-  {name:"Anay Chatterjee", events:["Metric Mastery","Helicopter","Heredity","Experimental Design"]},
-  {name:"Anvi Dhome", events:["Crime Busters","Mission Possible","Codebusters","Entomology","Potions and Poisons"]},
-  {name:"Anvika Rath", events:["Rocks and Minerals","Solar System","Crime Busters"]},
-  {name:"Dhruv Bajaj", events:["Experimental Design","Crime Busters","Circuit Lab"]},
-  {name:"Edmund Bao", events:["Boomilever","Helicopter","Scrambler","Potions and Poisons","Hovercraft","Crime Busters","Disease Detectives","Heredity","Codebusters"]},
-  {name:"Haasini Bharathwaj", events:["Dynamic Planet","Write It Do It","Solar System"]},
-  {name:"Ishani Bhat", events:["Disease Detectives","Heredity","Rocks and Minerals","Potions and Poisons"]},
-  {name:"Jayden Oh", events:["Boomilever","Hovercraft","Helicopter","Mission Possible"]},
-  {name:"Joann Antony", events:["Disease Detectives","Scrambler","Boomilever"]},
-  {name:"Krishvee Anand", events:["Anatomy and Physiology","Disease Detectives","Heredity","Solar System","Potions and Poisons","Experimental Design"]},
-  {name:"Nora Ahmed", events:["Solar System","Boomilever","Disease Detectives","Scrambler"]},
-  {name:"Pavaki Rastogi", events:["Entomology","Heredity","Write It Do It","Experimental Design"]},
-  {name:"Pavel Chudnovskiy", events:["Dynamic Planet","Meteorology","Circuit Lab"]},
-  {name:"Rayansh Anand", events:["Disease Detectives","Remote Sensing","Circuit Lab"]},
-  {name:"Ryan Thomas", events:["Metric Mastery","Helicopter","Write It Do It","Heredity","Experimental Design"]},
-  {name:"Samira Senthil", events:["Heredity","Water Quality","Rocks and Minerals","Potions and Poisons"]},
-  {name:"Sanvi Byreddy", events:["Disease Detectives","Heredity","Water Quality","Dynamic Planet"]},
-  {name:"Saanvika Nair", events:["Crime Busters","Potions and Poisons","Helicopter","Scrambler","Codebusters"]},
-  {name:"Shreya Ayyalasomayajula", events:["Anatomy and Physiology","Entomology","Heredity","Dynamic Planet"]},
-  {name:"Sofia Shao", events:["Machines","Potions and Poisons","Helicopter","Scrambler","Write It Do It"]},
-  {name:"Vinay Patel", events:["Entomology","Heredity","Crime Busters","Codebusters","Scrambler"]},
-  {name:"William Wang", events:["Hovercraft","Boomilever","Helicopter","Mission Possible"]},
-  {name:"Yvaine Wang", events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]},
-  {name:"Zayna Rasheed", events:["Water Quality","Heredity","Rocks and Minerals","Potions and Poisons"]}
+  {name:"Aarav Mandhar",events:["Rocks and Minerals","Codebusters","Boomilever"]},
+  {name:"Anay Chatterjee",events:["Metric Mastery","Helicopter","Heredity","Experimental Design"]},
+  {name:"Edmund Bao",events:["Boomilever","Helicopter","Scrambler","Potions and Poisons","Hovercraft","Crime Busters","Disease Detectives","Heredity","Codebusters"]},
+  {name:"Joann Antony",events:["Disease Detectives","Scrambler","Boomilever"]},
+  {name:"Pavel Chudnovskiy",events:["Dynamic Planet","Meteorology","Circuit Lab"]},
+  {name:"Sanvi Byreddy",events:["Disease Detectives","Heredity","Water Quality","Dynamic Planet"]},
+  {name:"Vinay Patel",events:["Entomology","Heredity","Crime Busters","Codebusters","Scrambler"]},
+  {name:"Anvi Dhome",events:["Crime Busters","Mission Possible","Codebusters","Entomology","Potions and Poisons"]},
+  {name:"Haasini Bharathwaj",events:["Dynamic Planet","Write It Do It","Solar System"]},
+  {name:"Krishvee Anand",events:["Anatomy and Physiology","Disease Detectives","Heredity","Solar System","Potions and Poisons","Experimental Design"]},
+  {name:"Rayansh Anand",events:["Disease Detectives","Remote Sensing","Circuit Lab"]},
+  {name:"Saanvika Nair",events:["Crime Busters","Potions and Poisons","Helicopter","Scrambler","Codebusters"]},
+  {name:"William Wang",events:["Hovercraft","Boomilever","Helicopter","Mission Possible"]},
+  {name:"Akhil Gollapally",events:["Anatomy and Physiology","Heredity","Boomilever","Mission Possible","Potions and Poisons","Disease Detectives"]},
+  {name:"Anvika Rath",events:["Rocks and Minerals","Solar System","Crime Busters"]},
+  {name:"Ishani Bhat",events:["Disease Detectives","Heredity","Rocks and Minerals","Potions and Poisons"]},
+  {name:"Nora Ahmed",events:["Solar System","Boomilever","Disease Detectives","Scrambler"]},
+  {name:"Ryan Thomas",events:["Metric Mastery","Helicopter","Write It Do It","Heredity","Experimental Design"]},
+  {name:"Shreya Ayyalasomayajula",events:["Anatomy and Physiology","Entomology","Heredity","Dynamic Planet"]},
+  {name:"Yvaine Wang",events:["Anatomy and Physiology","Disease Detectives","Potions and Poisons","Heredity","Crime Busters"]},
+  {name:"Akshay Varanasi",events:["Dynamic Planet","Meteorology","Circuit Lab"]},
+  {name:"Dhruv Bajaj",events:["Experimental Design","Crime Busters","Circuit Lab"]},
+  {name:"Jayden Oh",events:["Boomilever","Hovercraft","Helicopter","Mission Possible"]},
+  {name:"Pavaki Rastogi",events:["Entomology","Heredity","Write It Do It","Experimental Design"]},
+  {name:"Samira Senthil",events:["Heredity","Water Quality","Rocks and Minerals","Potions and Poisons"]},
+  {name:"Sofia Shao",events:["Machines","Potions and Poisons","Helicopter","Scrambler","Write It Do It"]},
+  {name:"Zayna Rasheed",events:["Water Quality","Heredity","Rocks and Minerals","Potions and Poisons"]}
 ];
 
-/* Build */
-function buildCards(list){
+/* build */
+const grid=document.getElementById("grid");
+function build(list){
   grid.innerHTML="";
   list.forEach((s,i)=>{
-    const card=document.createElement("div");
-    card.className="flip-card";
-    card.style.animationDelay=(i*0.04)+"s";
+    const c=document.createElement("div");
+    c.className="flip-card";
     const inner=document.createElement("div");
     inner.className="flip-inner";
-    const front=document.createElement("div");
-    front.className="face front";
-    front.innerHTML=`<h3>${s.name}</h3>`;
-    const back=document.createElement("div");
-    back.className="face back";
-    back.innerHTML=`<ul>${s.events.map(e=>`<li>${e}</li>`).join("")}</ul>
+    const f=document.createElement("div");
+    f.className="face front";
+    f.innerHTML=`<h3>${s.name}</h3>`;
+    const b=document.createElement("div");
+    b.className="face back";
+    b.innerHTML=`<ul>${s.events.map(e=>`<li>${e}</li>`).join("")}</ul>
       <button class='edit-btn'>✏️ Edit</button>`;
-    inner.appendChild(front); inner.appendChild(back); card.appendChild(inner);
-    grid.appendChild(card);
-
-    const editBtn=back.querySelector(".edit-btn");
-    editBtn.addEventListener("click",(e)=>{
+    inner.append(f,b); c.append(inner); grid.append(c);
+    b.querySelector(".edit-btn").onclick=e=>{
       e.stopPropagation();
-      editStudent(i);
-    });
-
-    card.addEventListener("click",()=>card.classList.toggle("flipped"));
+      edit(i);
+    };
+    c.onclick=()=>c.classList.toggle("flipped");
   });
 }
-
-/* Edit modal (simple prompt style) */
-function editStudent(index){
-  const s=students[index];
-  const newName=prompt("Edit Student Name:",s.name);
-  if(!newName) return;
-  const newEvents=prompt("Edit Events (separate by ;):",s.events.join("; "));
-  students[index]={name:newName.trim(),events:newEvents.split(/;|,/).map(e=>e.trim()).filter(Boolean)};
-  buildCards(students);
-  populateFilter();
+function edit(i){
+  const s=students[i];
+  const n=prompt("Edit student name:",s.name);
+  if(!n)return;
+  const ev=prompt("Edit events (; separated):",s.events.join("; "));
+  students[i]={name:n.trim(),events:ev.split(/;|,/).map(x=>x.trim()).filter(Boolean)};
+  populate();build(students);
 }
-
-/* Filter dropdown */
-const eventSelect=document.getElementById("eventFilter");
-function populateFilter(){
-  const allEvents=[...new Set(students.flatMap(s=>s.events))].sort();
-  eventSelect.innerHTML="<option value='All'>All Events</option>";
-  allEvents.forEach(ev=>{
-    const opt=document.createElement("option");
-    opt.value=ev; opt.textContent=ev;
-    eventSelect.appendChild(opt);
-  });
+function populate(){
+  const sel=document.getElementById("eventFilter");
+  const evs=[...new Set(students.flatMap(s=>s.events))].sort();
+  sel.innerHTML="<option value='All'>All Events</option>";
+  evs.forEach(e=>{const o=document.createElement("option");o.value=e;o.textContent=e;sel.append(o);});
 }
-eventSelect.addEventListener("change",()=>{
-  const val=eventSelect.value;
-  if(val==="All") buildCards(students);
-  else buildCards(students.filter(s=>s.events.includes(val)));
-});
-
-/* Initial */
-populateFilter();
-buildCards(students);
+document.getElementById("eventFilter").onchange=e=>{
+  const v=e.target.value;
+  if(v==="All")build(students);
+  else build(students.filter(s=>s.events.includes(v)));
+};
+populate();build(students);
 </script>
 </body>
 </html>
-
